@@ -1,0 +1,31 @@
+.weather-content {
+  position: absolute;
+  width: 600px;
+  height: 200px;
+  background: rgba(0, 0, 0, 0.4);
+  top: 170px;
+  left: 20px;
+  border-radius: 30px;
+}
+
+.cloud-icon {
+  position: absolute;
+  width: 100px;
+  left: 35px;
+  top: 35px;
+}
+
+.weather-place {
+  position: absolute;
+  top: 108px;
+  left: 35px;
+  font-size: 26px;
+  color: white;
+}
+
+.weather-temp {
+  position: absolute;
+  left: 465px;
+  font-size: 45px;
+  color: white;
+}
