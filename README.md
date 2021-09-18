@@ -1,1 +1,2 @@
-# SW-Web
+# Web
+Web software client for SmartHome project
