@@ -1,58 +1,53 @@
 import '../Weather/Weather.scss';
 import Cloud from '../../../Image/weatherPage/cloud.svg';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+// import { apiHeader } from './config';
 
 const Weather = () => {
-  const [place, setPlace] = useState('');
-  const [temp, setTemp] = useState('25');
-
-  const RestAPIKey = '1370e85596600eecc55f090db5a3d594'
-  const Kakao = axios.create({
-    baseURL: 'https://dapi.kakao.com',
-    headers: {
-      "Authoerization": "KakaoAK " + RestAPIKey,
-      "Access-Control-Allow-Origin": "*",
-    }
-  });
+  const [area, setArea] = useState('지역이 입력되지 않았습니다.');
+  const [temp, setTemp] = useState('');
 
   useEffect(() => {
-    console.log(place);
-    getWeather();
-  }, [place]);
-
-  const koreanToEnglish = () => {
-    Kakao.get('/v2/translation/translate?src_lang=kr&target_lang=en&query=' + place)
-      .then((res) => {
-        console.log(res);
-      })
-  };
-
-  const getWeather = () => {
-    console.log(place);
-    axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${place}&appid=c2a3abfbf70fb1c617186ea9b096b1d8&units=metric`)
+    axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${area}&appid=c2a3abfbf70fb1c617186ea9b096b1d8&units=metric`)
     .then((Response) => {
       console.log(Response.data['main']['temp']);
-      setTemp(Math.round(Response.data['main']['temp']));
+      setTemp(Math.round(Response.data['main']['temp']) + '℃');
     }).catch((Error) => {
       console.log(Error);
-    })
-  }
+    });
+  }, [area]);
+
+  const editPlace = useCallback(() => {
+    const place = prompt('설정할 지역을 입력하세요. (시 단위로 입력해주세요.');
+    setArea(place);
+    console.log(area);
+  }, [area]);
+
+  // const koreanToEnglish = () => {
+  //   axios.post(
+  //     "https://openapi.naver.com/v1/papago/n2mt", { source: "ko", target: "en", text: place }, apiHeader
+  //   ).then((Response) => {
+  //     console.log(Response);
+  //   }).catch((Error) => {
+  //     console.log(Error);
+  //   });
+  // };
 
   return (
     <div className='weather-content'>
-      <img className='cloud-icon' src={Cloud} />
-      <p className='weather-place'>{place}</p>
-      <p className='weather-temp'>{temp}℃</p>
-      <button
-        type='submit'
-        className='place-edit'
-        onClick={() => {
-          setPlace(prompt('수정할 지역을 입력하세요. (시 단위로 입력해주세요.)'));
-        }}
-      >
-        지역 수정
-      </button>
+      <img className='cloud-icon' src={Cloud} alt='구름' />
+      <p className='weather-place'>{area}</p>
+      <p className='weather-temp'>{temp}</p>
+      <div className='edit-place'>
+        <button
+          type='submit'
+          className='place-edit'
+          onClick={editPlace}
+        >
+          지역 설정
+        </button>
+      </div>
     </div>
   );
 };
