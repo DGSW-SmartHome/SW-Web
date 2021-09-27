@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import './Login.scss';
 
 const Login = () => {
@@ -9,12 +8,12 @@ const Login = () => {
         <div className='input-background'>
           <input type='text' className='input-tag' placeholder='ID' />
         </div>
-        <div className='password input-background'>
+        <div className='password input-background br'>
           <input type='password' className='input-tag' placeholder='PASSWORD' />
         </div>
-        <br/>
-        <Link to='/signup' className='signUp'>아직 회원가입을 하지 않으셨나요?</Link> <br/>
-        <button type='submit' className='login-button'>Log in</button>
+        <br />
+        <a href='/signup' className='signUp'>아직 회원가입을 하지 않으셨나요?</a> <br/>
+        <button type='submit' className='login-button'>Log In</button>
       </form>
     </div>
   );

@@ -23,14 +23,14 @@ body {
 .input-background {
   display: inline-block;
   width: 400px;
-  height: 90px;
+  height: 70px;
   margin-top: 88px;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 35px;
 }
 
 .input-tag {
-  margin-top: 25px;
+  margin-top: 4%;
   border: 0px;
   font-size: 30px;
   font-family: 'Jua';
@@ -51,12 +51,12 @@ body {
 }
 
 .login-button {
-  width: 200px;
-  height: 75px;
+  width: 160px;
+  height: 80px;
   background: rgba(255, 255, 255, 0.7);
   border-radius: 35px;
   border: 0px;
-  margin-top: 170px;
+  margin-top: 28%;
   font-size: 30px;
   font-family: 'Jua';
 }
@@ -64,4 +64,8 @@ body {
 .signUp {
   text-decoration: none;
   color: gray;
+}
+
+.br {
+  margin-bottom: 15px;
 }
