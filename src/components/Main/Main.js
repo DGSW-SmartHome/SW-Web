@@ -1,5 +1,5 @@
+import MainNav from '../Nav/MainNav';
 import Aircon from './Aircon/Aircon';
-import Navbar from '../Nav/Navbar';
 import Weather from "./Weather/Weather";
 import News from './News/News';
 import FineDust from './FineDust/FineDust';
@@ -10,7 +10,7 @@ import Security from './Security/Security';
 const Main = () => {
   return (
     <>
-      <Navbar />
+      <MainNav />
       <Weather />
       <Aircon />  
       <News />
