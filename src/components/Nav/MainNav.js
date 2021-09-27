@@ -8,10 +8,12 @@ const Navbar = () => {
     color: 'white',
     left: '45px',
     top: '40px',
-    alignContent: 'center'
+    alignContent: 'center',
+    fontFamily: 'Jua'
   }
 
   const homeIcon = {
+    marginBottom: '10px',
     verticalAlign: 'middle',
     width: '45px',
     height: '45px'
@@ -19,7 +21,8 @@ const Navbar = () => {
 
   return (
     <div style={home}>
-      <img style={homeIcon} src={HomeIcon} alt="집 아이콘" />집
+      <img style={homeIcon} src={HomeIcon} alt="집 아이콘" />
+      <span>집</span>
     </div>
   );
 };
