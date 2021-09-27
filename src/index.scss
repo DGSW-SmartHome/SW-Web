@@ -1,3 +1,28 @@
+@font-face {
+  font-family: 'Roboto300';
+  src: url('./Font/Roboto-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto400';
+  src: url('./Font/Roboto-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto500';
+  src: url('./Font/Roboto-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto700';
+  src: url('./Font/Roboto-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Jua';
+  src: url('./Font/Jua-Regular.ttf');
+}
+
 body, html {
   width: 100%;
   height: 100%;
@@ -8,8 +33,6 @@ body, html {
     #C080FF 135.42%
   );
   color: #fff;
-}
-
-body {
   margin: 0;
+  font-family: Roboto400, sans-serif;
 }
