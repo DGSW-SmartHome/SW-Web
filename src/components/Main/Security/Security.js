@@ -2,9 +2,11 @@ import './Security.scss';
 
 const Security = () => {
   return (
-    <div className='security-content'>
-      Security
-    </div>
+    <a href='/login'>
+      <div className='security-content'>
+        Security
+      </div>
+    </a>
   );
 };
 
