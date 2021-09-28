@@ -3,11 +3,11 @@ import HomeIcon from '../../Image/weatherPage/houseIcon.svg';
 const Navbar = () => {
   const home = {
     position: 'absolute',
-    height: '50px',
-    fontSize: '40px',
+    height: '5vh',
+    fontSize: '4vh',
     color: 'white',
-    left: '45px',
-    top: '40px',
+    left: '2vw',
+    top: '4vh',
     alignContent: 'center',
     fontFamily: 'Jua'
   }
@@ -15,8 +15,7 @@ const Navbar = () => {
   const homeIcon = {
     marginBottom: '10px',
     verticalAlign: 'middle',
-    width: '45px',
-    height: '45px'
+    height: '3.5vh'
   }
 
   return (
