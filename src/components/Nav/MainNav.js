@@ -1,4 +1,4 @@
-import HomeIcon from '../../Image/weatherPage/houseIcon.svg';
+import HomeIcon from '../../Image/houseIcon.svg';
 
 const Navbar = () => {
   const home = {
