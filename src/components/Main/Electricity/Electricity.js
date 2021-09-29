@@ -1,13 +1,13 @@
-import './Security.scss';
+import './Electricity.scss';
 
-const Security = () => {
+const Electricity = () => {
   return (
     <a href='/login'>
       <div className='security-content'>
-        Security
+        Electricity
       </div>
     </a>
   );
 };
 
-export default Security;
+export default Electricity;

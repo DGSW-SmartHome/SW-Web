@@ -5,7 +5,7 @@ import News from './News/News';
 import FineDust from './FineDust/FineDust';
 import Calendar from './Calendar/Calendar';
 import Light from './Light/Light';
-import Security from './Security/Security';
+import Electricity from './Electricity/Electricity';
 
 const Main = () => {
   return (
@@ -17,7 +17,7 @@ const Main = () => {
       <FineDust />
       <Calendar />
       <Light />
-      <Security />
+      <Electricity />
     </>
   );
 };

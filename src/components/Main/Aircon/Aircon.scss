@@ -15,30 +15,27 @@
 .aircon-content-title {
   position: absolute;
   font-size: 4vh;
-  top: 8vh;
+  top: 4vh;
   left: 3vw;
 }
 
 .aircon-temp {
   position: absolute;
   font-size: 6vh;
-  top: 8.4vh;
+  top: 4.4vh;
   left: 9vw;
 }
 
 .aircon-temp-control {
   position: absolute;
   top: 5vh;
-  left: 19vw;
+  left: 25.5vw;
   text-align: center;
   border-radius: 10px;
   border: 2px solid white;
-
   font-size: 3vh;
-
-  width: 4vw;
+  width: 5vw;
   height: 20vh;
-
   background: linear-gradient(180deg, #FF7A7D 0%, #7EA2FF 100%);
 }
 
@@ -52,10 +49,10 @@
 .aircon-onoff {
   position: absolute;
   border-radius: 10px;
-  width: 4vw;
-  height: 7.8vh;
-  top: 6vh;
-  left: 25vw;
+  width: 5vw;
+  height: 9vh;
+  top: 5vh;
+  left: 19vw;
   font-size: 2.5vh;
   color: #FFA7A7;
   background-color: white;
@@ -65,12 +62,19 @@
 .aircon-wind-strangth {
   position: absolute;
   border-radius: 10px;
-  width: 4vw;
-  height: 7.8vh;
-  top: 17vh;
-  left: 25vw;
+  width: 5vw;
+  height: 9vh;
+  top: 16vh;
+  left: 19vw;
   font-size: 2.5vh;
   color: white;
   background-color: #DBDBDB;
   border: 2.5px solid white;
+}
+
+.wind-img {
+  position: absolute;
+  top: 14vh;
+  left: 3.5vw;
+  width: 12.5vw;
 }
