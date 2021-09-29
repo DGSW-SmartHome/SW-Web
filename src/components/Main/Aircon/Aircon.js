@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
 import { imgData } from './AirconImg';
 import './Aircon.scss';
-import airconWind0 from '../../../Image/airconPage/airWind0.png';
 
 const Aircon = () => {
   const [airconTemp, setAirconTemp] = useState(() => JSON.parse(window.localStorage.getItem('airconTemp')) ? Number(window.localStorage.getItem('airconTemp').replace(/"/gi, '')) : 24);
-  const [windStrange, setWindStrange] = useState(1);
+  const [windStrange, setWindStrange] = useState(() => JSON.parse(window.localStorage.getItem('windStrage')) ? Number(window.localStorage.getItem('windStrage').replace(/"/gi, '')) : 1);
 
   useEffect(() => {
     window.localStorage.setItem('airconTemp', JSON.stringify(airconTemp));
   }, [airconTemp])
+
+  useEffect(() => {
+    window.localStorage.setItem('windStrage', JSON.stringify(windStrange));
+  }, [windStrange])
 
   const tempUp = () => {
     setAirconTemp(airconTemp => airconTemp + 1);
@@ -21,10 +24,8 @@ const Aircon = () => {
 
   const changeWindStrange = () => {
     if (windStrange === 5) {
-      console.log('windStrange: 5');
       setWindStrange(1);
     } else {
-      console.log(windStrange);
       setWindStrange(windStrange => windStrange + 1);
     }
   }
