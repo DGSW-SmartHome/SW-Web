@@ -1,0 +1,46 @@
+.weather-content {
+  font-family: 'Jua', sans-serif;
+  position: absolute;
+  width: 32vw;
+  height: 20.5vh;
+  background: rgba(0, 0, 0, 0.4);
+  top: 17.8vh;
+  left: 1vw;
+  border-radius: 30px;
+}
+
+.weather-icon {
+  position: absolute;
+  width: 6vw;
+  left: 1.5vw;
+  top: 2.5vh;
+}
+
+.weather-place {
+  position: absolute;
+  top: 11.2vh;
+  left: 1.5vw;
+  font-size: 2.6vh;
+  color: white;
+}
+
+.weather-temp {
+  position: absolute;
+  left: 25vw;
+  font-size: 5vh;
+  color: white;
+}
+
+.edit-place {
+  position: absolute;
+  left: 26.5vw;
+  top: 13.8vh;
+
+  button {
+    font-family: 'Jua', sans-serif;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 2vh;
+  }
+}

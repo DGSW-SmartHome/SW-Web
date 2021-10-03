@@ -1,0 +1,71 @@
+body {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.login-content {
+  width: 600px;
+  height: 800px;
+  text-align: center;
+  font-family: 'Jua';
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50px;
+}
+
+.login-content-title {
+  color: #000;
+  padding-top: 73px;
+  font-size: 60px;
+}
+
+.input-background {
+  display: inline-block;
+  width: 400px;
+  height: 70px;
+  margin-top: 88px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 35px;
+}
+
+.input-tag {
+  margin-top: 4%;
+  border: 0px;
+  font-size: 30px;
+  font-family: 'Jua';
+  background: rgba(255, 255, 255, 0);
+
+  &::placeholder {
+    font-weight: 40;
+    color: darkgray;
+  }
+
+  &:focus {
+    outline: 0px;
+  }
+}
+
+.password {
+  margin-top: 20px;
+}
+
+.login-button {
+  width: 170px;
+  height: 75px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 35px;
+  border: 0px;
+  margin-top: 28%;
+  font-size: 30px;
+  font-family: 'Jua';
+}
+
+.signUp {
+  text-decoration: none;
+  color: gray;
+}
+
+.br {
+  margin-bottom: 15px;
+}
