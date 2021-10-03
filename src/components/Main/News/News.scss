@@ -6,4 +6,56 @@
   top: 73.4vh;
   left: 1vw;
   border-radius: 30px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.news-main-content {
+  display: flex;
+
+  .news-thumnail {
+    position: absolute;
+    margin-left: 1rem;
+  
+    img {
+      display: block;
+      width: 140px;
+      height: 100px;
+      object-fit: cover;
+    }
+  }
+  
+  .news-contents {
+    font-family: 'Nanum700';
+    width: 30vw;
+
+    h2 {
+      margin: 0;
+  
+      a {
+        position: absolute;
+        color: white;
+        left: 200px;
+        text-decoration: none;
+        font-size: 20px;
+      }
+    }
+    p {
+      position: relative;
+      width: 20vw;
+      left: 185px;
+      top: 50px;
+      margin: 0;
+      line-height: 1.5;
+      word-wrap: break-word;
+      font-size: 12px;
+    }
+  }
+
+  & + & {
+    margin-top: 7rem;
+  }
 }
