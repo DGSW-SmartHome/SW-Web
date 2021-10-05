@@ -27,14 +27,14 @@
       object-fit: cover;
     }
   }
-  
+
   .news-contents {
     font-family: 'Nanum700';
     width: 30vw;
 
     h2 {
       margin: 0;
-  
+
       a {
         position: absolute;
         color: white;
@@ -43,6 +43,7 @@
         font-size: 18px;
       }
     }
+
     p {
       position: relative;
       width: 20vw;
@@ -56,6 +57,7 @@
   }
 
   & + & {
-    margin-top: 7rem;
+    margin-top: 6rem;
+    margin-bottom: 2rem;
   }
 }
