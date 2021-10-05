@@ -3,6 +3,18 @@ import showPassword from '../../Image/signUpPage/showPassword.png';
 import React, { useCallback, useState } from 'react';
 
 const SignUp = () => {
+  const useInput = (inintValue = null) => {
+    const [value, setter] = useState(inintValue);
+    const handler = useCallback((e) => {
+      setter(e.target.value);
+    }, []);
+    return [value, handler];
+  }
+
+  const [id, onChangeId] = useInput('');
+  const [name, onChangeName] = useInput('');
+  const [password, onChangePassword] = useInput('');
+
   const [firstPasswordType, setfirstPasswordType] = useState({
     type: 'password',
     visible: false
@@ -21,7 +33,7 @@ const SignUp = () => {
     setPasswordError(e.target.value !== password);
     setPasswordCheck(e.target.value);
     // password state를 사용하기 때문에 password를 넣어준다
-  }, [passwordCheck]);
+  }, [password]);
 
   const handlePassword = () => {
     setfirstPasswordType(() => {
@@ -44,18 +56,6 @@ const SignUp = () => {
   const duplicateCheck = () => {
     alert('Duplicate Check');
   }
-
-  const useInput = (inintValue = null) => {
-    const [value, setter] = useState(inintValue);
-    const handler = useCallback((e) => {
-      setter(e.target.value);
-    }, []);
-    return [value, handler];
-  }
-
-  const [id, onChangeId] = useInput('');
-  const [name, onChangeName] = useInput('');
-  const [password, onChangePassword] = useInput('');
 
   const onSubmit = useCallback((e) => {
     e.preventDefault();
