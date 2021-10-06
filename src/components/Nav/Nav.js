@@ -1,6 +1,7 @@
 import lockIcon from '../../Image/lock.png';
 import settingIcon from '../../Image/set.png';
 import homeIcon from '../../Image/houseIcon.svg';
+import { Link } from 'react-router-dom';
 
 const Nav = ({ iconName, name }) => {  
   return (
@@ -9,7 +10,7 @@ const Nav = ({ iconName, name }) => {
         iconName === '자물쇠' ? <img style={icon} src={lockIcon} alt='lockIcon' /> : <img style={icon} src={settingIcon} alt='settingIcon' />
       }
       <span style={title}>{name}</span>
-      <img style={main} src={homeIcon} alt='메인 화면 아이콘' />
+      <Link to='/'><img style={main} src={homeIcon} alt='메인 화면 아이콘' /></Link>
     </div>
   );
 };

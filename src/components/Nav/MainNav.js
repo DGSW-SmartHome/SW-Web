@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import HomeIcon from '../../Image/houseIcon.svg';
 import Lock from '../../Image/lock.png';
 import Setting from '../../Image/set.png';
@@ -7,8 +8,8 @@ const Navbar = () => {
     <div style={home}>
       <img style={homeIcon} src={HomeIcon} alt="집 아이콘" />
       <span>집</span>
-      <img style={lockIcon} src={Lock} alt='보안' />
-      <img style={settingIcon} src={Setting} alt='설정' />
+      <Link to='/lock'><img style={lockIcon} src={Lock} alt='보안' /></Link>
+      <Link to='/setting'><img style={settingIcon} src={Setting} alt='설정' /></Link>
     </div>
   );
 };
