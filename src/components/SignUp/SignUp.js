@@ -1,5 +1,5 @@
 import './SignUp.scss';
-import showPassword from '../../Image/signUpPage/showPassword.png';
+import showPassword from '../../Image/MainPage/signUpPage/showPassword.png';
 import React, { useCallback, useState } from 'react';
 
 const SignUp = () => {

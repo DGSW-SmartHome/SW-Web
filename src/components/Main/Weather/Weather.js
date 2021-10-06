@@ -1,5 +1,5 @@
 import '../Weather/Weather.scss';
-import Cloud from '../../../Image/weatherPage/cloud.svg';
+import Cloud from '../../../Image/MainPage/weatherPage/cloud.svg';
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 // import { apiHeader } from './config';
