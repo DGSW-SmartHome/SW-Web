@@ -1,12 +1,15 @@
 import Nav from "../Nav/Nav";
-
+import './Lock.scss';
+import VideoList from "./VideoList";
 
 const Lock = () => {
-
   return (
-    <div>
+    <>
       <Nav iconName='자물쇠' name='보안' />
-    </div>
+      <div className='video-background'>
+        <VideoList />
+      </div>
+    </>
   );
 };
 
