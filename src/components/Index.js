@@ -1,6 +1,6 @@
 import { Route } from 'react-router';
 
-import Main from './Main/Main';
+import Main from './Main/Index';
 import Login from './Login/Login';
 import SignUp from './SignUp/SignUp';
 import More from './More/More';

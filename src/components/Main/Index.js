@@ -7,7 +7,7 @@ import Calendar from './Calendar/Calendar';
 import Light from './Light/Light';
 import Electricity from './Electricity/Electricity';
 
-const Main = () => {
+const Index = () => {
   return (
     <>
       <MainNav />
@@ -22,4 +22,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Index;
