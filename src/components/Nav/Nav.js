@@ -10,7 +10,7 @@ const Nav = ({ iconName, name }) => {
         iconName === '자물쇠' ? <img style={icon} src={lockIcon} alt='lockIcon' /> : <img style={icon} src={settingIcon} alt='settingIcon' />
       }
       <span style={title}>{name}</span>
-      <Link to='/'><img style={main} src={homeIcon} alt='메인 화면 아이콘' /></Link>
+      <Link style={main} to='/'><img style={mainIcon} src={homeIcon} alt='메인 화면 아이콘' /></Link>
     </div>
   );
 };
@@ -39,6 +39,10 @@ const title = {
 const main = {
   position: 'relative',
   left: '88.5vw',
+  height: '3.5vh'
+}
+
+const mainIcon = {
   height: '3.5vh'
 }
 
