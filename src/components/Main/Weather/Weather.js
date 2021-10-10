@@ -22,7 +22,13 @@ const Weather = () => {
 
   const editPlace = useCallback(() => {
     const place = prompt('설정할 지역을 입력하세요. (시 단위로 입력해주세요.');
-    setArea(place);
+    if (!place) {
+      alert('지역을 입력해 주세요.');
+      setArea('지역이 입력되지 않았습니다.');
+      setTemp(null);
+    } else {
+      setArea(place);
+    }
     console.log(area);
   }, [area]);
 
