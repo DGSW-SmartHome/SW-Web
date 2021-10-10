@@ -22,25 +22,21 @@ const VideoList = () => {
 
   // 대기 중일 때
   if (loading) {
-    return <div style={errorMessage}>대기 중...</div>
-  }
-
-  // 아직 article 값이 설정되지 않았을 때
-  if (!article) {
-    return <div style={errorMessage}>영상이 없습니다.</div>
+    return <div style={errorMessage}>불러오는 중...</div>
   }
 
   return (
     <>
       {
-        article && article.article.map(article => {
+        article !== null ? article.article.map(article => {
           <Video article={article} />
-        })
+        }) : <div style={errorMessage}>영상이 없습니다.</div>
       }
     </>
   )
 }
 
+// CSS
 const errorMessage = {
   textAlign: 'center',
   verticalAilgn: 'middle',

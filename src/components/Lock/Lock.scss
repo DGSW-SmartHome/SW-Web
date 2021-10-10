@@ -6,4 +6,8 @@
   top: 3vw;
   border-radius: 30px;
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
