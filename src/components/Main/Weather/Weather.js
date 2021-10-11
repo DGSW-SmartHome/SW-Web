@@ -1,36 +1,47 @@
 import '../Weather/Weather.scss';
-import Cloud from '../../../Image/MainPage/weatherPage/cloud.svg';
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 // import { apiHeader } from './config';
 
 const Weather = () => {
-  const [area, setArea] = useState(() => JSON.parse(window.localStorage.getItem('place')) ? window.localStorage.getItem('place').replace(/"/gi, '') : '지역이 입력되지 않았습니다.');
-  const [temp, setTemp] = useState(() => JSON.parse(window.localStorage.getItem('temp')));
-
+  const [area, setArea] = useState(() => window.localStorage.getItem('place') ? window.localStorage.getItem('place').replace(/"/gi, '') : '지역이 입력되지 않았습니다.');
+  const [temp, setTemp] = useState(() => window.localStorage.getItem('temp') ? window.localStorage.getItem('temp').replace(/"/gi, '') : 1000);
+  const [weather, setWeather] = useState(() => window.localStorage.getItem('weather') ? window.localStorage.getItem('weather').replace(/"/gi, '') : 1);
 
   useEffect(() => {
-    axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${area}&appid=c2a3abfbf70fb1c617186ea9b096b1d8&units=metric`)
+    const featchData = async () => {
+      await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${area}&appid=c2a3abfbf70fb1c617186ea9b096b1d8&units=metric`)
       .then((Response) => {
         setTemp(Math.round(Response.data['main']['temp']) + '℃');
-        window.localStorage.setItem('place', JSON.stringify(area));
+        setWeather(Response.data['weather'][0]['icon']);
+        window.localStorage.setItem('place', area);
         window.localStorage.setItem('temp', JSON.stringify(Math.round(Response.data['main']['temp']) + '℃'));
+        window.localStorage.setItem('weather', weather);
       }).catch((Error) => {
         console.log(Error);
       });
-  }, [area]);
+    }
+
+    if (area !== '지역이 입력되지 않았습니다.') {
+      featchData();
+      console.log(area);
+    }
+  }, [area, temp, weather]);
 
   const editPlace = useCallback(() => {
     const place = prompt('설정할 지역을 입력하세요. (시 단위로 입력해주세요.');
     if (!place) {
       alert('지역을 입력해 주세요.');
       setArea('지역이 입력되지 않았습니다.');
-      setTemp(null);
+      setTemp(1000);
+      setWeather(1);
+      window.localStorage.setItem('place', area);
+      window.localStorage.setItem('temp', temp);
+      window.localStorage.setItem('weather', weather);
     } else {
       setArea(place);
     }
-    console.log(area);
-  }, [area]);
+  }, [area, temp, weather]);
 
   // const koreanToEnglish = () => {
   //   axios.post(
@@ -44,17 +55,13 @@ const Weather = () => {
 
   return (
     <div className='weather-content'>
-      <img className='weather-icon' src={Cloud} alt='날씨' />
-      <p className='weather-place'>{area}</p>
-      <p className='weather-temp'>{temp}</p>
-      <div className='edit-place'>
-        <button
-          type='submit'
-          onClick={editPlace}
-        >
-          지역 설정
-        </button>
-      </div>
+      {
+        weather !== 1 ? <img className='weather-icon' src={`http://openweathermap.org/img/wn/${weather}@2x.png`} alt='날씨' /> : null
+      }
+      <p className='weather-place' onClick={editPlace}>{area}</p>
+      {
+        temp !== 1000 ? <p className='weather-temp'>{temp}</p> : null
+      }
     </div>
   );
 };
