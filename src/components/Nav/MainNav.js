@@ -8,7 +8,7 @@ const Navbar = () => {
     <div style={home}>
       <img style={homeIcon} src={HomeIcon} alt="집 아이콘" />
       <span>집</span>
-      <Link to='/lock'><img style={lockIcon} src={Lock} alt='보안' /></Link>
+      <Link to='/login'><img style={lockIcon} src={Lock} alt='보안' /></Link>
       <Link to='/setting'><img style={settingIcon} src={Setting} alt='설정' /></Link>
     </div>
   );
