@@ -35,13 +35,13 @@ const Weather = () => {
       setArea('지역이 입력되지 않았습니다.');
       setTemp(1000);
       setWeather(1);
-      window.localStorage.setItem('place', area);
-      window.localStorage.setItem('temp', temp);
-      window.localStorage.setItem('weather', weather);
+      window.localStorage.removeItem('place');
+      window.localStorage.removeItem('temp');
+      window.localStorage.removeItem('weather');
     } else {
       setArea(place);
     }
-  }, [area, temp, weather]);
+  }, []);
 
   // const koreanToEnglish = () => {
   //   axios.post(
