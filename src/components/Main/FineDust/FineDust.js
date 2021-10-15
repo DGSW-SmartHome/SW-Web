@@ -56,6 +56,7 @@ const FineDust = () => {
   const changeCitiName = () => {
     const place = prompt('지역을 입력해주세요. (**시 **동/면/읍)');
     if (!place) {
+      alert('지역을 입력해 주세요.')
       setFirstCityName('지역이 설정되지 않았습니다.');
       setLastCityName('');
       setFineDustImg(null);
