@@ -22,7 +22,6 @@ const FineDust = () => {
     const featchData = async () => {
       await axios.get(`http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=${serviceKey}&returnType=${returnType}&sidoName=${replaceArea}&numOfRows=100`)
         .then((response) => {
-          console.log(response.data['response']['body']);
           response.data['response']['body'].items.map(items => {
             if (items['stationName'] === lastCityName) {
               setFineDustValue(items['pm10Value']);
@@ -84,7 +83,9 @@ const FineDust = () => {
         {
           fineDustValue !== 999 ? <div style={FineDustValueCSS}>{fineDust}</div> : null
         }
-        <p style={FinseDustPlaceCSS}>{firstCityName} {lastCityName !== 1 ? lastCityName : null}</p>
+        {
+          firstCityName === '지역이 설정되지 않았습니다.' ? <div style={noSelectCity}>{firstCityName}</div> : <p style={FinseDustPlaceCSS}>{firstCityName} {lastCityName !== 1 ? lastCityName : null}</p>
+        }
       </div>
     </div>
   );
@@ -105,6 +106,13 @@ const FinseDustPlaceCSS = {
   left: '6.5vw',
   top: '8vh',
   textAlign: 'center'
+}
+
+const noSelectCity = {
+  position: 'absolute',
+  fontSize: '2vmin',
+  left: '2.5vw',
+  top: '7vh'
 }
 
 export default FineDust;

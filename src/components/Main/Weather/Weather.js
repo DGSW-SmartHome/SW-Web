@@ -40,10 +40,11 @@ const Weather = () => {
       window.localStorage.removeItem('weather');
     } else {
       setArea(place);
+      // koreanToEnglish(place);
     }
   }, []);
 
-  // const koreanToEnglish = () => {
+  // const koreanToEnglish = (place) => {
   //   axios.post(
   //     "https://openapi.naver.com/v1/papago/n2mt", { source: "ko", target: "en", text: place }, apiHeader
   //   ).then((Response) => {
@@ -54,16 +55,27 @@ const Weather = () => {
   // };
 
   return (
-    <div className='weather-content'>
+    <div className='weather-content' onClick={editPlace}>
       {
         weather !== 1 ? <img className='weather-icon' src={`http://openweathermap.org/img/wn/${weather}@2x.png`} alt='날씨' /> : null
       }
-      <p className='weather-place' onClick={editPlace}>{area}</p>
+      {
+        area === '지역이 입력되지 않았습니다.' ? <div style={noSelectArea}>{area}</div> : <p className='weather-place'>{area}</p>
+      }
       {
         temp !== 1000 ? <p className='weather-temp'>{temp}</p> : null
       }
     </div>
   );
 };
+
+// CSS
+const noSelectArea = {
+  position: 'absolute',
+  fontSize: '3vmin',
+  left: '15vmin',
+  right: '15vmin',
+  top: '8.5vh'
+}
 
 export default Weather;
