@@ -1,0 +1,13 @@
+.video-background {
+  position: relative;
+  background: rgba(0, 0, 0, 0.4);
+  width: 94vw;
+  height: 80vh;
+  top: 3vw;
+  border-radius: 30px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

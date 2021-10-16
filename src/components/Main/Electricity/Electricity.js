@@ -1,12 +1,11 @@
 import './Electricity.scss';
+import ElectricityList from './ElectricityList';
 
 const Electricity = () => {
   return (
-    <a href='/login'>
-      <div className='security-content'>
-        Electricity
-      </div>
-    </a>
+    <div className='security-content'>
+      <ElectricityList />
+    </div>
   );
 };
 

@@ -1,50 +1,9 @@
 import './SignUp.scss';
-import showPassword from '../../Image/signUpPage/showPassword.png';
 import React, { useCallback, useState } from 'react';
+import axios from 'axios';
+import { baseURL, headers } from '../../API/config';
 
 const SignUp = () => {
-  const [firstPasswordType, setfirstPasswordType] = useState({
-    type: 'password',
-    visible: false
-  });
-
-  const [secondPasswordType, setSecondPasswordType] = useState({
-    type: 'password',
-    visible: false
-  });
-
-  const [passwordCheck, setPasswordCheck] = useState('');
-  const [passwordError, setPasswordError] = useState(false);
-
-  const onChangePasswordChk = useCallback((e) => {
-    // 비밀번호를 입력할때마다 password를 검증하는 함수
-    setPasswordError(e.target.value !== password);
-    setPasswordCheck(e.target.value);
-    // password state를 사용하기 때문에 password를 넣어준다
-  }, [passwordCheck]);
-
-  const handlePassword = () => {
-    setfirstPasswordType(() => {
-      if (!setfirstPasswordType.visible) {
-        return { type: 'text', visible: true }
-      }
-      return { type: 'password', visible: false }
-    })
-  }
-
-  const handleShowPassword = () => {
-    setSecondPasswordType(() => {
-      if (!setSecondPasswordType.visible) {
-        return { type: 'text', visible: true }
-      }
-      return { type: 'password', visible: false }
-    })
-  }
-
-  const duplicateCheck = () => {
-    alert('Duplicate Check');
-  }
-
   const useInput = (inintValue = null) => {
     const [value, setter] = useState(inintValue);
     const handler = useCallback((e) => {
@@ -57,19 +16,62 @@ const SignUp = () => {
   const [name, onChangeName] = useInput('');
   const [password, onChangePassword] = useInput('');
 
-  const onSubmit = useCallback((e) => {
+  const [passwordCheck, setPasswordCheck] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [checkUserName, setCheckUserName] = useState(false);
+
+  const onChangePasswordChk = useCallback((e) => {
+    // 비밀번호를 입력할때마다 password를 검증하는 함수
+    setPasswordError(e.target.value !== password);
+    setPasswordCheck(e.target.value);
+    // password state를 사용하기 때문에 password를 넣어준다
+  }, [password]);
+
+  const duplicateCheck = useCallback((e) => {
     e.preventDefault();
+    setCheckUserName(true);
+    const data = new URLSearchParams();
+    data.append('id', id);
+
+    axios.post(baseURL + '/v1/user/manage/signup/checkusername/', data, headers)
+      .then(res => {
+        console.log(res);
+        alert('사용가능한 아이디입니다.');
+      }).catch(error => {
+        alert('이미 존재하는 아이디입니다.');
+      })
+  }, [id])
+
+  const signUP = useCallback((e) => {
+    e.preventDefault();
+
+    const data = new URLSearchParams();
+    data.append('id', id);
+    data.append('password', password);
+    data.append('username', name);
+
     if(password !== passwordCheck) {
-      alert('asdf');
+      alert('비밀번호가 일치하지 않습니다.');
       return setPasswordError(true);
     }
-    alert('회원가입에 성공하였습니다.');
-  }, [password, passwordCheck]);
+
+    if (checkUserName === false) {
+      alert('아이디 중복 확인을 먼저 해주세요.');
+    } else {
+      axios.post(baseURL + '/v1/user/manage/signup/', data, headers)
+      .then(res => {
+        alert('아이디 생성을 성공하였습니다.');
+        window.location.replace('/login');
+      }).catch(res => {
+        alert('이미 존재하는 유저입니다.');
+      })
+    }
+  }, [id, name, password, passwordCheck, checkUserName]);
   
   return (
     <div className='signup-content'>
       <p className='signup-content-title'>Sign Up</p>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={signUP}>
         <div className='signup-input'>
           <p className='signup-input-name'>이름</p>
           <div className='signup-input-background'>
@@ -109,7 +111,7 @@ const SignUp = () => {
           <p className='signup-input-password'>비밀번호</p>
           <div className='signup-input-background'>
             <input 
-              type={firstPasswordType.type} 
+              type='password' 
               className='signup-input-tag' 
               placeholder='PASSWORD' 
               name='firstPassword' 
@@ -117,31 +119,19 @@ const SignUp = () => {
               required 
               onChange={onChangePassword}
             />
-            <img 
-              className='show-password-img' 
-              onClick={handlePassword} 
-              src={showPassword} 
-              alt='showPasswordImg' 
-            />
           </div>
         </div>
         <div className='signup-input'>
           <p className='signup-input-password-check'>비밀번호 확인</p>
           <div className='signup-input-background'>
             <input 
-              type={secondPasswordType.type} 
+              type='password' 
               className='signup-input-tag' 
               placeholder='PASSWORD' 
               name='secondPassword' 
               value={passwordCheck} 
               required 
               onChange={onChangePasswordChk}
-            />
-            <img 
-              className='show-password-img' 
-              onClick={handleShowPassword} 
-              src={showPassword} 
-              alt='showPasswordImg' 
             />
           </div>
         </div>

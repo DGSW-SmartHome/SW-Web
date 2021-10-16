@@ -14,7 +14,6 @@ const NewsList = () => {
       setLoading(true);
       await axios.get(`https://newsapi.org/v2/top-headlines?country=kr&apiKey=${apiKey}`)
         .then((respoense) => {
-          console.log(respoense.data);
           setArticle(respoense.data['articles']);
         }).catch((error) => {
           console.log(error);
@@ -23,10 +22,6 @@ const NewsList = () => {
     }
     fetchData();
   }, []);
-
-  useEffect(() => {
-    console.log(article);
-  }, [article]);
 
   // 대기 중일 때
   if (loading) {
