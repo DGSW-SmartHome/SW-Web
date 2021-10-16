@@ -1,5 +1,4 @@
 import './SignUp.scss';
-import showPassword from '../../Image/MainPage/signUpPage/showPassword.png';
 import React, { useCallback, useState } from 'react';
 import axios from 'axios';
 import { baseURL, headers } from '../../API/config';
