@@ -9,9 +9,9 @@ const VideoList = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      await axios.get('http://10.80.163.68:8000/')
+      await axios.get('http://192.168.150.189:8000/')
         .then((response) => {
-          setArticle(response.data);
+          setArticle(response.data['article']);
         }).catch((error) => {
           console.log(error);
         });
@@ -19,6 +19,10 @@ const VideoList = () => {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    console.log(article);
+  }, [article]);
 
   // 대기 중일 때
   if (loading) {
@@ -28,9 +32,9 @@ const VideoList = () => {
   return (
     <>
       {
-        article !== null ? article.article.map(article => {
-          <Video article={article} />
-        }) : <div style={errorMessage}>영상이 없습니다.</div>
+        article ? article.map((article, index) => {
+          return ( <Video key={index} article={article} /> )
+        }) : null
       }
     </>
   )
