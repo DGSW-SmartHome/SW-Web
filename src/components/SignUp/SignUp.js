@@ -17,16 +17,6 @@ const SignUp = () => {
   const [name, onChangeName] = useInput('');
   const [password, onChangePassword] = useInput('');
 
-  const [firstPasswordType, setfirstPasswordType] = useState({
-    type: 'password',
-    visible: false
-  });
-
-  const [secondPasswordType, setSecondPasswordType] = useState({
-    type: 'password',
-    visible: false
-  });
-
   const [passwordCheck, setPasswordCheck] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [checkUserName, setCheckUserName] = useState(false);
@@ -37,25 +27,6 @@ const SignUp = () => {
     setPasswordCheck(e.target.value);
     // password state를 사용하기 때문에 password를 넣어준다
   }, [password]);
-
-  const handlePassword = () => {
-    setfirstPasswordType(() => {
-      if (!setfirstPasswordType.visible) {
-        console.log('visible: true')
-        return { type: 'text', visible: true }
-      }
-      return { type: 'password', visible: false }
-    })
-  }
-
-  const handleShowPassword = () => {
-    setSecondPasswordType(() => {
-      if (!setSecondPasswordType.visible) {
-        return { type: 'text', visible: true }
-      }
-      return { type: 'password', visible: false }
-    })
-  }
 
   const duplicateCheck = useCallback((e) => {
     e.preventDefault();
@@ -140,7 +111,7 @@ const SignUp = () => {
           <p className='signup-input-password'>비밀번호</p>
           <div className='signup-input-background'>
             <input 
-              type={firstPasswordType.type} 
+              type='password' 
               className='signup-input-tag' 
               placeholder='PASSWORD' 
               name='firstPassword' 
@@ -148,31 +119,19 @@ const SignUp = () => {
               required 
               onChange={onChangePassword}
             />
-            <img 
-              className='show-password-img' 
-              onClick={handlePassword} 
-              src={showPassword} 
-              alt='showPasswordImg' 
-            />
           </div>
         </div>
         <div className='signup-input'>
           <p className='signup-input-password-check'>비밀번호 확인</p>
           <div className='signup-input-background'>
             <input 
-              type={secondPasswordType.type} 
+              type='password' 
               className='signup-input-tag' 
               placeholder='PASSWORD' 
               name='secondPassword' 
               value={passwordCheck} 
               required 
               onChange={onChangePasswordChk}
-            />
-            <img 
-              className='show-password-img' 
-              onClick={handleShowPassword} 
-              src={showPassword} 
-              alt='showPasswordImg' 
             />
           </div>
         </div>
