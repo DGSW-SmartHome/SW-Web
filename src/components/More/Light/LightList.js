@@ -3,7 +3,11 @@ import LightItem from "./LightItem";
 const LightList = () => {
   return (
     <div style={background}>
-      LightList Component.
+      <LightItem />
+      <LightItem />
+      <LightItem />
+      <LightItem />
+      <LightItem />
       <LightItem />
     </div>
   );

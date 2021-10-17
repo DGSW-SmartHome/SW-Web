@@ -15,7 +15,7 @@ const AddBackground = {
   display: 'inline-block',
   position: 'relative',
   top: '2.5vh',
-  borderRadius: '30px'
+  borderRadius: '30px',
 }
 
 const addIcon = {
