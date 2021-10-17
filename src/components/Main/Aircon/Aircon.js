@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { imgData } from './AirconImg';
-import './Aircon.scss';
+import { AirconContent, AirconContentTitle, AirconOnOff, AirconTemp, AirconTempControl, AirconWindStrangeth, TempControl, WindImg, SettingAirconOnOff, SettingAirconTempControl } from './Aircon.style';
+import airWind0 from '../../../Image/MainPage/airconPage/airWind0.png';
 
 const Aircon = () => {
   const [airconTemp, setAirconTemp] = useState(() => JSON.parse(window.localStorage.getItem('airconTemp')) ? Number(window.localStorage.getItem('airconTemp').replace(/"/gi, '')) : 24);
   const [windStrange, setWindStrange] = useState(() => JSON.parse(window.localStorage.getItem('windStrage')) ? Number(window.localStorage.getItem('windStrage').replace(/"/gi, '')) : 1);
+  const airconMode = window.localStorage.getItem('controlMode');
 
   useEffect(() => {
     window.localStorage.setItem('airconTemp', JSON.stringify(airconTemp));
@@ -31,36 +33,55 @@ const Aircon = () => {
   }
 
   return (
-    <div className='aircon-content'>
-      <span className='aircon-content-title'>희망<br/>온도</span>
-      <div className='aircon-temp'>{ airconTemp }℃</div>
-        {
-          imgData.map(({ key, img }) => {
-            return (
-              <>
-                <button 
-                  onClick={() => changeWindStrange()} 
-                  className='aircon-wind-strangth'
-                >
-                  바람<br/>세기
-                </button>
-                
+    <AirconContent>
+      {
+        airconMode === 'control' ? 
+        <>
+          <AirconContentTitle>희망<br />온도</AirconContentTitle>
+          <AirconTemp>{airconTemp}℃</AirconTemp>
+          {
+            imgData.map(({ key, img }) => {
+              return(
                 <>
-                  {windStrange === key ? (
-                    <img src={img} key={key} alt='Aircon-Img' className='wind-img' />
-                  ) : null}
+                  <AirconWindStrangeth
+                    onClick={() => changeWindStrange()}
+                  >
+                    바람<br/>세기
+                  </AirconWindStrangeth>
+                  <>
+                  {
+                    windStrange === key ? (
+                      <WindImg src={img} key={key} alt='Aircon-Img' />
+                    ) : null
+                  }
+                  </>
                 </>
-              </>
-            )
-          })
-        }
-      <button onClick={() => setWindStrange(1)} className='aircon-onoff'>운전<br/>정지</button>
-      <div className='aircon-temp-control'>
-        <button className='temp-up temp-control' onClick={tempUp}>up</button> <br />
-        <span>온도</span> <br />
-        <button className='temp-down temp-control' onClick={tempDown}>down</button>
-      </div>
-    </div>
+              )
+            })
+          }
+          <AirconOnOff onClick={() => setWindStrange(1)}>운전<br/>정지</AirconOnOff>
+          <AirconTempControl>
+            <TempControl onClick={tempUp}>up</TempControl> <br />
+            <span>온도</span> <br />
+            <TempControl onClick={tempDown}>down</TempControl>
+          </AirconTempControl>
+        </> : 
+        <>
+          <AirconContentTitle>희망<br />온도</AirconContentTitle>
+          <AirconTemp>24℃</AirconTemp>
+          <AirconWindStrangeth>
+            바람<br />세기
+          </AirconWindStrangeth>
+          <WindImg src={airWind0} alt='Aircon-Img' />
+          <SettingAirconOnOff>운전<br />정지</SettingAirconOnOff>
+          <SettingAirconTempControl>
+            <TempControl>up</TempControl> <br />
+            <span>온도</span> <br />
+            <TempControl>down</TempControl>
+          </SettingAirconTempControl>
+        </>
+      }
+    </AirconContent>
   );
 };
 
