@@ -1,4 +1,6 @@
-.aircon-content {
+import styled from 'styled-components';
+
+export const AirconContent = styled.div`
   position: absolute;
   width: 32vw;
   height: 31vh;
@@ -10,23 +12,23 @@
   button {
     font-family: 'Jua', sans-serif;
   }
-}
+`;
 
-.aircon-content-title {
+export const AirconContentTitle = styled.span`
   position: absolute;
   font-size: 4vh;
   top: 4vh;
   left: 3vw;
-}
+`;
 
-.aircon-temp {
+export const AirconTemp = styled.div`
   position: absolute;
   font-size: 6vh;
   top: 4.4vh;
   left: 9vw;
-}
+`;
 
-.aircon-temp-control {
+export const AirconTempControl = styled.div`
   position: absolute;
   top: 5vh;
   left: 25.5vw;
@@ -37,16 +39,16 @@
   width: 5vw;
   height: 20vh;
   background: linear-gradient(180deg, #FF7A7D 0%, #7EA2FF 100%);
-}
+`;
 
-.temp-control {
+export const TempControl = styled.button`
   border-radius: 10px;
   width: 100%;
   height: 41.5%;
   opacity: 0;
-}
+`;
 
-.aircon-onoff {
+export const AirconOnOff = styled.button`
   position: absolute;
   border-radius: 10px;
   width: 5vw;
@@ -57,9 +59,9 @@
   color: #FFA7A7;
   background-color: white;
   border: 2.5px solid #FFA7A7;
-}
+`;
 
-.aircon-wind-strangth {
+export const AirconWindStrangeth = styled.button`
   position: absolute;
   border-radius: 10px;
   width: 5vw;
@@ -70,11 +72,37 @@
   color: white;
   background-color: #DBDBDB;
   border: 2.5px solid white;
-}
+`;
 
-.wind-img {
+export const WindImg = styled.img`
   position: absolute;
   top: 14vh;
   left: 3.5vw;
   width: 12.5vw;
-}
+`;
+
+export const SettingAirconOnOff = styled.button`
+  position: absolute;
+  border-radius: 10px;
+  width: 5vw;
+  height: 9vh;
+  top: 5vh;
+  left: 19vw;
+  font-size: 2.5vh;
+  color: #FFF;
+  background-color: #DBDBDB;
+  border: 2.5px solid #FFF;
+`;
+
+export const SettingAirconTempControl = styled.div`
+  position: absolute;
+  top: 5vh;
+  left: 25.5vw;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid white;
+  font-size: 3vh;
+  width: 5vw;
+  height: 20vh;
+  background: #DBDBDB;
+`;
