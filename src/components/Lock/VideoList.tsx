@@ -4,8 +4,8 @@ import Video from "./Video";
 import { Error } from './Lock.style';
 
 const VideoList = () => {
-  const [article, setArticle] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [article, setArticle] = useState<String[]>([]);
+  const [loading, setLoading] = useState<Boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {

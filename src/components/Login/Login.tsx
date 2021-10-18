@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { baseURL, headers } from '../../API/config';
 import {
   LoginContainer,
@@ -11,12 +11,12 @@ import {
 } from './Login.style';
 
 const Login = () => {
-  const useInput = (initValue = null) => {
-    const [value, setter] = useState(initValue);
-    const handler = useCallback((e) => {
-      setter(e.target.value);
+  const useInput = <T,>(inintValue: T): [T, (e: ChangeEvent<HTMLInputElement>) => void, Dispatch<SetStateAction<T>>] => {
+    const [value, setter] = useState<T>(inintValue);
+    const handler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+      setter(e.target.value as unknown as T);
     }, []);
-    return [value, handler];
+    return [value, handler, setter];
   }
 
   const [id, onChangeId] = useInput('');

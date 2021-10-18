@@ -30,7 +30,7 @@ export const SignUpInput = styled.div`
 
   .id {
     position: relative;
-    right: 0px;
+    right: -10px;
   }
 `;
 
@@ -51,7 +51,6 @@ export const SignUpInputBackground = styled.div`
 
   .tag {
     position: relative;
-    left: 0px;
   }
 `;
 
@@ -62,7 +61,6 @@ export const SignUpInputForm = styled.input`
   margin-top: 4%;
   border: 0px;
   font-size: 30px;
-  font-family: 'Jua';
   background: rgba(255, 255, 255, 0);
 
   &::placeholder {
@@ -83,7 +81,7 @@ export const PasswordError = styled.div`
 
 export const PasswordDuplicateCheck = styled.button`
   position: relative;
-  left: 10px;
+  left: 20px;
   font-family: 'DoHyeon', sans-serif;
   font-size: 20px;
   font-weight: 100;

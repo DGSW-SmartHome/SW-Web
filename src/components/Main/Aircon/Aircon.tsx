@@ -4,8 +4,8 @@ import { AirconContent, AirconContentTitle, AirconOnOff, AirconTemp, AirconTempC
 import airWind0 from '../../../Image/MainPage/airconPage/airWind0.png';
 
 const Aircon = () => {
-  const [airconTemp, setAirconTemp] = useState(() => JSON.parse(window.localStorage.getItem('airconTemp')) ? Number(window.localStorage.getItem('airconTemp').replace(/"/gi, '')) : 24);
-  const [windStrange, setWindStrange] = useState(() => JSON.parse(window.localStorage.getItem('windStrage')) ? Number(window.localStorage.getItem('windStrage').replace(/"/gi, '')) : 1);
+  const [airconTemp, setAirconTemp] = useState<number>(24);
+  const [windStrange, setWindStrange] = useState<number>(1);
   const airconMode = window.localStorage.getItem('controlMode');
 
   useEffect(() => {

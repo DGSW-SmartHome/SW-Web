@@ -8,7 +8,6 @@ export const Home = styled.div`
   left: 2vw;
   top: 4vh;
   align-content: center;
-  font-family: 'Jua';
 `;
 
 export const Icon = styled.img`
