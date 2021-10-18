@@ -7,7 +7,7 @@ export const Mode = styled.button`
   border-radius: 30px;
   top: 2.5vh;
   font-size: 3vmin;
-  font-family: 'Jua';
+  font-family: 'NotoSansMedium';
 `;
 
 export const AirconOnOff = styled.button`
@@ -18,7 +18,7 @@ export const AirconOnOff = styled.button`
   border-radius: 30px;
   left: 3.5vw;
   font-size: 3vmin;
-  font-family: 'Jua', sans-serif;
+  font-family: 'NotoSansMedium', sans-serif;
 `;
 
 export const AirconTempUp = styled.button`
@@ -29,7 +29,7 @@ export const AirconTempUp = styled.button`
   border-radius: 30px;
   left: -3.5vw;
   font-size: 3vmin;
-  font-family: 'Jua', sans-serif;
+  font-family: 'NotoSansMedium', sans-serif;
 `;
 
 export const AirconWindStrange = styled.button`
@@ -40,7 +40,7 @@ export const AirconWindStrange = styled.button`
   border-radius: 30px;
   left: -6.5vw;
   font-size: 3vmin;
-  font-family: 'Jua', sans-serif;
+  font-family: 'NotoSansMedium', sans-serif;
 `;
 
 export const AirconTempDown = styled.button`
@@ -51,7 +51,7 @@ export const AirconTempDown = styled.button`
   border-radius: 30px;
   left: 6.5vw;
   font-size: 3vmin;
-  font-family: 'Jua', sans-serif;
+  font-family: 'NotoSansMedium', sans-serif;
 `;
 
 export const SensorValueBox = styled.div`
@@ -67,7 +67,7 @@ export const SensorValueBox = styled.div`
 export const SensorValue = styled.div`
   position: relative;
   left: 1vw;
-  top: 2vh;
+  top: 1vh;
   font-size: 2vmin;
   margin-bottom: 1vh;
   text-align: left;

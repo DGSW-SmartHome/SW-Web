@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react/cjs/react.development';
 import NewsItem from './NewsItem';
+import { NewsListForm } from './News.style';
 
 const apiKey = '2de1f8590ab3470087b4f5e2d7d37e89';
 
@@ -25,7 +26,7 @@ const NewsList = () => {
 
   // 대기 중일 때
   if (loading) {
-    return <div style={newsList}>대기 중...</div>
+    return <NewsListForm>대기 중...</NewsListForm>
   }
   
   // 아직 article 값이 설정되지 않았을 때
@@ -35,26 +36,14 @@ const NewsList = () => {
 
   // article 값이 유효할 때
   return (
-    <div style={newsList}>
+    <NewsListForm>
       {
         article.map(article => (
           <NewsItem key={article.url} article={article} />
         ))
       }
-    </div>
+    </NewsListForm>
   )
-}
-
-// css
-const newsList = {
-  boxSizing: 'border-box',
-  paddingBottom: '3rem',
-  width: '30vw',
-  margin: '0 auto',
-  marginTop: '2rem',
-  marginLeft: '1rem',
-  marginRight: '1rem',
-  borderRadius: '10px'
 }
 
 export default NewsList;

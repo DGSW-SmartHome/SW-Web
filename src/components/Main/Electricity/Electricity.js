@@ -1,11 +1,11 @@
-import './Electricity.scss';
 import ElectricityList from './ElectricityList';
+import { ElectricityContainer } from './Electricity.style';
 
 const Electricity = () => {
   return (
-    <div className='security-content'>
+    <ElectricityContainer>
       <ElectricityList />
-    </div>
+    </ElectricityContainer>
   );
 };
 

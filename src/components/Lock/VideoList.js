@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import Video from "./Video";
+import { Error } from './Lock.style';
 
 const VideoList = () => {
   const [article, setArticle] = useState(null);
@@ -9,7 +10,7 @@ const VideoList = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      await axios.get('http://192.168.150.189:8000/')
+      await axios.get('http://192.168.0.18:8000/')
         .then((response) => {
           setArticle(response.data['article']);
         }).catch((error) => {
@@ -26,7 +27,7 @@ const VideoList = () => {
 
   // 대기 중일 때
   if (loading) {
-    return <div style={errorMessage}>불러오는 중...</div>
+    return <Error>불러오는 중...</Error>
   }
 
   return (
@@ -34,18 +35,12 @@ const VideoList = () => {
       {
         article ? article.map((article, index) => {
           return ( <Video key={index} article={article} /> )
-        }) : null
+        }) : <Error>영상이 없습니다.</Error>
       }
     </>
   )
 }
 
 // CSS
-const errorMessage = {
-  textAlign: 'center',
-  verticalAilgn: 'middle',
-  lineHeight: '80vh',
-  fontSize: '7vmin'
-}
 
 export default VideoList;

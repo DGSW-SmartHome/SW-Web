@@ -1,50 +1,23 @@
 import { Link } from 'react-router-dom';
-import HomeIcon from '../../Image/houseIcon.svg';
-import Lock from '../../Image/lock.png';
-import Setting from '../../Image/set.png';
+import homeicon from '../../Image/houseIcon.svg';
+import lockicon from '../../Image/lock.png';
+import settingicon from '../../Image/set.png';
+import {
+  Home,
+  HomeIcon,
+  LockIcon,
+  SettingIcon
+} from './MainNav.style';
 
 const Navbar = () => {
   return (
-    <div style={home}>
-      <img style={homeIcon} src={HomeIcon} alt="집 아이콘" />
+    <Home>
+      <HomeIcon src={homeicon} alt="집 아이콘" />
       <span>집</span>
-      <Link to='/login'><img style={lockIcon} src={Lock} alt='보안' /></Link>
-      <Link to='/setting'><img style={settingIcon} src={Setting} alt='설정' /></Link>
-    </div>
+      <Link to='/login'><LockIcon src={lockicon} alt='보안' /></Link>
+      <Link to='/setting'><SettingIcon src={settingicon} alt='설정' /></Link>
+    </Home>
   );
 };
-
-const home = {
-  position: 'absolute',
-  height: '5vh',
-  fontSize: '4vh',
-  color: 'white',
-  left: '2vw',
-  top: '4vh',
-  alignContent: 'center',
-  fontFamily: 'Jua'
-}
-
-const homeIcon = {
-  marginBottom: '10px',
-  verticalAlign: 'middle',
-  height: '3.5vh'
-}
-
-const lockIcon = {
-  position: 'relative',
-  marginBottom: '10px',
-  verticalAlign: 'middle',
-  height: '3.5vh',
-  left: '87.5vw'
-}
-
-const settingIcon = {
-  position: 'relative',
-  marginBottom: '10px',
-  verticalAlign: 'middle',
-  height: '3.5vh',
-  left: '88.5vw'
-}
 
 export default Navbar;

@@ -25,6 +25,7 @@ export const LightItemContent = styled.div`
   height: 12vh;
   margin-bottom: 2vh;
   background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
 `;
 
 export const LightItemImage = styled.img`

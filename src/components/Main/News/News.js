@@ -1,11 +1,11 @@
 import NewsList from './NewsList';
-import './News.scss';
+import { NewsContainer } from './News.style';
 
 const News = () => {
   return (
-    <div className='news-content'>
+    <NewsContainer>
       <NewsList />
-    </div>
+    </NewsContainer>
   );
 };
 

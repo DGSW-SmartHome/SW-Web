@@ -1,7 +1,20 @@
-import './SignUp.scss';
 import React, { useCallback, useState } from 'react';
 import axios from 'axios';
 import { baseURL, headers } from '../../API/config';
+import {
+  SignUpContainer,
+  SignUpTitle,
+  SignUpInput,
+  SignUpInputName,
+  SignUpInputBackground,
+  SignUpInputForm,
+  PasswordError,
+  PasswordDuplicateCheck,
+  SignUpInputID,
+  SignUpInputPassword,
+  SignUpInputPasswordCheck,
+  SignUpSubmitButtom
+} from './SignUp.style';
 
 const SignUp = () => {
   const useInput = (inintValue = null) => {
@@ -69,90 +82,81 @@ const SignUp = () => {
   }, [id, name, password, passwordCheck, checkUserName]);
   
   return (
-    <div className='signup-content'>
-      <p className='signup-content-title'>Sign Up</p>
+    <SignUpContainer>
+      <SignUpTitle>Sign Up</SignUpTitle>
       <form onSubmit={signUP}>
-        <div className='signup-input'>
-          <p className='signup-input-name'>이름</p>
-          <div className='signup-input-background'>
-            <input 
+        <SignUpInput>
+          <SignUpInputName>이름</SignUpInputName>
+          <SignUpInputBackground className='signup-input-background'>
+            <SignUpInputForm 
               type='text' 
-              className='signup-input-tag tag' 
+              className='tag' 
               placeholder='이름' 
               name='name' 
               value={name} 
               required 
               onChange={onChangeName}
             />
-          </div>
-        </div>
-        <div className='signup-input'>
-          <p className='signup-input-id'>아이디</p>
-          <div className='signup-input-background id'>
-            <input 
+          </SignUpInputBackground>
+        </SignUpInput>
+        <SignUpInput>
+          <SignUpInputID>아이디</SignUpInputID>
+          <SignUpInputBackground className='id'>
+            <SignUpInputForm 
               type='text' 
-              className='signup-input-tag tag' 
+              className='tag' 
               placeholder='ID' 
               name='id' 
               value={id}
               required 
               onChange={onChangeId}
             />
-          </div>
-          <button 
+          </SignUpInputBackground>
+          <PasswordDuplicateCheck 
             type='button' 
-            className='duplicate-check'
             onClick={duplicateCheck}
           >
             중복 확인
-          </button>
-        </div>
-        <div className='signup-input'>
-          <p className='signup-input-password'>비밀번호</p>
-          <div className='signup-input-background'>
-            <input 
+          </PasswordDuplicateCheck>
+        </SignUpInput>
+        <SignUpInput>
+          <SignUpInputPassword>비밀번호</SignUpInputPassword>
+          <SignUpInputBackground>
+            <SignUpInputForm 
               type='password' 
-              className='signup-input-tag' 
               placeholder='PASSWORD' 
               name='firstPassword' 
               value={password} 
               required 
               onChange={onChangePassword}
             />
-          </div>
-        </div>
-        <div className='signup-input'>
-          <p className='signup-input-password-check'>비밀번호 확인</p>
-          <div className='signup-input-background'>
-            <input 
+          </SignUpInputBackground>
+        </SignUpInput>
+        <SignUpInput>
+          <SignUpInputPasswordCheck>비밀번호 확인</SignUpInputPasswordCheck>
+          <SignUpInputBackground>
+            <SignUpInputForm 
               type='password' 
-              className='signup-input-tag' 
               placeholder='PASSWORD' 
               name='secondPassword' 
               value={passwordCheck} 
               required 
               onChange={onChangePasswordChk}
             />
-          </div>
-        </div>
-        <div>
-          {passwordError && <div style={ passwordErrorStyle }>비밀번호가 일치하지 않습니다.</div>}
-        </div>
-        <button 
+          </SignUpInputBackground>
+        </SignUpInput>
+        <>
+          {passwordError && <PasswordError>비밀번호가 일치하지 않습니다.</PasswordError>}
+        </>
+        <SignUpSubmitButtom 
           type='submit' 
           className='signup-button'
         >
           회원가입
-        </button>
+        </SignUpSubmitButtom>
       </form>
-    </div>
+    </SignUpContainer>
   );
 };
-
-const passwordErrorStyle = {
-  color: 'red',
-  position: 'relative',
-  top: '40px'
-}
 
 export default SignUp;

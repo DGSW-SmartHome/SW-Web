@@ -1,6 +1,13 @@
 import moment from 'moment';
 import { useState } from 'react';
 import './Calendar.scss';
+import {
+  CalendarContainer,
+  MonthControl,
+  PrevMonth,
+  NextMonth,
+  CalendarWeek,
+} from './Calendar.style';
 
 const Calendar = () => {
   const [getMoment, setMoment] = useState(moment());
@@ -49,29 +56,27 @@ const Calendar = () => {
   }
 
   return (
-    <div className='calendar-content'>
-      <div className='month-control'>
-        <button 
-          className='prev-month' 
+    <CalendarContainer>
+      <MonthControl>
+        <PrevMonth 
           onClick={ () => {
             setMoment(getMoment.clone().subtract(1, 'month'))
           } }
         >
           <span>‹</span>
-        </button>
+        </PrevMonth>
         <span>{today.format('YYYY년 M월')}</span>
-        <button 
-          className='next-month' 
+        <NextMonth 
           onClick={ () => {
             setMoment(getMoment.clone().add(1, 'month'))
           } }
         >
           <span>›</span>
-        </button>
-      </div>
+        </NextMonth>
+      </MonthControl>
       <table>
         <tbody>
-          <tr className='week'>
+          <CalendarWeek className='week'>
             <td><span>일</span></td>
             <td><span>월</span></td>
             <td><span>화</span></td>
@@ -79,11 +84,11 @@ const Calendar = () => {
             <td><span>목</span></td>
             <td><span>금</span></td>
             <td><span>토</span></td>
-          </tr>
+          </CalendarWeek>
           {calendarArr()}
         </tbody>
       </table>
-    </div>
+    </CalendarContainer>
   );
 };
 

@@ -1,39 +1,36 @@
-body {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: center;
-}
+import styled from "styled-components";
 
-.login-content {
+export const LoginContainer = styled.div`
   width: 600px;
   height: 800px;
   text-align: center;
-  font-family: 'Jua';
   background: rgba(255, 255, 255, 0.5);
   border-radius: 50px;
-}
 
-.login-content-title {
+  .br {
+    margin-bottom: 15px;
+  }
+`;
+
+export const LoginTitle = styled.div`
   color: #000;
   padding-top: 73px;
   font-size: 60px;
-}
+`;
 
-.input-background {
+export const LoginInputBackground = styled.div`
   display: inline-block;
   width: 400px;
   height: 70px;
   margin-top: 88px;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 35px;
-}
+`;
 
-.input-tag {
-  margin-top: 4%;
+export const LoginInputTag = styled.input`
+  margin-top: 1.9vh;
   border: 0px;
   font-size: 30px;
-  font-family: 'Jua';
   background: rgba(255, 255, 255, 0);
 
   &::placeholder {
@@ -44,13 +41,14 @@ body {
   &:focus {
     outline: 0px;
   }
-}
+`;
 
-.password {
-  margin-top: 20px;
-}
+export const LinkToSignUp = styled.a`
+  text-decoration: none;
+  color: gray;
+`;
 
-.login-button {
+export const LoginButton = styled.button`
   width: 170px;
   height: 75px;
   background: rgba(255, 255, 255, 0.7);
@@ -58,14 +56,4 @@ body {
   border: 0px;
   margin-top: 28%;
   font-size: 30px;
-  font-family: 'Jua';
-}
-
-.signUp {
-  text-decoration: none;
-  color: gray;
-}
-
-.br {
-  margin-bottom: 15px;
-}
+`;

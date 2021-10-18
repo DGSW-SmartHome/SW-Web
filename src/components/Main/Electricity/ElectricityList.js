@@ -35,13 +35,13 @@ const ElectricityList = () => {
   ]
   
   return (
-    <div>
+    <>
       {
         room.map(roomList => {
           return ( <ElectricityItem key={roomList.id} roomList={roomList} /> )
         })
       }
-    </div>
+    </>
   );
 };
 

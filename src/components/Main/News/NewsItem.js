@@ -1,25 +1,31 @@
-import './News.scss';
+import { 
+  NewsMainContent,
+  NewsContentThumnail,
+  NewsContents,
+  NewsContentsTitle,
+  NewsContentsSubTitle 
+} from './News.style';
 
 const NewsItem = ({ article }) => {
   const { title, description, url, urlToImage } = article;
   return (
-    <div className='news-main-content'>
+    <NewsMainContent>
       { urlToImage && (
-        <div className='news-thumnail'>
+        <NewsContentThumnail>
           <a href={url} target="_blank" rel="noopener noreferrer">
             <img src={urlToImage} alt='newsThumnail' />
           </a>
-        </div>
+        </NewsContentThumnail>
       )}
-      <div className='news-contents'>
+      <NewsContents>
         <h2>
-          <a href={url} target="_blank" rel="noopener noreferrer">
+          <NewsContentsTitle href={url} target="_blank" rel="noopener noreferrer">
             {title}
-          </a>
-          <p>{description}</p>
+          </NewsContentsTitle>
+          <NewsContentsSubTitle>{description}</NewsContentsSubTitle>
         </h2>
-      </div>
-    </div>
+      </NewsContents>
+    </NewsMainContent>
   )
 }
 

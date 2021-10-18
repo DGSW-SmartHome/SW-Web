@@ -1,4 +1,6 @@
-.security-content {
+import styled from "styled-components";
+
+export const ElectricityContainer = styled.div`
   position: absolute;
   width: 32vw;
   height: 37vh;
@@ -6,22 +8,22 @@
   top: 56.7vh;
   left: 67vw;
   border-radius: 30px;
-}
+`;
 
-.electricity-item {
+export const ElectricityItemContainer = styled.div`
   position: relative;
   float: left;
   left: 1.5vw;
   top: 3vh;
   padding: 0 3vw;
   padding-bottom: 1.9vh;
-}
+`;
 
-.electricity-img {
+export const ElectricityItemImage = styled.img`
   width: 7vmin;
-}
+`;
 
-.room-name {
+export const ElectricityRoomName = styled.div`
   font-size: 2.2vmin;
   text-align: center;
-}
+`;

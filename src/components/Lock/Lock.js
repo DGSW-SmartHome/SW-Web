@@ -1,14 +1,14 @@
 import Nav from "../Nav/Nav";
-import './Lock.scss';
 import VideoList from "./VideoList";
+import { VideoBackground } from './Lock.style';
 
 const Lock = () => {
   return (
     <>
       <Nav iconName='자물쇠' name='보안' />
-      <div className='video-background'>
+      <VideoBackground>
         <VideoList />
-      </div>
+      </VideoBackground>
     </>
   );
 };

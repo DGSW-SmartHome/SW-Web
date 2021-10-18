@@ -10,15 +10,15 @@ export const AirconContent = styled.div`
   border-radius: 30px;
 
   button {
-    font-family: 'Jua', sans-serif;
+    font-family: 'NotoSansMedium', sans-serif;
   }
 `;
 
 export const AirconContentTitle = styled.span`
   position: absolute;
-  font-size: 4vh;
+  font-size: 3.5vh;
   top: 4vh;
-  left: 3vw;
+  left: 4vw;
 `;
 
 export const AirconTemp = styled.div`

@@ -1,7 +1,14 @@
 import axios from 'axios';
 import { useCallback, useState } from 'react';
 import { baseURL, headers } from '../../API/config';
-import './Login.scss';
+import {
+  LoginContainer,
+  LoginTitle,
+  LoginInputBackground,
+  LoginInputTag,
+  LinkToSignUp,
+  LoginButton
+} from './Login.style';
 
 const Login = () => {
   const useInput = (initValue = null) => {
@@ -32,11 +39,11 @@ const Login = () => {
   }, [id, password]);
 
   return (
-    <div className='login-content'>
-      <div className='login-content-title'>Log In</div>
+    <LoginContainer>
+      <LoginTitle>Log In</LoginTitle>
       <form onSubmit={signIN}>
-        <div className='input-background'>
-          <input 
+        <LoginInputBackground>
+          <LoginInputTag 
             type='text' 
             className='input-tag' 
             placeholder='ID' 
@@ -45,9 +52,9 @@ const Login = () => {
             required 
             onChange={onChangeId}
           />
-        </div>
-        <div className='password input-background br'>
-          <input 
+        </LoginInputBackground>
+        <LoginInputBackground className='br'>
+          <LoginInputTag 
             type='password' 
             className='input-tag' 
             placeholder='PASSWORD' 
@@ -56,12 +63,12 @@ const Login = () => {
             required 
             onChange={onChangePassword} 
           />
-        </div>
+        </LoginInputBackground>
         <br />
-        <a href='/signup' className='signUp'>아직 회원가입을 하지 않으셨나요?</a> <br/>
-        <button type='submit' className='login-button'>Log In</button>
+        <LinkToSignUp href='/signup'>아직 회원가입을 하지 않으셨나요?</LinkToSignUp> <br/>
+        <LoginButton type='submit'>Log In</LoginButton>
       </form>
-    </div>
+    </LoginContainer>
   );
 };
 

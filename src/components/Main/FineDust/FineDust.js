@@ -1,11 +1,19 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import './FineDust.scss';
 
 import HouseFineDustGood from '../../../Image/MainPage/finedustPage/dustHouseGood.png';
 import HouseFineDustSoso from '../../../Image/MainPage/finedustPage/dustHouseSoso.png';
 import HouseFineDustBad from '../../../Image/MainPage/finedustPage/dustHouseBad.png';
 import HouseFineDustVeryBad from '../../../Image/MainPage/finedustPage/dustHouseVeryBad.png';
+
+import {
+  FineDustValueContent,
+  FineDustPlaceContent,
+  NotSelectCity,
+  FineDustContainer,
+  ExternalFineDust,
+  FineDustImage
+} from './FineDust.style';
 
 const FineDust = () => {
   const serviceKey = 'KyfnBnvWKoiRG0ZwQx00xJWfOX4f5Lup6gGQD7wGeIPgpnvMYGiHG1%2Bi9UjjTnQ9x5vNXxKzLwhhf2koi2I%2B9A%3D%3D';  // API Key
@@ -14,7 +22,7 @@ const FineDust = () => {
   const [lastCityName, setLastCityName] = useState(() => window.localStorage.getItem('lastCityName') ? window.localStorage.getItem('lastCityName') : '');
   const [fineDustImg, setFineDustImg] = useState(null);
   const [fineDustValue, setFineDustValue] = useState(() => window.localStorage.getItem('fineDustValue')? window.localStorage.getItem('fineDustValue') : 999);        // Fine Dust Value
-  const [fineDust, setFineDust] = useState(() => window.localStorage.getItem('fineDust') ? window.localStorage.getItem('fineDust') : 999);
+  const [fineDust, setFineDust] = useState(() => window.localStorage.getItem('fineDust') ? window.localStorage.getItem('fineDust') : '.');
 
   useEffect(() => {
     const formatData = '' + firstCityName
@@ -27,6 +35,7 @@ const FineDust = () => {
               setFineDustValue(items['pm10Value']);
               window.localStorage.setItem('fineDustValue', fineDustValue);
             }
+            return <></>;
           })
         })
     }
@@ -75,44 +84,20 @@ const FineDust = () => {
   }
 
   return (
-    <div className='finedust-content'>
-      <div className='external-fine-dust' onClick={changeCitiName}>
+    <FineDustContainer>
+      <ExternalFineDust onClick={changeCitiName}>
         {
-          fineDustValue !== 999 ? <img className='fine-dust' src={fineDustImg} alt='Fine Dust Image' /> : null
+          fineDustValue !== 999 ? <FineDustImage src={fineDustImg} alt='Fine_Dust_Image' /> : null
         }
         {
-          fineDustValue !== 999 ? <div style={FineDustValueCSS}>{fineDust}</div> : null
+          fineDustValue !== 999 ? <FineDustValueContent>{fineDust}</FineDustValueContent> : null
         }
         {
-          firstCityName === '지역이 설정되지 않았습니다.' ? <div style={noSelectCity}>{firstCityName}</div> : <p style={FinseDustPlaceCSS}>{firstCityName} {lastCityName !== 1 ? lastCityName : null}</p>
+          firstCityName === '지역이 설정되지 않았습니다.' ? <NotSelectCity>{firstCityName}</NotSelectCity> : <FineDustPlaceContent>{firstCityName} {lastCityName !== 1 ? lastCityName : null} </FineDustPlaceContent>
         }
-      </div>
-    </div>
+      </ExternalFineDust>
+    </FineDustContainer>
   );
 };
-
-// CSS
-const FineDustValueCSS = {
-  position: 'absolute',
-  left: '5.8vw',
-  top: '6vh',
-  width: '4vw',
-  fontSize: '3.5vmin',
-  textAlign: 'center'
-}
-
-const FinseDustPlaceCSS = {
-  position: 'absolute',
-  left: '6.5vw',
-  top: '8vh',
-  textAlign: 'center'
-}
-
-const noSelectCity = {
-  position: 'absolute',
-  fontSize: '2vmin',
-  left: '2.5vw',
-  top: '7vh'
-}
 
 export default FineDust;

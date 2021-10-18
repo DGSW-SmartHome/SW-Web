@@ -1,7 +1,12 @@
-import '../Weather/Weather.scss';
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
-// import { apiHeader } from './config';
+import {
+  WeatherContainer,
+  WeatherIcon,
+  NotSelectArea,
+  WeatherPlace,
+  WeatherTemp
+} from './Weather.style';
 
 const Weather = () => {
   const [area, setArea] = useState(() => window.localStorage.getItem('place') ? window.localStorage.getItem('place').replace(/"/gi, '') : '지역이 입력되지 않았습니다.');
@@ -40,42 +45,22 @@ const Weather = () => {
       window.localStorage.removeItem('weather');
     } else {
       setArea(place);
-      // koreanToEnglish(place);
     }
   }, []);
 
-  // const koreanToEnglish = (place) => {
-  //   axios.post(
-  //     "https://openapi.naver.com/v1/papago/n2mt", { source: "ko", target: "en", text: place }, apiHeader
-  //   ).then((Response) => {
-  //     console.log(Response);
-  //   }).catch((Error) => {
-  //     console.log(Error);
-  //   });
-  // };
-
   return (
-    <div className='weather-content' onClick={editPlace}>
+    <WeatherContainer onClick={editPlace}>
       {
-        weather !== 1 ? <img className='weather-icon' src={`http://openweathermap.org/img/wn/${weather}@2x.png`} alt='날씨' /> : null
+        weather !== 1 ? <WeatherIcon src={`http://openweathermap.org/img/wn/${weather}@2x.png`} alt='날씨' /> : null
       }
       {
-        area === '지역이 입력되지 않았습니다.' ? <div style={noSelectArea}>{area}</div> : <p className='weather-place'>{area}</p>
+        area === '지역이 입력되지 않았습니다.' ? <NotSelectArea>{area}</NotSelectArea> : <WeatherPlace>{area}</WeatherPlace>
       }
       {
-        temp !== 1000 ? <p className='weather-temp'>{temp}</p> : null
+        temp !== 1000 ? <WeatherTemp>{temp}</WeatherTemp> : null
       }
-    </div>
+    </WeatherContainer>
   );
 };
-
-// CSS
-const noSelectArea = {
-  position: 'absolute',
-  fontSize: '3vmin',
-  left: '15vmin',
-  right: '15vmin',
-  top: '8.5vh'
-}
 
 export default Weather;

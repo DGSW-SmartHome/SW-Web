@@ -35,13 +35,13 @@ const LightList = () => {
   ]
 
   return (
-    <div>
+    <>
       {
         room.map(roomList => {
           return ( <LightItem key={roomList.id} roomName={roomList.name} value={roomList.OnOff} /> )
         })
       }
-    </div>
+    </>
   );
 };
 

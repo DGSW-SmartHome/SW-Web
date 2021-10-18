@@ -1,11 +1,11 @@
-import './Light.scss';
 import LightList from './LightList';
+import { LightContainer } from './Light.style';
 
 const Light = () => {
   return (
-    <div className='light-content'>
+    <LightContainer>
       <LightList />
-    </div>
+    </LightContainer>
   );
 };
 
