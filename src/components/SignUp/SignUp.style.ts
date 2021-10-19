@@ -58,10 +58,11 @@ export const SignUpInputForm = styled.input`
   position: relative;
   left: 10px;
   width: 250px;
-  margin-top: 4%;
+  margin-top: 2.5%;
   border: 0px;
   font-size: 30px;
   background: rgba(255, 255, 255, 0);
+  font-family: 'NotoSansMedium';
 
   &::placeholder {
     font-weight: 40;
@@ -82,7 +83,7 @@ export const PasswordError = styled.div`
 export const PasswordDuplicateCheck = styled.button`
   position: relative;
   left: 20px;
-  font-family: 'DoHyeon', sans-serif;
+  font-family: 'NotoSansMedium', sans-serif;
   font-size: 20px;
   font-weight: 100;
   background: #fff;
@@ -111,7 +112,7 @@ export const SignUpSubmitButtom = styled.button`
   height: 70px;
   top: 70px;
   font-size: 30px;
-  font-family: 'Jua', sans-serif;
+  font-family: 'NotoSansMedium', sans-serif;
   background: rgba(255, 255, 255, 0.7);
   border: 0px;
   border-radius: 35px;

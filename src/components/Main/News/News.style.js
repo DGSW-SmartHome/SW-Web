@@ -50,7 +50,6 @@ export const NewsContentsTitle = styled.a`
   position: absolute;
   color: white;
   left: 10vw;
-  margin-bottom: 5vh;
   text-decoration: none;
   font-size: 2vmin;
 `;
@@ -59,7 +58,7 @@ export const NewsContentsSubTitle = styled.p`
   position: relative;
   width: 20vw;
   left: 9.2vw;
-  top: 5vh;
+  top: 7vh;
   margin: 0;
   line-height: 1.5;
   word-wrap: break-word;
