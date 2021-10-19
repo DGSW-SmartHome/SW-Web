@@ -5,6 +5,7 @@ import Login from './Login/Login';
 import SignUp from './SignUp/SignUp';
 import More from './More/More';
 import Lock from './Lock/Lock';
+import PrivateRoute from './CustomRoute/PrivateRoute';
 
 const Index = () => {
   return (
@@ -13,7 +14,7 @@ const Index = () => {
       <Route exact path='/login' component={Login} />
       <Route exact path='/signup' component={SignUp} />
       <Route exact path='/setting' component={More} />
-      <Route exact path='/lock' component={Lock} />
+      <PrivateRoute component={Lock} path='/lock' exact />
     </>
   );
 };
