@@ -11,7 +11,7 @@ import {
   LoginButton
 } from './Login.style';
 
-const Login = ({ history }) => {
+const Login = () => {
   const [id, onChangeId] = useInput('');
   const [password, onChangePassword] = useInput('');
 
@@ -24,6 +24,7 @@ const Login = ({ history }) => {
 
     axios.post(baseURL + '/v1/user/manage/signin/', data, headers)
     .then(res => {
+      sessionStorage.setItem('accessToken', res.data.data.token);
       window.location.replace('/lock');
     }).catch(error => {
       console.log(error);
