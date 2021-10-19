@@ -24,7 +24,7 @@ export const LightItemName = styled.div`
   float: left;
   left: 2vw;
   font-size: 3.5vmin;
-  top: 4vh;
+  top: 3vh;
 `;
 
 export const LightItemDeleteImg = styled.img`
@@ -33,4 +33,20 @@ export const LightItemDeleteImg = styled.img`
   width: 5vmin;
   top: 3vh;
   right: 2vmin;
+`;
+
+export const LightAddBackground = styled.div`
+  background: rgba(255, 255, 255, 0.6);
+  width: 28vw;
+  height: 10vh;
+  display: inline-block;
+  position: relative;
+  top: 2.5vh;
+  border-radius: 30px;
+`;
+
+export const AddIcon = styled.img`
+  position: relative;
+  width: 5vmin;
+  top: 2.5vh;
 `;
