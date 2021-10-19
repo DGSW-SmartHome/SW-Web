@@ -23,14 +23,26 @@ const FineDust = () => {
   const [fineDustImg, setFineDustImg] = useState(null);
   const [fineDustValue, setFineDustValue] = useState(() => window.localStorage.getItem('fineDustValue')? window.localStorage.getItem('fineDustValue') : 999);        // Fine Dust Value
   const [fineDust, setFineDust] = useState(() => window.localStorage.getItem('fineDust') ? window.localStorage.getItem('fineDust') : '.');
+  const [replaceArea, setReplaceArea] = useState('');
 
   useEffect(() => {
     const formatData = '' + firstCityName
-    const replaceArea = formatData.substring(0, formatData.length - 3);
+    if (formatData.length === 7) {
+      setReplaceArea(formatData.substring(0, formatData.length - 5));
+    } else if (formatData.length === 6) {
+      setReplaceArea(formatData.substring(0, formatData.length - 4));
+    } else if (formatData.length === 5) {
+      setReplaceArea(formatData.substring(0, formatData.length - 3));
+    } else if (formatData.length === 4) {
+      setReplaceArea(formatData.substring(0, formatData.length - 2));
+    } else if (formatData.length === 3) {
+      setReplaceArea(formatData.substring(0, formatData.length - 1));
+    }
+
     const featchData = async () => {
       await axios.get(`http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=${serviceKey}&returnType=${returnType}&sidoName=${replaceArea}&numOfRows=100`)
         .then((response) => {
-          response.data['response']['body'].items.map(items => {
+          response && response.data.response.body.items.map(items => {
             if (items['stationName'] === lastCityName) {
               setFineDustValue(items['pm10Value']);
               window.localStorage.setItem('fineDustValue', fineDustValue);
@@ -43,7 +55,7 @@ const FineDust = () => {
     if (firstCityName !== '지역이 설정되지 않았습니다.') {
       featchData();
     }
-  }, [firstCityName, fineDustValue, lastCityName]);
+  }, [firstCityName, fineDustValue, lastCityName, replaceArea]);
 
   useEffect(() => {
     if (fineDustValue <= 30) {
