@@ -1,6 +1,7 @@
-import { ChangeEvent, useCallback, useState, SetStateAction, Dispatch } from 'react';
+import { useCallback, useState } from 'react';
 import axios from 'axios';
 import { baseURL, headers } from '../../API/config';
+import useInput from '../../Hooks/useInput';
 import {
   SignUpContainer,
   SignUpTitle,
@@ -16,15 +17,7 @@ import {
   SignUpSubmitButtom
 } from './SignUp.style';
 
-const SignUp = () => {
-  const useInput = <T,>(inintValue: T): [T, (e: ChangeEvent<HTMLInputElement>) => void, Dispatch<SetStateAction<T>>] => {
-    const [value, setter] = useState<T>(inintValue);
-    const handler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-      setter(e.target.value as unknown as T);
-    }, []);
-    return [value, handler, setter];
-  }
-
+const SignUp = ({ history }) => {
   const [id, onChangeId] = useInput('');
   const [name, onChangeName] = useInput('');
   const [password, onChangePassword] = useInput('');
@@ -51,6 +44,7 @@ const SignUp = () => {
         console.log(res);
         alert('사용가능한 아이디입니다.');
       }).catch(error => {
+        console.log(error.response.data['detail']);
         alert('이미 존재하는 아이디입니다.');
       })
   }, [id])
@@ -74,12 +68,12 @@ const SignUp = () => {
       axios.post(baseURL + '/v1/user/manage/signup/', data, headers)
       .then(res => {
         alert('아이디 생성을 성공하였습니다.');
-        window.location.replace('/login');
+        history.push('/login');
       }).catch(res => {
         alert('이미 존재하는 유저입니다.');
       })
     }
-  }, [id, name, password, passwordCheck, checkUserName]);
+  }, [id, name, password, passwordCheck, checkUserName, history]);
   
   return (
     <SignUpContainer>

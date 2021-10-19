@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { useCallback, useState, ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { useCallback } from 'react';
 import { baseURL, headers } from '../../API/config';
+import useInput from '../../Hooks/useInput';
 import {
   LoginContainer,
   LoginTitle,
@@ -10,17 +11,9 @@ import {
   LoginButton
 } from './Login.style';
 
-const Login = () => {
-  const useInput = <T,>(inintValue: T): [T, (e: ChangeEvent<HTMLInputElement>) => void, Dispatch<SetStateAction<T>>] => {
-    const [value, setter] = useState<T>(inintValue);
-    const handler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-      setter(e.target.value as unknown as T);
-    }, []);
-    return [value, handler, setter];
-  }
-
+const Login = ({ history }) => {
   const [id, onChangeId] = useInput('');
-  const [password, onChangePassword] =useInput('');
+  const [password, onChangePassword] = useInput('');
 
   const signIN = useCallback((e) => {
     e.preventDefault();
@@ -37,7 +30,7 @@ const Login = () => {
       alert('아이디 또는 비밀번호가 일치하지 않습니다.');
     })
   }, [id, password]);
-
+  
   return (
     <LoginContainer>
       <LoginTitle>Log In</LoginTitle>

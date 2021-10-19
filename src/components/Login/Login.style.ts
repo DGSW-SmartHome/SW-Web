@@ -28,10 +28,13 @@ export const LoginInputBackground = styled.div`
 `;
 
 export const LoginInputTag = styled.input`
-  margin-top: 1.9vh;
+  margin-top: 1vh;
+  margin-left: 2vw;
+  width: 18vw;
   border: 0px;
   font-size: 30px;
   background: rgba(255, 255, 255, 0);
+  font-family: 'NotoSansMedium';
 
   &::placeholder {
     font-weight: 40;
