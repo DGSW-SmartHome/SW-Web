@@ -15,13 +15,13 @@ const AirconControl = () => {
   }
 
   useEffect(() => {
-    window.localStorage.setItem('controlMode', airconControlMode);
+    console.log(airconControlMode);
   }, [airconControlMode]);
 
-  const AirconONOFFValue = '대충 IR 센서 값';
-  const WindPWValue = '대충 IR 센서 값';
-  const TempUPValue = '대충 IR 센서 값';
-  const TempDownValue = '대충 IR 센서 값';
+  const AirconONOFFValue: string = '대충 IR 센서 값';
+  const WindPWValue: string = '대충 IR 센서 값';
+  const TempUPValue: string = '대충 IR 센서 값';
+  const TempDownValue: string = '대충 IR 센서 값';
 
   return (
     <>

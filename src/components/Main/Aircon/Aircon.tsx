@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import { imgData } from './AirconImg';
 import { AirconContent, AirconContentTitle, AirconOnOff, AirconTemp, AirconTempControl, AirconWindStrangeth, TempControl, WindImg, SettingAirconOnOff, SettingAirconTempControl } from './Aircon.style';
 import airWind0 from '../../../Image/MainPage/airconPage/airWind0.png';
+import { useRecoilValue } from 'recoil';
+import { AirconMode } from 'src/components/AirconMode/AirconMode';
 
 const Aircon = () => {
   const [airconTemp, setAirconTemp] = useState<number>(24);
   const [windStrange, setWindStrange] = useState<number>(1);
-  const airconMode = window.localStorage.getItem('controlMode');
+  const airconMode = useRecoilValue(AirconMode);
+  const mode: any = 'control';
 
   useEffect(() => {
     window.localStorage.setItem('airconTemp', JSON.stringify(airconTemp));
@@ -15,6 +18,10 @@ const Aircon = () => {
   useEffect(() => {
     window.localStorage.setItem('windStrage', JSON.stringify(windStrange));
   }, [windStrange])
+
+  useEffect(() => {
+    console.log(airconMode);
+  })
 
   const tempUp = () => {
     setAirconTemp(airconTemp => airconTemp + 1);
@@ -35,7 +42,7 @@ const Aircon = () => {
   return (
     <AirconContent>
       {
-        airconMode === 'control' ? 
+        airconMode === mode ? 
         <>
           <AirconContentTitle>희망<br />온도</AirconContentTitle>
           <AirconTemp>{airconTemp}℃</AirconTemp>

@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-export const AirconMode = atom({
+export const AirconMode = atom<string>({
   key: 'airconMode',
-  default: window.localStorage.getItem('controlMode') ? window.localStorage.getItem('controlMode') : 'setting'
+  default: 'setting'
 })
