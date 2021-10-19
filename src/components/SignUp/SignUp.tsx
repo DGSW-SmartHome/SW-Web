@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import axios from 'axios';
-import { baseURL, headers } from '../../API/config';
+import { baseURL, headers } from '../../API/MainConfig';
 import useInput from '../../Hooks/useInput';
 import {
   SignUpContainer,

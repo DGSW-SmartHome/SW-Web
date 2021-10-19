@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useCallback } from 'react';
-import { baseURL, headers } from '../../API/config';
+import { baseURL, headers } from '../../API/MainConfig';
 import useInput from '../../Hooks/useInput';
 import {
   LoginContainer,
@@ -25,6 +25,7 @@ const Login = () => {
     axios.post(baseURL + '/v1/user/manage/signin/', data, headers)
     .then(res => {
       sessionStorage.setItem('accessToken', res.data.data.token);
+      sessionStorage.setItem('token', res.data.data.token);
       window.location.replace('/lock');
     }).catch(error => {
       console.log(error);
