@@ -13,12 +13,12 @@ const Calendar = () => {
   const [getMoment, setMoment] = useState(moment());
   const today = getMoment;
 
-  const firstWeek = today.clone().startOf('month').week();
-  const lastWeek = today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week();
+  const firstWeek: number = today.clone().startOf('month').week();
+  const lastWeek: number = today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week();
 
   const calendarArr = () => {
-    let result = [];
-    let week = firstWeek;
+    let result: any[] = [];
+    let week: number = firstWeek;
     
     for (week; week <= lastWeek; week++) {
       result = result.concat(

@@ -1,7 +1,8 @@
-import LightItem from "./LightItem";
+import ElectricityItem from "./ElectricityItem";
+import { RoomList } from "src/Store/RoomListInterFace";
 
-const LightList = () => {
-  const room = [
+const ElectricityList = () => {
+  const room: RoomList[] = [
     {
       'id': 1,
       'name': 'room1',
@@ -15,7 +16,7 @@ const LightList = () => {
     {
       'id': 3,
       'name': 'room3',
-      'OnOff': 'ON'
+      'OnOff': 'OFF'
     },
     {
       'id': 4,
@@ -30,19 +31,19 @@ const LightList = () => {
     {
       'id': 6,
       'name': 'room6',
-      'OnOff': 'OFF'
+      'OnOff': 'ON'
     },
   ]
-
+  
   return (
     <>
       {
         room.map(roomList => {
-          return ( <LightItem key={roomList.id} roomName={roomList.name} value={roomList.OnOff} /> )
+          return ( <ElectricityItem key={roomList.id} roomList={roomList} /> )
         })
       }
     </>
   );
 };
 
-export default LightList;
+export default ElectricityList;

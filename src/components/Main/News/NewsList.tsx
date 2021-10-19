@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react/cjs/react.development';
 import NewsItem from './NewsItem';
 import { NewsListForm } from './News.style';
 
-const apiKey = '2de1f8590ab3470087b4f5e2d7d37e89';
+const apiKey: string = '2de1f8590ab3470087b4f5e2d7d37e89';
 
 const NewsList = () => {
-  const [article, setArticle] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [article, setArticle] = useState<null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     // async를 사용하는 함수 따로 선언

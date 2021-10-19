@@ -5,7 +5,7 @@ export const FineDustValueContent = styled.div`
   left: 5.8vw;
   top: 6vh;
   width: 4vw;
-  font-size: 3.5vim;
+  font-size: 2.5vmin;
   text-align: center;
 `;
 
@@ -14,6 +14,7 @@ export const FineDustPlaceContent = styled.p`
   left: 6.5vw;
   top: 8vh;
   text-align: center;
+  font-size: 2.2vmin;
 `;
 
 export const NotSelectCity = styled.div`
@@ -38,7 +39,7 @@ export const ExternalFineDust = styled.div`
   width: 17vw;
   height: 16vh;
   top: 2vh;
-  left: 1.3vw;
+  left: 1vw;
 `;
 
 export const FineDustImage = styled.img`
