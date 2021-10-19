@@ -9,11 +9,14 @@ body, html {
   );
   color: #fff;
   margin: 0;
-  font-family: 'Jua', 'Roboto400',sans-serif;
+  font-family: 'NotoSansMedium',sans-serif;
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: center;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 a {
