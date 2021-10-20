@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useCallback, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { WeatherImage } from 'src/API/Weather/WeatherConfig';
+import { baseURL, WeatherImage } from 'src/API/Weather/WeatherConfig';
 import { WeatherArea, WeatherState, WeatherTempState } from 'src/Store/Weather';
 
 import {
@@ -19,7 +19,7 @@ const Weather = () => {
 
   useEffect(() => {
     const featchData = async () => {
-      await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${area}&appid=c2a3abfbf70fb1c617186ea9b096b1d8&units=metric`)
+      await axios.get(`${baseURL}?q=${area}&appid=c2a3abfbf70fb1c617186ea9b096b1d8&units=metric`)
       .then((Response) => {
         setTemp(Math.round(Response.data['main']['temp']) + '℃');
         setWeather(Response.data['weather'][0]['icon']);
