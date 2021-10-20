@@ -41,13 +41,13 @@ const FineDust = () => {
     }
   }, [firstCityName]);
 
+  useEffect(() => {
     const featchData = async () => {
-      await axios.get(`http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=${serviceKey}&returnType=${returnType}&sidoName=${replaceArea}&numOfRows=100`)
+      await axios.get(`${baseURL}?serviceKey=${ServiceKey}&returnType=${ReturnType}&sidoName=${replaceArea}&numOfRows=100`)
         .then((response) => {
           response && response.data.response.body.items.map(items => {
             if (items['stationName'] === lastCityName) {
               setFineDustValue(items['pm10Value']);
-              window.localStorage.setItem('fineDustValue', fineDustValue);
             }
             return <></>;
           })
@@ -57,7 +57,8 @@ const FineDust = () => {
     if (firstCityName !== '지역이 설정되지 않았습니다.') {
       featchData();
     }
-  }, [firstCityName, fineDustValue, lastCityName, replaceArea]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [replaceArea])
 
   useEffect(() => {
     if (fineDustValue <= 30) {
@@ -108,7 +109,7 @@ const FineDust = () => {
           fineDustValue !== 999 ? <FineDustValueContent>{fineDust}</FineDustValueContent> : null
         }
         {
-          firstCityName === '지역이 설정되지 않았습니다.' ? <NotSelectCity>{firstCityName}</NotSelectCity> : <FineDustPlaceContent>{firstCityName} {lastCityName !== 1 ? lastCityName : null} </FineDustPlaceContent>
+          firstCityName === '지역이 설정되지 않았습니다.' ? <NotSelectCity>{firstCityName}</NotSelectCity> : <FineDustPlaceContent>{firstCityName} {lastCityName !== '' ? lastCityName : null} </FineDustPlaceContent>
         }
       </ExternalFineDust>
     </FineDustContainer>

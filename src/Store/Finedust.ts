@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-export const FineDustState = atom<string>({
+export const FineDustState = atom<string | number>({
   key: 'FineDustState',
   default: '좋음'
 });
