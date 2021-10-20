@@ -19,10 +19,6 @@ const Aircon = () => {
     window.localStorage.setItem('windStrage', JSON.stringify(windStrange));
   }, [windStrange])
 
-  useEffect(() => {
-    console.log(airconMode);
-  })
-
   const tempUp = () => {
     setAirconTemp(airconTemp => airconTemp + 1);
   }
