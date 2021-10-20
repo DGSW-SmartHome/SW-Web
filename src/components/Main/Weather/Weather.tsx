@@ -12,7 +12,8 @@ import {
   WeatherTemp
 } from './Weather.style';
 
-const Weather = () => {
+const Weather = ({ history }) => {
+  const USER_TOKEN = sessionStorage.getItem('token');
   const [area, setArea] = useRecoilState(WeatherArea);
   const [temp, setTemp] = useRecoilState(WeatherTempState);
   const [weather, setWeather] = useRecoilState(WeatherState);
@@ -34,16 +35,21 @@ const Weather = () => {
   }, [area, temp, weather, setTemp, setWeather]);
 
   const editPlace = useCallback(() => {
-    const place = prompt('설정할 지역을 입력하세요. (시 단위로 입력해주세요.');
-    if (!place) {
-      alert('지역을 입력해 주세요.');
-      setArea('지역이 입력되지 않았습니다.');
-      setTemp(1000);
-      setWeather(1);
+    if (!USER_TOKEN) {
+      alert('로그인이 필요한 서비스입니다. 로그인 후 사용해주세요.');
+      history.push('/mainlogin');
     } else {
-      setArea(place);
+      const place = prompt('설정할 지역을 입력하세요. (시 단위로 입력해주세요.');
+      if (!place) {
+        alert('지역을 입력해 주세요.');
+        setArea('지역이 입력되지 않았습니다.');
+        setTemp(1000);
+        setWeather(1);
+      } else {
+        setArea(place);
+      }
     }
-  }, [setArea, setWeather, setTemp]);
+  }, [setArea, setWeather, setTemp, USER_TOKEN, history]);
 
   return (
     <WeatherContainer onClick={editPlace}>

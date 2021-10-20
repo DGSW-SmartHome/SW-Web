@@ -18,7 +18,8 @@ import {
   FineDustImage
 } from './FineDust.style';
 
-const FineDust = () => {
+const FineDust = ({ history }) => {
+  const USER_TOKEN = sessionStorage.getItem('token');
   const [firstCityName, setFirstCityName] = useRecoilState(FirstCityName);            // 입력된 지역의 앞 부분
   const [lastCityName, setLastCityName] = useRecoilState(LastCityName);               // 입력된 지역의 뒷 부분
   const [fineDustValue, setFineDustValue] = useRecoilState(FineDustValue);            // 미세먼지 농도
@@ -78,24 +79,23 @@ const FineDust = () => {
   }, [fineDustValue]);
 
   const changeCitiName = () => {
-    const place = prompt('지역을 입력해주세요. (**시 **동/면/읍)');
-    if (!place) {
-      alert('지역을 입력해 주세요.')
-      setFirstCityName('지역이 설정되지 않았습니다.');
-      setLastCityName('');
-      setFineDustImg('');
-      setFineDustValue(999);
-      setFineDust(999);
-      window.localStorage.removeItem('firstCityName');
-      window.localStorage.removeItem('lastCityName');
-      window.localStorage.removeItem('fineDustValue');
-      window.localStorage.removeItem('fineDust');
+    if (!USER_TOKEN) {
+      alert('로그인이 필요한 서비스입니다. 로그인을 먼저해주세요.');
+      history.push('/mainlogin');
     } else {
-      const placeArray = place.split(' ');
-      setFirstCityName(placeArray[0]);
-      setLastCityName(placeArray[1]);
-      window.localStorage.setItem('firstCityName', placeArray[0]);
-      window.localStorage.setItem('lastCityName', placeArray[1]);
+      const place = prompt('지역을 입력해주세요. (**시 **동/면/읍)');
+      if (!place) {
+        alert('지역을 입력해 주세요.')
+        setFirstCityName('지역이 설정되지 않았습니다.');
+        setLastCityName('');
+        setFineDustImg('');
+        setFineDustValue(999);
+        setFineDust(999);
+      } else {
+        const placeArray = place.split(' ');
+        setFirstCityName(placeArray[0]);
+        setLastCityName(placeArray[1]);
+      }
     }
   }
 

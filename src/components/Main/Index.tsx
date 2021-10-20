@@ -7,14 +7,14 @@ import Calendar from './Calendar/Calendar';
 import Light from './Light/Light';
 import Electricity from './Electricity/Electricity';
 
-const Index = () => {
+const Index = ({ history }) => {
   return (
     <>
       <MainNav />
-      <Weather />
+      <Weather history={history} />
       <Aircon />  
       <News />
-      <FineDust />
+      <FineDust history={history} />
       <Calendar />
       <Light />
       <Electricity />
