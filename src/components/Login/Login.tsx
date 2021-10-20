@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useCallback } from 'react';
-import { baseURL, headers } from '../../API/MainConfig';
+import { baseURL, headers } from '../../API/SmartHome/SmartHomeConfig';
 import useInput from '../../Hooks/useInput';
 import {
   LoginContainer,

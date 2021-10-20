@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { baseURL, ServiceKey, ReturnType } from '../../../API/FineDust/FineDustConfig';
+import { FineDustState, FirstCityName, LastCityName, FineDustValue } from '../../../Store/Finedust';
+import { useRecoilState } from 'recoil';
 
 import HouseFineDustGood from '../../../Image/MainPage/finedustPage/dustHouseGood.png';
 import HouseFineDustSoso from '../../../Image/MainPage/finedustPage/dustHouseSoso.png';
@@ -16,14 +19,12 @@ import {
 } from './FineDust.style';
 
 const FineDust = () => {
-  const serviceKey = 'KyfnBnvWKoiRG0ZwQx00xJWfOX4f5Lup6gGQD7wGeIPgpnvMYGiHG1%2Bi9UjjTnQ9x5vNXxKzLwhhf2koi2I%2B9A%3D%3D';  // API Key
-  const returnType = 'json';  // API return Type
-  const [firstCityName, setFirstCityName] = useState(() => window.localStorage.getItem('firstCityName') ? window.localStorage.getItem('firstCityName') : '지역이 설정되지 않았습니다.');
-  const [lastCityName, setLastCityName] = useState(() => window.localStorage.getItem('lastCityName') ? window.localStorage.getItem('lastCityName') : '');
-  const [fineDustImg, setFineDustImg] = useState(null);
-  const [fineDustValue, setFineDustValue] = useState(() => window.localStorage.getItem('fineDustValue')? window.localStorage.getItem('fineDustValue') : 999);        // Fine Dust Value
-  const [fineDust, setFineDust] = useState(() => window.localStorage.getItem('fineDust') ? window.localStorage.getItem('fineDust') : '.');
-  const [replaceArea, setReplaceArea] = useState('');
+  const [firstCityName, setFirstCityName] = useRecoilState(FirstCityName);            // 입력된 지역의 앞 부분
+  const [lastCityName, setLastCityName] = useRecoilState(LastCityName);               // 입력된 지역의 뒷 부분
+  const [fineDustValue, setFineDustValue] = useRecoilState(FineDustValue);            // 미세먼지 농도
+  const [fineDust, setFineDust] = useRecoilState(FineDustState);                      // 미세먼지 상태 (좋음, 보통, 나쁨, 매우 나쁨)
+  const [fineDustImg, setFineDustImg] = useState<string>('');                         // 미세먼지 이미지
+  const [replaceArea, setReplaceArea] = useState('');                                 // 새로 저장한 지역 이름
 
   useEffect(() => {
     const formatData = '' + firstCityName
@@ -38,6 +39,7 @@ const FineDust = () => {
     } else if (formatData.length === 3) {
       setReplaceArea(formatData.substring(0, formatData.length - 1));
     }
+  }, [firstCityName]);
 
     const featchData = async () => {
       await axios.get(`http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=${serviceKey}&returnType=${returnType}&sidoName=${replaceArea}&numOfRows=100`)
@@ -71,7 +73,8 @@ const FineDust = () => {
       setFineDustImg(HouseFineDustVeryBad);
       setFineDust('매우 나쁨');
     }
-  }, [fineDustValue])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fineDustValue]);
 
   const changeCitiName = () => {
     const place = prompt('지역을 입력해주세요. (**시 **동/면/읍)');
@@ -79,7 +82,7 @@ const FineDust = () => {
       alert('지역을 입력해 주세요.')
       setFirstCityName('지역이 설정되지 않았습니다.');
       setLastCityName('');
-      setFineDustImg(null);
+      setFineDustImg('');
       setFineDustValue(999);
       setFineDust(999);
       window.localStorage.removeItem('firstCityName');
