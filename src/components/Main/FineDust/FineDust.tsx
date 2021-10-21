@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { baseURL, ServiceKey, ReturnType } from '../../../API/FineDust/FineDustConfig';
-import { FineDustState, FirstCityName, LastCityName, FineDustValue } from '../../../Store/Finedust';
+import { FineDustState, FirstCityName, LastCityName, FineDustValue } from '../../../Store/Recoil/Finedust';
 import { useRecoilState } from 'recoil';
 
 import HouseFineDustGood from '../../../Image/MainPage/finedustPage/dustHouseGood.png';

@@ -1,5 +1,5 @@
 import LightItem from "./LightItem";
-import { RoomList } from "src/Store/RoomListInterFace";
+import { RoomList } from "src/Store/InterFace/RoomList";
 
 const LightList = () => {
   const room: RoomList[] = [

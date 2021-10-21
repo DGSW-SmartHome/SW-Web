@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useCallback, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { baseURL, WeatherImage } from 'src/API/Weather/WeatherConfig';
-import { WeatherArea, WeatherState, WeatherTempState } from 'src/Store/Weather';
+import { WeatherArea, WeatherState, WeatherTempState } from 'src/Store/Recoil/Weather';
 
 import {
   WeatherContainer,
@@ -36,7 +36,7 @@ const Weather = ({ history }) => {
 
   const editPlace = useCallback(() => {
     if (!USER_TOKEN) {
-      alert('로그인이 필요한 서비스입니다. 로그인 후 사용해주세요.');
+      alert('로그인이 필요한 서비스입니다. 로그인을 먼저 해주세요.');
       history.push('/mainlogin');
     } else {
       const place = prompt('설정할 지역을 입력하세요. (시 단위로 입력해주세요.');
@@ -49,6 +49,7 @@ const Weather = ({ history }) => {
         setArea(place);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setArea, setWeather, setTemp, USER_TOKEN, history]);
 
   return (
