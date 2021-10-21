@@ -26,8 +26,9 @@ export const PlugBackground = styled.div`
   border-radius: 30px;
   text-align: center;
   float: left;
+  overflow: auto;
 
-  &::-webkit-scrollbat {
+  &::-webkit-scrollbar {
     display: none;
   }
 `;
@@ -42,8 +43,4 @@ export const AirconBackground = styled.div`
   border-radius: 30px;
   text-align: center;
   float: left;
-
-  &::-webkit-scrollbat {
-    display: none;
-  }
 `;
