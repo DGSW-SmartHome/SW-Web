@@ -22,9 +22,9 @@ const SignUp = ({ history }) => {
   const [name, onChangeName] = useInput('');
   const [password, onChangePassword] = useInput('');
 
-  const [passwordCheck, setPasswordCheck] = useState('');
-  const [passwordError, setPasswordError] = useState(false);
-  const [checkUserName, setCheckUserName] = useState(false);
+  const [passwordCheck, setPasswordCheck] = useState<string>('');
+  const [passwordError, setPasswordError] = useState<boolean>(false);
+  const [checkUserName, setCheckUserName] = useState<boolean>(false);
 
   const onChangePasswordChk = useCallback((e) => {
     // 비밀번호를 입력할때마다 password를 검증하는 함수

@@ -13,7 +13,7 @@ import {
 } from './Weather.style';
 
 const Weather = ({ history }) => {
-  const USER_TOKEN = sessionStorage.getItem('token');
+  const USER_TOKEN: string | null = sessionStorage.getItem('token');
   const [area, setArea] = useRecoilState(WeatherArea);
   const [temp, setTemp] = useRecoilState(WeatherTempState);
   const [weather, setWeather] = useRecoilState(WeatherState);

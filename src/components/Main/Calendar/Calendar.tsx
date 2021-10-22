@@ -11,7 +11,7 @@ import {
 
 const Calendar = () => {
   const [getMoment, setMoment] = useState(moment());
-  const today = getMoment;
+  const today: any = getMoment;
 
   const firstWeek: number = today.clone().startOf('month').week();
   const lastWeek: number = today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week();

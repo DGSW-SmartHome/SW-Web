@@ -9,7 +9,7 @@ const Aircon = () => {
   const [airconTemp, setAirconTemp] = useState<number>(24);
   const [windStrange, setWindStrange] = useState<number>(1);
   const airconMode = useRecoilValue(AirconMode);
-  const mode: any = 'control';
+  const mode: string = 'control';
 
   useEffect(() => {
     window.localStorage.setItem('airconTemp', JSON.stringify(airconTemp));

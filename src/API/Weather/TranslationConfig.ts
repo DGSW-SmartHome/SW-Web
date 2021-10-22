@@ -1,6 +1,6 @@
-export const baseURL = '';
+export const baseURL: string = '';
 
-export const headers = {
+export const headers: object = {
   headers: {
     "Content-Type": "application/x-www-form-urlencoded",
     "X-Naver-Client-Id": "T3yvCB0htTbo0J2Z6t0a",

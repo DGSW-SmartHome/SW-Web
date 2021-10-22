@@ -1,14 +1,14 @@
-const GetUserToken = sessionStorage.getItem('token');
+const GetUserToken: string | null = sessionStorage.getItem('token');
 
-export const SmartHomeURL = 'http://15.165.77.151:8000';
+export const SmartHomeURL: string = 'http://15.165.77.151:8000';
 
-export const headers = {
+export const headers: object = {
   headers: {
     "Content-Type": "application/x-www-form-urlencoded"
   }
 }
 
-export const UserHeaders = {
+export const UserHeaders: object = {
   headers: {
     "Authoriation": `Token ${GetUserToken}`,
     "Content-Type": "application/x-www-form-urlencoded"
