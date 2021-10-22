@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import Video from "./Video";
 import { Error } from './Lock.style';
-import { baseURL } from "src/API/SmartHome/SmartHomeConfig";
+import { SmartHomeURL } from "src/API/SmartHome/SmartHomeConfig";
 
 const VideoList = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -12,7 +12,7 @@ const VideoList = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      await axios.get(baseURL + '/mockup/video/')  // 목업 서버에서 영상을 받아옴
+      await axios.get(SmartHomeURL + '/mockup/video/')  // 목업 서버에서 영상을 받아옴
         .then((response) => {
           setArticle(response.data.data.article);
         }).catch((error) => {

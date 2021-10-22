@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useCallback } from 'react';
-import { baseURL, headers } from '../../API/SmartHome/SmartHomeConfig';
+import { SmartHomeURL, headers } from '../../API/SmartHome/SmartHomeConfig';
 import useInput from '../../Hooks/useInput';
 import {
   LoginContainer,
@@ -22,7 +22,7 @@ const MainLogin = () => {
     data.append('id', id);
     data.append('password', password);
 
-    axios.post(baseURL + '/v1/user/manage/signin/', data, headers)
+    axios.post(SmartHomeURL + '/v1/user/manage/signin/', data, headers)
     .then(res => {
       sessionStorage.setItem('token', res.data.data.token);
       window.location.replace('/');

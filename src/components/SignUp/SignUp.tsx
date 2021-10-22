@@ -1,6 +1,6 @@
   import { useCallback, useState } from 'react';
 import axios from 'axios';
-import { baseURL, headers } from '../../API/SmartHome/SmartHomeConfig';
+import { SmartHomeURL, headers } from '../../API/SmartHome/SmartHomeConfig';
 import useInput from '../../Hooks/useInput';
 import {
   SignUpContainer,
@@ -39,7 +39,7 @@ const SignUp = ({ history }) => {
     const data = new URLSearchParams();
     data.append('id', id);
 
-    axios.post(baseURL + '/v1/user/manage/signup/checkusername/', data, headers)
+    axios.post(SmartHomeURL + '/v1/user/manage/signup/checkusername/', data, headers)
       .then(res => {
         console.log(res);
         alert('사용가능한 아이디입니다.');
@@ -65,7 +65,7 @@ const SignUp = ({ history }) => {
     if (checkUserName === false) {
       alert('아이디 중복 확인을 먼저 해주세요.');
     } else {
-      axios.post(baseURL + '/v1/user/manage/signup/', data, headers)
+      axios.post(SmartHomeURL + '/v1/user/manage/signup/', data, headers)
       .then(res => {
         alert('아이디 생성을 성공하였습니다.');
         history.push('/login');
