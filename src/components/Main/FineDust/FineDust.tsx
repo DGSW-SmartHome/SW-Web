@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { baseURL, ServiceKey, ReturnType } from '../../../API/FineDust/FineDustConfig';
-import { UserHeaders, SmartHomeURL } from 'src/API/SmartHome/SmartHomeConfig';
+import { baseURL, ServiceKey, ReturnType } from '../../../api/FineDust/FineDust.config';
+import { UserHeaders, SmartHomeURL } from 'src/api/SmartHome/SmartHome.config';
 import { FineDustState, FirstCityName, LastCityName, FineDustValue } from '../../../Store/Recoil/Finedust';
 import { useRecoilState } from 'recoil';
 
-import HouseFineDustGood from '../../../Image/MainPage/finedustPage/dustHouseGood.png';
-import HouseFineDustSoso from '../../../Image/MainPage/finedustPage/dustHouseSoso.png';
-import HouseFineDustBad from '../../../Image/MainPage/finedustPage/dustHouseBad.png';
-import HouseFineDustVeryBad from '../../../Image/MainPage/finedustPage/dustHouseVeryBad.png';
+import HouseFineDustGood from '../../../assets/Image/MainPage/finedustPage/dustHouseGood.png';
+import HouseFineDustSoso from '../../../assets/Image/MainPage/finedustPage/dustHouseSoso.png';
+import HouseFineDustBad from '../../../assets/Image/MainPage/finedustPage/dustHouseBad.png';
+import HouseFineDustVeryBad from '../../../assets/Image/MainPage/finedustPage/dustHouseVeryBad.png';
 
 import {
   FineDustValueContent,

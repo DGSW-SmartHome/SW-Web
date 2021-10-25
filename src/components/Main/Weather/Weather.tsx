@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useCallback, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { baseURL, WeatherImage } from 'src/api/Weather/WeatherConfig';
+import { baseURL, WeatherImage } from 'src/api/Weather/Weather.config';
 import { WeatherArea, WeatherState, WeatherTempState } from 'src/Store/Recoil/Weather';
 
 import {
