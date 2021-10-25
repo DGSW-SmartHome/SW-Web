@@ -25,7 +25,6 @@ const Login = () => {
     axios.post(SmartHomeURL + '/v1/user/manage/signin/', data, headers)
     .then(res => {
       sessionStorage.setItem('accessToken', res.data.data.token);
-      sessionStorage.setItem('token', res.data.data.token);
       window.location.replace('/lock');
     }).catch(error => {
       console.log(error);
