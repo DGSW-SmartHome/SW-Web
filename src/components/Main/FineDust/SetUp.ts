@@ -9,6 +9,7 @@ export const SetUp = () => {
   const SET_LAST_CITY_NAME = useSetRecoilState(LastCityName);
   const SET_FINE_DUST_VALUE = useSetRecoilState(FineDustValue);
   const SET_FINE_DUST = useSetRecoilState(FineDustState);
+  
   useEffect(() => {
     axios.get(`${SmartHomeURL}/v1/user/data/finedust/`, )
   }, []);

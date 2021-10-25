@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { baseURL, ServiceKey, ReturnType } from '../../../API/FineDust/FineDustConfig';
+import { UserHeaders, SmartHomeURL } from 'src/API/SmartHome/SmartHomeConfig';
 import { FineDustState, FirstCityName, LastCityName, FineDustValue } from '../../../Store/Recoil/Finedust';
 import { useRecoilState } from 'recoil';
 
@@ -20,47 +21,80 @@ import {
 
 const FineDust = ({ history }) => {
   const USER_TOKEN = sessionStorage.getItem('token');
+
   const [firstCityName, setFirstCityName] = useRecoilState(FirstCityName);            // 입력된 지역의 앞 부분
   const [lastCityName, setLastCityName] = useRecoilState(LastCityName);               // 입력된 지역의 뒷 부분
   const [fineDustValue, setFineDustValue] = useRecoilState(FineDustValue);            // 미세먼지 농도
   const [fineDust, setFineDust] = useRecoilState(FineDustState);                      // 미세먼지 상태 (좋음, 보통, 나쁨, 매우 나쁨)
+  
   const [fineDustImg, setFineDustImg] = useState<string>('');                         // 미세먼지 이미지
-  const [replaceArea, setReplaceArea] = useState('');                                 // 새로 저장한 지역 이름
+  const [replaceArea, setReplaceArea] = useState<string>('');                         // 새로 저장한 지역 이름
 
-  useEffect(() => {
-    const formatData = '' + firstCityName
-    if (formatData.length === 7) {
-      setReplaceArea(formatData.substring(0, formatData.length - 5));
-    } else if (formatData.length === 6) {
-      setReplaceArea(formatData.substring(0, formatData.length - 4));
-    } else if (formatData.length === 5) {
-      setReplaceArea(formatData.substring(0, formatData.length - 3));
-    } else if (formatData.length === 4) {
-      setReplaceArea(formatData.substring(0, formatData.length - 2));
-    } else if (formatData.length === 3) {
-      setReplaceArea(formatData.substring(0, formatData.length - 1));
-    }
-  }, [firstCityName]);
-
-  useEffect(() => {
-    const featchData = async () => {
-      await axios.get(`${baseURL}?serviceKey=${ServiceKey}&returnType=${ReturnType}&sidoName=${replaceArea}&numOfRows=100`)
-        .then((response) => {
+  // 미세먼지 API 호출
+  const getFineDustValue = async () => {
+    await axios.get(`${baseURL}?serviceKey=${ServiceKey}&returnType=${ReturnType}&sidoName=${replaceArea}&numOfRows=100`)
+      .then((response) => {
+        if (response.data.response.body.totalCount === 0) {
+          alert('미세먼지 측정소가 없습니다. 지역 설정을 다시 해주세요.');
+          NotFineDustStation();
+        } else {
           response && response.data.response.body.items.map(items => {
-            if (items['stationName'] === lastCityName) {
-              setFineDustValue(items['pm10Value']);
-            }
+            if (items['stationName'] === lastCityName) setFineDustValue(items['pm10Value']);
             return <></>;
           })
-        })
-    }
+        }
+      })
+  }
 
+  const NotFineDustStation = () => {
+    setFirstCityName('지역이 설정되지 않았습니다.');
+    setLastCityName('');
+    setFineDustValue(999);
+    setFineDust(999);
+  }
+
+  // 미세먼지 값 저장 API 호출
+  const PostFineDust = async (firstCityName, lastCityName, fineDustValue, fineDust) => {
+    const Data = new URLSearchParams();
+    Data.append('firstCityName', firstCityName);
+    Data.append('lastCityName', lastCityName);
+    Data.append('fineDustValue', fineDustValue);
+    Data.append('fineDust', fineDust);
+
+    await axios.post(`${SmartHomeURL}/v1/user/data/finedust/`, Data, UserHeaders)
+      .then((res) => {
+        console.log(res.data);
+      }).catch((error) => {
+        console.log(error.response);
+      })
+  }
+
+  // 미세먼지 값 
+
+  useEffect(() => {
+    const formatData: string = '' + firstCityName;
+    if (formatData.length === 7) setReplaceArea(formatData.substring(0, formatData.length - 5));
+    else if (formatData.length === 6) setReplaceArea(formatData.substring(0, formatData.length - 4));
+    else if (formatData.length === 5) setReplaceArea(formatData.substring(0, formatData.length - 3));
+    else if (formatData.length === 4) setReplaceArea(formatData.substring(0, formatData.length - 2));
+    else if (formatData.length === 3) setReplaceArea(formatData.substring(0, formatData.length - 1));
+  }, [firstCityName]);
+
+  // 지역 이름이 바뀌었을 때 실행
+  useEffect(() => {
     if (firstCityName !== '지역이 설정되지 않았습니다.') {
-      featchData();
+      getFineDustValue();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [replaceArea])
+  }, [replaceArea]);
 
+  useEffect(() => {
+    console.log(firstCityName, lastCityName, fineDustValue, fineDust);
+    PostFineDust(firstCityName, lastCityName, fineDustValue, fineDust);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fineDustValue]);
+
+  // 미세먼지 값이 바뀌었을 때 실행
   useEffect(() => {
     if (fineDustValue <= 30) {
       setFineDustImg(HouseFineDustGood);
@@ -78,21 +112,17 @@ const FineDust = ({ history }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fineDustValue]);
 
-  const changeCitiName = () => {
+  const changeCityName = () => {
     if (!USER_TOKEN) {
       alert('로그인이 필요한 서비스입니다. 로그인을 먼저해주세요.');
       history.push('/mainlogin');
     } else {
-      const place = prompt('지역을 입력해주세요. (**시 **동/면/읍)');
+      const place: string | null = prompt('지역을 입력해주세요. (**시 **동/면/읍)');
       if (!place) {
         alert('지역을 입력해 주세요.')
-        setFirstCityName('지역이 설정되지 않았습니다.');
-        setLastCityName('');
-        setFineDustImg('');
-        setFineDustValue(999);
-        setFineDust(999);
+        NotFineDustStation();
       } else {
-        const placeArray = place.split(' ');
+        const placeArray: string[] = place.split(' ');
         setFirstCityName(placeArray[0]);
         setLastCityName(placeArray[1]);
       }
@@ -101,7 +131,7 @@ const FineDust = ({ history }) => {
 
   return (
     <FineDustContainer>
-      <ExternalFineDust onClick={changeCitiName}>
+      <ExternalFineDust onClick={changeCityName}>
         {
           fineDustValue !== 999 ? <FineDustImage src={fineDustImg} alt='Fine_Dust_Image' /> : null
         }
