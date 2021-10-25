@@ -76,7 +76,7 @@ export const AirconWindStrangeth = styled.button`
 
 export const WindImg = styled.img`
   position: absolute;
-  top: 14vh;
+  top: 15vh;
   left: 3.5vw;
   width: 12.5vw;
 `;

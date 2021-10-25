@@ -40,7 +40,7 @@ const Aircon = () => {
       {
         airconMode === mode ? 
         <>
-          <AirconContentTitle>희망<br />온도</AirconContentTitle>
+          <AirconContentTitle>실내<br />온도</AirconContentTitle>
           <AirconTemp>{airconTemp}℃</AirconTemp>
           {
             imgData.map(({ key, img }) => {
@@ -70,7 +70,7 @@ const Aircon = () => {
           </AirconTempControl>
         </> : 
         <>
-          <AirconContentTitle>희망<br />온도</AirconContentTitle>
+          <AirconContentTitle>실내<br />온도</AirconContentTitle>
           <AirconTemp>24℃</AirconTemp>
           <AirconWindStrangeth>
             바람<br />세기
