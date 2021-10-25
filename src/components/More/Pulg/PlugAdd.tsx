@@ -1,4 +1,4 @@
-import AddIcon from '../../../Image/morePage/add.png';
+import AddIcon from '../../../assets/Image/morePage/add.png';
 import { PlugAddBackground, PlugAddIcon } from './Plug.style';
 
 const PlugAdd = () => {

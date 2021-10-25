@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import homeicon from '../../Image/houseIcon.svg';
-import lockicon from '../../Image/lock.png';
-import settingicon from '../../Image/set.png';
+import homeicon from '../../assets/Image/houseIcon.svg';
+import lockicon from '../../assets/Image/lock.png';
+import settingicon from '../../assets/Image/set.png';
 import {
   Home,
   Icon,

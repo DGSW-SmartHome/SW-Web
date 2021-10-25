@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { imgData } from './AirconImg';
 import { AirconContent, AirconContentTitle, AirconOnOff, AirconTemp, AirconTempControl, AirconWindStrangeth, TempControl, WindImg, SettingAirconOnOff, SettingAirconTempControl } from './Aircon.style';
-import airWind0 from '../../../Image/MainPage/airconPage/airWind0.png';
+import airWind0 from '../../../assets/Image/MainPage/airconPage/airWind0.png';
 import { useRecoilValue } from 'recoil';
 import { AirconMode } from 'src/Store/Recoil/AirconMode';
 

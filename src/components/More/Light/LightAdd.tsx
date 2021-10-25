@@ -1,4 +1,4 @@
-import addIcon from '../../../Image/morePage/add.png';
+import addIcon from '../../../assets/Image/morePage/add.png';
 import { LightAddBackground, AddIcon } from './Light.style';
 
 const LightAdd = () => {
