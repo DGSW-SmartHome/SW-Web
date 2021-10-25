@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { baseURL, ServiceKey, ReturnType } from '../../../api/FineDust/FineDust.config';
-import { UserHeaders, SmartHomeURL } from 'src/api/SmartHome/SmartHome.config';
+import { UserHeaders } from 'src/api/SmartHome/SmartHome.config';
 import { FineDustState, FirstCityName, LastCityName, FineDustValue } from '../../../Store/Recoil/Finedust';
 import { useRecoilState } from 'recoil';
 
@@ -55,13 +55,14 @@ const FineDust = ({ history }) => {
 
   // 미세먼지 값 저장 API 호출
   const PostFineDust = async (firstCityName, lastCityName, fineDustValue, fineDust) => {
+    console.log(UserHeaders);
     const Data = new URLSearchParams();
     Data.append('firstCityName', firstCityName);
     Data.append('lastCityName', lastCityName);
-    Data.append('fineDustValue', fineDustValue);
-    Data.append('fineDust', fineDust);
+    Data.append('fineDustValue', fineDust);
+    Data.append('fineDust', fineDustValue);
 
-    await axios.post(`${SmartHomeURL}/v1/user/data/finedust/`, Data, UserHeaders)
+    await axios.post(`/v1/user/data/finedust/`, Data, UserHeaders)
       .then((res) => {
         console.log(res.data);
       }).catch((error) => {
@@ -92,7 +93,7 @@ const FineDust = ({ history }) => {
     console.log(firstCityName, lastCityName, fineDustValue, fineDust);
     PostFineDust(firstCityName, lastCityName, fineDustValue, fineDust);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fineDustValue]);
+  }, [firstCityName, lastCityName, fineDustValue, fineDustValue]);
 
   // 미세먼지 값이 바뀌었을 때 실행
   useEffect(() => {

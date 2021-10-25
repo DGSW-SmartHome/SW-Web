@@ -10,7 +10,7 @@ export const headers: object = {
 
 export const UserHeaders: object = {
   headers: {
-    "Authoriation": `Token ${GetUserToken}`,
+    "Authorization": `Token ${GetUserToken}`,
     "Content-Type": "application/x-www-form-urlencoded"
   }
 }
