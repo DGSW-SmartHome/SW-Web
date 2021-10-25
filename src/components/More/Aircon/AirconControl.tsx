@@ -1,4 +1,4 @@
-import { AirconMode } from '../../AirconMode/AirconMode';
+import { AirconMode } from '../../../Store/Recoil/AirconMode';
 import { useRecoilState } from 'recoil';
 import { AirconTempUp, Mode, AirconOnOff, AirconWindStrange, AirconTempDown, SensorValueBox, SensorValue } from './AirconControl.style';
 import { useEffect } from 'react';
