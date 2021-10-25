@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react"
 import { useSetRecoilState } from "recoil"
-import { SmartHomeURL } from "src/API/SmartHome/SmartHomeConfig";
+import { SmartHomeURL } from "src/api/SmartHome/SmartHomeConfig";
 import { FineDustState, FineDustValue, FirstCityName, LastCityName } from "src/Store/Recoil/Finedust";
 
 export const SetUp = () => {

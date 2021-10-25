@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import Video from "./Video";
 import { Error } from './Lock.style';
-import { SmartHomeURL } from "src/API/SmartHome/SmartHomeConfig";
+import { SmartHomeURL } from "src/api/SmartHome/SmartHomeConfig";
 
 const VideoList = () => {
   const [loading, setLoading] = useState<boolean>(false);
