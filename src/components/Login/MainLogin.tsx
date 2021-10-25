@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useCallback } from 'react';
-import { SmartHomeURL, headers } from '../../api/SmartHome/SmartHomeConfig';
+import { SmartHomeURL, headers } from '../../api/SmartHome/SmartHome.config';
 import useInput from '../../Hooks/useInput';
 import {
   LoginContainer,
