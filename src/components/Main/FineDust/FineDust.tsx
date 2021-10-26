@@ -1,9 +1,11 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { baseURL, ServiceKey, ReturnType } from '../../../api/FineDust/FineDust.config';
 import { UserHeaders } from 'src/api/SmartHome/SmartHome.config';
 import { FineDustState, FirstCityName, LastCityName, FineDustValue } from '../../../Store/Recoil/Finedust';
 import { useRecoilState } from 'recoil';
+
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 import HouseFineDustGood from '../../../assets/Image/MainPage/finedustPage/dustHouseGood.png';
 import HouseFineDustSoso from '../../../assets/Image/MainPage/finedustPage/dustHouseSoso.png';
@@ -35,7 +37,11 @@ const FineDust = ({ history }) => {
     await axios.get(`${baseURL}?serviceKey=${ServiceKey}&returnType=${ReturnType}&sidoName=${replaceArea}&numOfRows=100`)
       .then((response) => {
         if (response.data.response.body.totalCount === 0) {
-          alert('미세먼지 측정소가 없습니다. 지역 설정을 다시 해주세요.');
+          Swal.fire({
+            icon: 'error',
+            title:'미세먼지 측정소가 없습니다.',
+            text: '지역을 다시 입력해주세요.'
+          })
           NotFineDustStation();
         } else {
           response && response.data.response.body.items.map(items => {
@@ -101,6 +107,7 @@ const FineDust = ({ history }) => {
   // 지역 이름이 바뀌었을 때 실행
   useEffect(() => {
     if (firstCityName !== '지역이 설정되지 않았습니다.') {
+      console.log('hi');
       getFineDustValue();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -133,15 +140,36 @@ const FineDust = ({ history }) => {
   }, [fineDustValue]);
 
   // 미세먼지 지역 변경
-  const changeCityName = () => {
+  const changeCityName = async () => {
     if (!USER_TOKEN) {
-      alert('로그인이 필요한 서비스입니다. 로그인을 먼저해주세요.');
-      history.push('/mainlogin');
+      Swal.fire({
+        icon: 'error',
+        title: '로그인이 필요한 서비스입니다.',
+        text: '로그인을 먼저해주세요.',
+      }).then((result) => {
+        if (result.isConfirmed === true) {
+          history.push('/mainlogin');
+        }
+      });
     } else {
-      const place: string | null = prompt('지역을 입력해주세요. (**시 **동/면/읍)');
+      // const place: string | null = prompt('지역을 입력해주세요. (**시 **동/면/읍)');
+      const { value: place } = await Swal.fire({
+        title: '지역을 입력해주세요.',
+        text: '(**시 **읍/면/동)',
+        input: 'text',
+        inputPlaceholder: 'ex) 대구광역시 유가읍'
+      })
+
       if (!place) {
-        alert('지역을 입력해 주세요.')
-        NotFineDustStation();
+        Swal.fire({
+          icon: 'error',
+          title: '지역이 입력되지 않았습니다.',
+          text: '지역을 입력해주세요'
+        }).then((result) => {
+          if (result.isConfirmed === true) {
+            NotFineDustStation();
+          }
+        });
       } else {
         const placeArray: string[] = place.split(' ');
         setFirstCityName(placeArray[0]);
