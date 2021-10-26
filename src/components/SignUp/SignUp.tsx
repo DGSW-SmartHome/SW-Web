@@ -68,7 +68,7 @@ const SignUp = ({ history }) => {
       axios.post(SmartHomeURL + '/v1/user/manage/signup/', data, headers)
       .then(res => {
         alert('아이디 생성을 성공하였습니다.');
-        history.push('/login');
+        history.push('/');
       }).catch(res => {
         alert('이미 존재하는 유저입니다.');
       })
