@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const NewsContainer = styled.div`
   position: absolute;
   width: 32vw;
-  height: 20.5vh;
+  height: 53.8vh;
   background: rgba(0, 0, 0, 0.4);
-  top: 73.4vh;
+  top: 40.5vh;
   left: 1vw;
   border-radius: 30px;
   overflow: auto;
@@ -17,7 +17,8 @@ export const NewsContainer = styled.div`
 
 export const NewsMainContent = styled.div`
   display: flex;
-  margin-bottom: 10vh;
+  height: 10vh;
+  margin-bottom: 6vh;
 `;
 
 export const NewsContentThumnail = styled.div`
@@ -67,7 +68,6 @@ export const NewsContentsSubTitle = styled.p`
 
 export const NewsListForm = styled.div `
   box-sizeing: border-box;
-  padding-bottom: 3rem;
   width: 30vw;
   margin: 0 auto;
   margin-top: 2rem;

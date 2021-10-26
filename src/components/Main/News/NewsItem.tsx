@@ -8,6 +8,18 @@ import {
 
 const NewsItem = ({ article }) => {
   const { title, description, url, urlToImage } = article;
+  
+  const stringProcessing = (description) => {
+    let subtitle = '' + description;
+    let Description = '';
+    if (subtitle.length >= 120) {
+      Description = subtitle.substr(0, 120);
+      subtitle = Description + '...';
+      console.log(subtitle);
+    }
+    return subtitle
+  }
+
   return (
     <NewsMainContent>
       { urlToImage && (
@@ -22,7 +34,7 @@ const NewsItem = ({ article }) => {
           <NewsContentsTitle href={url} target="_blank" rel="noopener noreferrer">
             {title}
           </NewsContentsTitle>
-          <NewsContentsSubTitle>{description}</NewsContentsSubTitle>
+          <NewsContentsSubTitle>{stringProcessing(description)}</NewsContentsSubTitle>
         </h2>
       </NewsContents>
     </NewsMainContent>
