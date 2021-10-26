@@ -115,7 +115,7 @@ const FineDust = ({ history }) => {
 
   // 지역이 변경 되었을 때 서버에 값 저장
   useEffect(() => {
-    if (USER_TOKEN) {
+    if (USER_TOKEN && firstCityName !== '지역이 설정되지 않았습니다.') {
       PostFineDust(firstCityName, lastCityName, fineDustValue, fineDust);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
