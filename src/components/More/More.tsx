@@ -1,6 +1,5 @@
 import Nav from "../Nav/Nav";
-import AirconControl from "./Aircon/AirconControl";
-import { LightBackground, PlugBackground, AirconBackground } from "./More.style";
+import { LightBackground, PlugBackground } from "./More.style";
 import LightList from "./Light/LightList"
 import PlugList from "./Pulg/PlutList";
 
@@ -15,9 +14,6 @@ const More = () => {
       <PlugBackground>
         <PlugList />
       </PlugBackground>
-      <AirconBackground>
-        <AirconControl />
-      </AirconBackground>
     </>
   );
 };

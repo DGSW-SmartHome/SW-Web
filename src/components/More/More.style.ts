@@ -32,15 +32,3 @@ export const PlugBackground = styled.div`
     display: none;
   }
 `;
-
-export const AirconBackground = styled.div`
-  position: relative;
-  background-color: rgba(0, 0, 0, 0.4);
-  width: 30vw;
-  height: 80vh;
-  top: 3vh;
-  left: 3vw;
-  border-radius: 30px;
-  text-align: center;
-  float: left;
-`;
