@@ -10,7 +10,7 @@ export const WeatherTempState = atom<number | string>({
   default: 1000
 });
 
-export const WeatherState = atom<number>({
+export const WeatherState = atom<string | number>({
   key: 'WeatherState',
   default: 1
 })

@@ -1,3 +1,5 @@
-export const baseURL: string = 'http://api.openweathermap.org/data/2.5/weather';
+export const WeatherBaseURL: string = 'http://data.ex.co.kr/openapi/restinfo/restWeatherList';
 
-export const WeatherImage: string = ' http://openweathermap.org/img/wn/';
+export const API_KEY: string = '3258472551';
+
+export const API_TYPE: string = 'json';

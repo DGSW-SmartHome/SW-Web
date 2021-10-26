@@ -152,7 +152,6 @@ const FineDust = ({ history }) => {
         }
       });
     } else {
-      // const place: string | null = prompt('지역을 입력해주세요. (**시 **동/면/읍)');
       const { value: place } = await Swal.fire({
         title: '지역을 입력해주세요.',
         text: '(**시 **읍/면/동)',
