@@ -1,8 +1,16 @@
-import axios from 'axios';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { baseURL, WeatherImage } from 'src/api/Weather/Weather.config';
-import { WeatherArea, WeatherState, WeatherTempState } from 'src/Store/Recoil/Weather';
+import { API_KEY, API_TYPE, WeatherBaseURL } from 'src/api/Weather/Weather.config';
+import { WeatherArea, WeatherImg, WeatherState, WeatherTempState } from 'src/Store/Recoil/Weather';
+
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import cloudy from 'src/assets/Image/MainPage/weatherPage/cloudy.png';
+import manyCloudy from 'src/assets/Image/MainPage/weatherPage/manyCloudy.png';
+import rainy from 'src/assets/Image/MainPage/weatherPage/rainy.png';
+import manyRainy from 'src/assets/Image/MainPage/weatherPage/manyRainy.png';
+import foggy from 'src/assets/Image/MainPage/weatherPage/foggy.png';
+import sun from 'src/assets/Image/MainPage/weatherPage/sun.png';
 
 import {
   WeatherContainer,
@@ -17,13 +25,39 @@ const Weather = ({ history }) => {
   const [area, setArea] = useRecoilState(WeatherArea);
   const [temp, setTemp] = useRecoilState(WeatherTempState);
   const [weather, setWeather] = useRecoilState(WeatherState);
+  const [weatherImg, setWeatherImg] = useRecoilState(WeatherImg);
 
   useEffect(() => {
     const featchData = async () => {
-      await axios.get(`${baseURL}?q=${area}&appid=c2a3abfbf70fb1c617186ea9b096b1d8&units=metric`)
-      .then((Response) => {
-        setTemp(Math.round(Response.data['main']['temp']) + '℃');
-        setWeather(Response.data['weather'][0]['icon']);
+      const today = new Date();
+      const year = today.getFullYear();
+      const date = ('0' + (today.getMonth() + 1)).slice(-2);
+      const day = ('0' + today.getDate()).slice(-2);
+      const hour = ('0' + (today.getHours() - 2)).slice(-2);
+
+      await axios.get(`${WeatherBaseURL}?key=${API_KEY}&type=${API_TYPE}&sdate=${year}${date}${day}&stdHour=${hour}`)
+      .then((res) => {
+        // console.log();
+        res.data.list.map(items => {
+          const value = items.addr.substr(0, area.length);
+          console.log(value);
+          console.log(area);
+          if (value === area) {
+            setWeather(items.weatherContents);
+            setTemp(parseInt(items.tempValue) + '℃');
+            console.log(area);
+            console.log(items);
+            console.log(items.weatherContents + ', ' + items.tempValue);
+          }
+          if (weather === 1) {
+            Swal.fire({
+              icon: 'error',
+              title: 'ERROR!',
+              text: '해당 지역의 날씨를 가져올 수 없습니다.'
+            })
+          }
+          return <></>;
+        })
       }).catch((Error) => {
         console.log(Error);
       });
@@ -32,16 +66,47 @@ const Weather = ({ history }) => {
     if (area !== '지역이 입력되지 않았습니다.') {
       featchData();
     }
-  }, [area, temp, weather, setTemp, setWeather]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [area]);
 
-  const editPlace = useCallback(() => {
+  useEffect(() => {
+    if (weather === '구름많음') {
+      setWeatherImg(manyCloudy);
+    } else if (weather === '구름조금') {
+      setWeatherImg(cloudy);
+    } else if (weather === '맑음') {
+      setWeatherImg(sun);
+    } else if (weather === '연무') {
+      setWeatherImg(foggy);
+    }
+    console.log(weatherImg);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [weather]);
+
+  const editPlace = useCallback(async() => {
     if (!USER_TOKEN) {
-      alert('로그인이 필요한 서비스입니다. 로그인을 먼저 해주세요.');
-      history.push('/mainlogin');
+      Swal.fire({
+        icon: 'error',
+        title: '로그인이 필요한 서비스입니다.',
+        text: '로그인을 먼저 해주세요.'
+      }).then((result) => {
+        if (result.isConfirmed === true) {
+          history.push('/mainlogin');
+        }
+      })
     } else {
-      const place = prompt('설정할 지역을 입력하세요. (시 단위로 입력해주세요.');
+      const { value: place } = await Swal.fire({
+        title: '지역을 입력해주세요.',
+        text: '(**시 **군 **읍/면/동)',
+        input: 'text',
+        inputPlaceholder: 'ex) 대구광역시 달성군 현풍면'
+      })
       if (!place) {
-        alert('지역을 입력해 주세요.');
+        Swal.fire({
+          icon: 'error',
+          title: '지역이 입력되지 않았습니다.',
+          text: '지역을 입력해주세요.'
+        })
         setArea('지역이 입력되지 않았습니다.');
         setTemp(1000);
         setWeather(1);
@@ -55,7 +120,7 @@ const Weather = ({ history }) => {
   return (
     <WeatherContainer onClick={editPlace}>
       {
-        weather !== 1 ? <WeatherIcon src={`${WeatherImage}${weather}@2x.png`} alt='날씨' /> : null
+        weather !== 1 ? <WeatherIcon src={weatherImg} alt='날씨' /> : null
       }
       {
         area === '지역이 입력되지 않았습니다.' ? <NotSelectArea>{area}</NotSelectArea> : <WeatherPlace>{area}</WeatherPlace>

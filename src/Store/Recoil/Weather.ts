@@ -14,3 +14,8 @@ export const WeatherState = atom<string | number>({
   key: 'WeatherState',
   default: 1
 })
+
+export const WeatherImg = atom<string>({
+  key: 'WeatherImg',
+  default: '',
+})
