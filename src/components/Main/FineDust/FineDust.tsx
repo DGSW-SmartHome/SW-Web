@@ -44,34 +44,51 @@ const FineDust = ({ history }) => {
           })
         }
       })
-  }
+  };
 
+  // 지역 입력에 아무것도 하지 않았을 경우
   const NotFineDustStation = () => {
     setFirstCityName('지역이 설정되지 않았습니다.');
     setLastCityName('');
     setFineDustValue(999);
     setFineDust(999);
-  }
+  };
 
   // 미세먼지 값 저장 API 호출
   const PostFineDust = async (firstCityName, lastCityName, fineDustValue, fineDust) => {
-    console.log(UserHeaders);
     const Data = new URLSearchParams();
     Data.append('firstCityName', firstCityName);
     Data.append('lastCityName', lastCityName);
-    Data.append('fineDustValue', fineDust);
-    Data.append('fineDust', fineDustValue);
-
+    Data.append('fineDustValue', fineDustValue);
+    Data.append('fineDust', fineDust);
     await axios.post(`/v1/user/data/finedust/`, Data, UserHeaders)
       .then((res) => {
         console.log(res.data);
       }).catch((error) => {
         console.log(error.response);
       })
+  };
+
+  // 미세먼지 값 불러오기 API 호출
+  const GetFineDust = async () => {
+    await axios.get('/v1/user/data/finedust', UserHeaders)
+    .then((res) => {
+      const response = res.data.data;
+      setFirstCityName(response.firstCityName);
+      setLastCityName(response.lastCityName);
+      setFineDustValue(response.fineDustValue);
+      setFineDust(response.fineDust);
+    })
   }
 
-  // 미세먼지 값 
+  useEffect(() => {
+    if (USER_TOKEN) {
+      GetFineDust();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [USER_TOKEN]);
 
+  // 미세먼지 값을 가져올 지역 문자열 가공
   useEffect(() => {
     const formatData: string = '' + firstCityName;
     if (formatData.length === 7) setReplaceArea(formatData.substring(0, formatData.length - 5));
@@ -89,11 +106,13 @@ const FineDust = ({ history }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [replaceArea]);
 
+  // 지역이 변경 되었을 때 서버에 값 저장
   useEffect(() => {
-    console.log(firstCityName, lastCityName, fineDustValue, fineDust);
-    PostFineDust(firstCityName, lastCityName, fineDustValue, fineDust);
+    if (USER_TOKEN) {
+      PostFineDust(firstCityName, lastCityName, fineDustValue, fineDust);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstCityName, lastCityName, fineDustValue, fineDustValue]);
+  }, [fineDust]);
 
   // 미세먼지 값이 바뀌었을 때 실행
   useEffect(() => {
@@ -113,6 +132,7 @@ const FineDust = ({ history }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fineDustValue]);
 
+  // 미세먼지 지역 변경
   const changeCityName = () => {
     if (!USER_TOKEN) {
       alert('로그인이 필요한 서비스입니다. 로그인을 먼저해주세요.');
