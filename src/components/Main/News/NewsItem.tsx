@@ -15,7 +15,6 @@ const NewsItem = ({ article }) => {
     if (subtitle.length >= 120) {
       Description = subtitle.substr(0, 120);
       subtitle = Description + '...';
-      console.log(subtitle);
     }
     return subtitle
   }
