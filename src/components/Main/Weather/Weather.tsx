@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { API_KEY, API_TYPE, WeatherBaseURL } from 'src/api/Weather/Weather.config';
 import { WeatherArea, WeatherImg, WeatherState, WeatherTempState } from 'src/Store/Recoil/Weather';
@@ -48,13 +48,6 @@ const Weather = ({ history }) => {
             console.log(area);
             console.log(items);
             console.log(items.weatherContents + ', ' + items.tempValue);
-          }
-          if (weather === 1) {
-            Swal.fire({
-              icon: 'error',
-              title: 'ERROR!',
-              text: '해당 지역의 날씨를 가져올 수 없습니다.'
-            })
           }
           return <></>;
         })

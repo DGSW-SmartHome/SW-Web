@@ -5,7 +5,7 @@ import Login from './Login/Login';
 import SignUp from './SignUp/SignUp';
 import More from './More/More';
 import Lock from './Lock/Lock';
-import PrivateRoute from './CustomRoute/PrivateRoute';
+import PrivateRoute from '../Utils/CustomRoute/PrivateRoute';
 import MainLogin from './Login/MainLogin';
 
 const Index = () => {
