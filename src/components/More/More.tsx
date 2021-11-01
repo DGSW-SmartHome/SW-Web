@@ -1,9 +1,6 @@
 import Nav from "../Nav/Nav";
-import AirconControl from "./Aircon/AirconControl";
-import { LightBackground, PlugBackground, AirconBackground } from "./More.style";
-import LightAdd from "./Light/LightAdd";
+import { LightBackground, PlugBackground } from "./More.style";
 import LightList from "./Light/LightList"
-import PlugAdd from "./Pulg/PlugAdd";
 import PlugList from "./Pulg/PlutList";
 
 const More = () => {
@@ -12,16 +9,11 @@ const More = () => {
     <>
       <Nav iconName='톱니' name='설정' />
       <LightBackground>
-        <LightAdd />
         <LightList />
       </LightBackground>
       <PlugBackground>
-        <PlugAdd />
         <PlugList />
       </PlugBackground>
-      <AirconBackground>
-        <AirconControl />
-      </AirconBackground>
     </>
   );
 };

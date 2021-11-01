@@ -26,24 +26,9 @@ export const PlugBackground = styled.div`
   border-radius: 30px;
   text-align: center;
   float: left;
+  overflow: auto;
 
-  &::-webkit-scrollbat {
-    display: none;
-  }
-`;
-
-export const AirconBackground = styled.div`
-  position: relative;
-  background-color: rgba(0, 0, 0, 0.4);
-  width: 30vw;
-  height: 80vh;
-  top: 3vh;
-  left: 3vw;
-  border-radius: 30px;
-  text-align: center;
-  float: left;
-
-  &::-webkit-scrollbat {
+  &::-webkit-scrollbar {
     display: none;
   }
 `;

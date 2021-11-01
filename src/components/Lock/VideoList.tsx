@@ -2,28 +2,26 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import Video from "./Video";
 import { Error } from './Lock.style';
+import { SmartHomeURL } from "src/api/SmartHome/SmartHome.config";
 
 const VideoList = () => {
-  const [article, setArticle] = useState<String[]>([]);
-  const [loading, setLoading] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [article, setArticle] = useState<string[]>([]);
 
+  // Component가 렌더링 될 때 한 번만 실행
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      await axios.get('http://192.168.0.18:8000/')
+      await axios.get(SmartHomeURL + '/mockup/video/')  // 목업 서버에서 영상을 받아옴
         .then((response) => {
-          setArticle(response.data['article']);
+          setArticle(response.data.data.article);
         }).catch((error) => {
-          console.log(error);
+          console.log(error.response);
         });
       setLoading(false);
     }
     fetchData();
   }, []);
-
-  useEffect(() => {
-    console.log(article);
-  }, [article]);
 
   // 대기 중일 때
   if (loading) {
@@ -34,13 +32,15 @@ const VideoList = () => {
     <>
       {
         article ? article.map((article, index) => {
-          return ( <Video key={index} article={article} /> )
-        }) : <Error>영상이 없습니다.</Error>
+          return (
+            <Video key={index} article={article} />
+          )
+        }) : (
+          <Error>저장된 영상이 없습니다.</Error>
+        )
       }
     </>
   )
 }
-
-// CSS
 
 export default VideoList;

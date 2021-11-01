@@ -1,6 +1,6 @@
 import Nav from "../Nav/Nav";
 import VideoList from "./VideoList";
-import { VideoBackground } from './Lock.style';
+import { ScrollContainer, VideoBackground } from './Lock.style';
 import { useEffect } from "react";
 
 const Lock = () => {
@@ -12,7 +12,9 @@ const Lock = () => {
     <>
       <Nav iconName='자물쇠' name='보안' />
       <VideoBackground>
-        <VideoList />
+        <ScrollContainer className="scroll">
+          <VideoList />
+        </ScrollContainer>
       </VideoBackground>
     </>
   );

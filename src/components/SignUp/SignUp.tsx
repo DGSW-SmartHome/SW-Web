@@ -1,6 +1,6 @@
-import { useCallback, useState } from 'react';
+  import { useCallback, useState } from 'react';
 import axios from 'axios';
-import { baseURL, headers } from '../../API/MainConfig';
+import { SmartHomeURL, headers } from '../../api/SmartHome/SmartHome.config';
 import useInput from '../../Hooks/useInput';
 import {
   SignUpContainer,
@@ -22,9 +22,9 @@ const SignUp = ({ history }) => {
   const [name, onChangeName] = useInput('');
   const [password, onChangePassword] = useInput('');
 
-  const [passwordCheck, setPasswordCheck] = useState('');
-  const [passwordError, setPasswordError] = useState(false);
-  const [checkUserName, setCheckUserName] = useState(false);
+  const [passwordCheck, setPasswordCheck] = useState<string>('');
+  const [passwordError, setPasswordError] = useState<boolean>(false);
+  const [checkUserName, setCheckUserName] = useState<boolean>(false);
 
   const onChangePasswordChk = useCallback((e) => {
     // 비밀번호를 입력할때마다 password를 검증하는 함수
@@ -39,7 +39,7 @@ const SignUp = ({ history }) => {
     const data = new URLSearchParams();
     data.append('id', id);
 
-    axios.post(baseURL + '/v1/user/manage/signup/checkusername/', data, headers)
+    axios.post(SmartHomeURL + '/v1/user/manage/signup/checkusername/', data, headers)
       .then(res => {
         console.log(res);
         alert('사용가능한 아이디입니다.');
@@ -65,10 +65,10 @@ const SignUp = ({ history }) => {
     if (checkUserName === false) {
       alert('아이디 중복 확인을 먼저 해주세요.');
     } else {
-      axios.post(baseURL + '/v1/user/manage/signup/', data, headers)
+      axios.post(SmartHomeURL + '/v1/user/manage/signup/', data, headers)
       .then(res => {
         alert('아이디 생성을 성공하였습니다.');
-        history.push('/login');
+        history.push('/');
       }).catch(res => {
         alert('이미 존재하는 유저입니다.');
       })

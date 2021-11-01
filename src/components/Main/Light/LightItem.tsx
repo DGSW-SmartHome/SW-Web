@@ -1,5 +1,5 @@
-import lightON from '../../../Image/MainPage/lightPage/light_ON.png';
-import lightOFF from '../../../Image/MainPage/lightPage/light_OFF.png';
+import lightON from '../../../assets/Image/MainPage/lightPage/light_ON.png';
+import lightOFF from '../../../assets/Image/MainPage/lightPage/light_OFF.png';
 import { LightItemContainer, LightItemImage, LightRoomName } from './Light.style';
 
 const LightItem = ({ roomName, value }) => {

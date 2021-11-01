@@ -1,5 +1,5 @@
-import PlugON from '../../../Image/MainPage/electriccityPage/plug_ON.png';
-import PlugOFF from '../../../Image/MainPage/electriccityPage/plug_OFF.png';
+import PlugON from '../../../assets/Image/MainPage/electriccityPage/plug_ON.png';
+import PlugOFF from '../../../assets/Image/MainPage/electriccityPage/plug_OFF.png';
 import {
   ElectricityItemContainer,
   ElectricityItemImage,

@@ -1,5 +1,5 @@
 import ElectricityItem from "./ElectricityItem";
-import { RoomList } from "src/Store/RoomListInterFace";
+import { RoomList } from "src/Store/InterFace/RoomList";
 
 const ElectricityList = () => {
   const room: RoomList[] = [

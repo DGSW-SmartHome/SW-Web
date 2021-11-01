@@ -1,7 +1,10 @@
-import axios from 'axios';
 import { useCallback } from 'react';
-import { baseURL, headers } from '../../API/MainConfig';
+import { SmartHomeURL, headers } from '../../api/SmartHome/SmartHome.config';
+
+import axios from 'axios';
 import useInput from '../../Hooks/useInput';
+import Swal from 'sweetalert2';
+
 import {
   LoginContainer,
   LoginTitle,
@@ -22,14 +25,18 @@ const Login = () => {
     data.append('id', id);
     data.append('password', password);
 
-    axios.post(baseURL + '/v1/user/manage/signin/', data, headers)
+    axios.post(SmartHomeURL + '/v1/user/manage/signin/', data, headers)
     .then(res => {
       sessionStorage.setItem('accessToken', res.data.data.token);
-      sessionStorage.setItem('token', res.data.data.token);
       window.location.replace('/lock');
     }).catch(error => {
-      console.log(error);
-      alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+      if (error.response.data['detail'] === 'Invalid value') {
+        Swal.fire({
+          icon: 'error',
+          title: 'ERROR!',
+          text: '아이디 또는 비밀번호가 일치하지 않습니다.'
+        })
+      }
     })
   }, [id, password]);
   
