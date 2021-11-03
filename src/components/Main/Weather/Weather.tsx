@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { API_KEY, API_TYPE, WeatherBaseURL } from 'src/api/Weather/Weather.config';
-import { WeatherArea, WeatherImg, WeatherState, WeatherTempState } from 'src/Store/Recoil/Weather';
+import { WeatherArea, WeatherImg, WeatherState, WeatherTempState } from 'src/Store/Weather';
 
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -40,14 +40,9 @@ const Weather = ({ history }) => {
         // console.log();
         res.data.list.map(items => {
           const value = items.addr.substr(0, area.length);
-          console.log(value);
-          console.log(area);
           if (value === area) {
             setWeather(items.weatherContents);
             setTemp(parseInt(items.tempValue) + '℃');
-            console.log(area);
-            console.log(items);
-            console.log(items.weatherContents + ', ' + items.tempValue);
           }
           return <></>;
         })

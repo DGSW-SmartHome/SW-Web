@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { baseURL, ServiceKey, ReturnType } from '../../../api/FineDust/FineDust.config';
 import { UserHeaders } from 'src/api/SmartHome/SmartHome.config';
-import { FineDustState, FirstCityName, LastCityName, FineDustValue } from '../../../Store/Recoil/Finedust';
+import { FineDustState, FirstCityName, LastCityName, FineDustValue } from '../../../Store/Finedust';
 import { useRecoilState } from 'recoil';
 
 import axios from 'axios';
