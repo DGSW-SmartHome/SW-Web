@@ -67,13 +67,20 @@ const FineDust = ({ history }) => {
     Data.append('lastCityName', lastCityName);
     Data.append('fineDustValue', fineDustValue);
     Data.append('fineDust', fineDust);
-    await axios.post(`/v1/user/data/finedust/`, Data, UserHeaders)
+    await axios.post('/v1/user/data/finedust/', Data, UserHeaders)
       .then((res) => {
         console.log(res.data);
       }).catch((error) => {
         console.log(error.response);
       })
   };
+  // 지역이 변경 되었을 때 서버에 값 저장
+  useEffect(() => {
+    if (USER_TOKEN && firstCityName !== '지역이 설정되지 않았습니다.') {
+      PostFineDust(firstCityName, lastCityName, fineDustValue, fineDust);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fineDust]);
 
   // 미세먼지 값 불러오기 API 호출
   const GetFineDust = async () => {
@@ -86,7 +93,7 @@ const FineDust = ({ history }) => {
       setFineDust(response.fineDust);
     })
   }
-
+  // 로그인 토큰이 존재하면 서버에서 값 불러오기
   useEffect(() => {
     if (USER_TOKEN) {
       GetFineDust();
@@ -107,19 +114,10 @@ const FineDust = ({ history }) => {
   // 지역 이름이 바뀌었을 때 실행
   useEffect(() => {
     if (firstCityName !== '지역이 설정되지 않았습니다.') {
-      console.log('hi');
       getFineDustValue();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [replaceArea]);
-
-  // 지역이 변경 되었을 때 서버에 값 저장
-  useEffect(() => {
-    if (USER_TOKEN && firstCityName !== '지역이 설정되지 않았습니다.') {
-      PostFineDust(firstCityName, lastCityName, fineDustValue, fineDust);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fineDust]);
 
   // 미세먼지 값이 바뀌었을 때 실행
   useEffect(() => {
@@ -180,15 +178,9 @@ const FineDust = ({ history }) => {
   return (
     <FineDustContainer>
       <ExternalFineDust onClick={changeCityName}>
-        {
-          fineDustValue !== 999 ? <FineDustImage src={fineDustImg} alt='Fine_Dust_Image' /> : null
-        }
-        {
-          fineDustValue !== 999 ? <FineDustValueContent>{fineDust}</FineDustValueContent> : null
-        }
-        {
-          firstCityName === '지역이 설정되지 않았습니다.' ? <NotSelectCity>{firstCityName}</NotSelectCity> : <FineDustPlaceContent>{firstCityName} {lastCityName !== '' ? lastCityName : null} </FineDustPlaceContent>
-        }
+        { fineDustValue !== 999 ? <FineDustImage src={fineDustImg} alt='Fine_Dust_Image' /> : null }
+        { fineDustValue !== 999 ? <FineDustValueContent>{fineDust}</FineDustValueContent> : null }
+        { firstCityName === '지역이 설정되지 않았습니다.' ? <NotSelectCity>{firstCityName}</NotSelectCity> : <FineDustPlaceContent>{firstCityName} {lastCityName !== '' ? lastCityName : null} </FineDustPlaceContent> }
       </ExternalFineDust>
     </FineDustContainer>
   );

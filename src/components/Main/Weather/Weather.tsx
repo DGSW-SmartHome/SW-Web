@@ -2,9 +2,12 @@ import { useCallback, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { API_KEY, API_TYPE, WeatherBaseURL } from 'src/api/Weather/Weather.config';
 import { WeatherArea, WeatherImg, WeatherState, WeatherTempState } from 'src/Store/Weather';
+import { UserHeaders } from 'src/api/SmartHome/SmartHome.config';
 
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+
 import cloudy from 'src/assets/Image/MainPage/weatherPage/cloudy.png';
 import manyCloudy from 'src/assets/Image/MainPage/weatherPage/manyCloudy.png';
 import rainy from 'src/assets/Image/MainPage/weatherPage/rainy.png';
@@ -27,6 +30,54 @@ const Weather = ({ history }) => {
   const [weather, setWeather] = useRecoilState(WeatherState);
   const [weatherImg, setWeatherImg] = useRecoilState(WeatherImg);
 
+  const GetWeather = async () => {
+    await axios.get ('/v1/user/data/weather/', UserHeaders)
+    .then((res) => {
+      const response = res.data.data;
+      setArea(response.city);
+      setTemp(response.weather);
+      setWeather(response.temperature);
+    })
+  }
+  useEffect(() => {
+    if (USER_TOKEN) {
+      GetWeather();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [USER_TOKEN]);
+
+  const PostWeather = async (area, temp, weather) => {
+    const Data = new URLSearchParams();
+    Data.append('city', area);
+    Data.append('weather', weather);
+    Data.append('temperature', temp);
+
+    await axios.post('/v1/user/data/weather/', Data, UserHeaders)
+    .then((res) => {
+      toast.success('Success!', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      }) 
+      // Swal.fire({
+      //   'icon': 'success',
+      //   'title': 'Success!',
+      //   'text': '성공적으로 서버에 값을 저장하였습니다.'
+      // });
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
+  useEffect(() => {
+    if (USER_TOKEN && area !== '지역이 입력되지 않았습니다.') {
+      PostWeather(area, temp, weather);
+    }
+  })
+
   useEffect(() => {
     const featchData = async () => {
       const today = new Date();
@@ -37,7 +88,6 @@ const Weather = ({ history }) => {
 
       await axios.get(`${WeatherBaseURL}?key=${API_KEY}&type=${API_TYPE}&sdate=${year}${date}${day}&stdHour=${hour}`)
       .then((res) => {
-        // console.log();
         res.data.list.map(items => {
           const value = items.addr.substr(0, area.length);
           if (value === area) {
@@ -65,6 +115,8 @@ const Weather = ({ history }) => {
     } else if (weather === '맑음') {
       setWeatherImg(sun);
     } else if (weather === '연무') {
+      setWeatherImg(foggy);
+    } else if (weather === '안개끝') {
       setWeatherImg(foggy);
     }
     console.log(weatherImg);
@@ -107,15 +159,9 @@ const Weather = ({ history }) => {
 
   return (
     <WeatherContainer onClick={editPlace}>
-      {
-        weather !== 1 ? <WeatherIcon src={weatherImg} alt='날씨' /> : null
-      }
-      {
-        area === '지역이 입력되지 않았습니다.' ? <NotSelectArea>{area}</NotSelectArea> : <WeatherPlace>{area}</WeatherPlace>
-      }
-      {
-        temp !== 1000 ? <WeatherTemp>{temp}</WeatherTemp> : null
-      }
+      { weather !== 1 ? <WeatherIcon src={weatherImg} alt='날씨' /> : null }
+      { area === '지역이 입력되지 않았습니다.' ? <NotSelectArea>{area}</NotSelectArea> : <WeatherPlace>{area}</WeatherPlace> }
+      { temp !== 1000 ? <WeatherTemp>{temp}</WeatherTemp> : null }
     </WeatherContainer>
   );
 };
