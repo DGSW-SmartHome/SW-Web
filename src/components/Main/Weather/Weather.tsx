@@ -6,12 +6,9 @@ import { UserHeaders } from 'src/api/SmartHome/SmartHome.config';
 
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 import cloudy from 'src/assets/Image/MainPage/weatherPage/cloudy.png';
 import manyCloudy from 'src/assets/Image/MainPage/weatherPage/manyCloudy.png';
-import rainy from 'src/assets/Image/MainPage/weatherPage/rainy.png';
-import manyRainy from 'src/assets/Image/MainPage/weatherPage/manyRainy.png';
 import foggy from 'src/assets/Image/MainPage/weatherPage/foggy.png';
 import sun from 'src/assets/Image/MainPage/weatherPage/sun.png';
 
@@ -54,20 +51,7 @@ const Weather = ({ history }) => {
 
     await axios.post('/v1/user/data/weather/', Data, UserHeaders)
     .then((res) => {
-      toast.success('Success!', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined
-      }) 
-      // Swal.fire({
-      //   'icon': 'success',
-      //   'title': 'Success!',
-      //   'text': '성공적으로 서버에 값을 저장하였습니다.'
-      // });
+      console.log(res);
     }).catch((error) => {
       console.log(error);
     })
@@ -76,7 +60,8 @@ const Weather = ({ history }) => {
     if (USER_TOKEN && area !== '지역이 입력되지 않았습니다.') {
       PostWeather(area, temp, weather);
     }
-  })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [area])
 
   useEffect(() => {
     const featchData = async () => {
