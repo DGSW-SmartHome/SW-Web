@@ -51,7 +51,7 @@ const Weather = ({ history }) => {
 
     await axios.post('/v1/user/data/weather/', Data, UserHeaders)
     .then((res) => {
-      console.log(res);
+      
     }).catch((error) => {
       console.log(error);
     })
