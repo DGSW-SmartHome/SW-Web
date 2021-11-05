@@ -1,45 +1,33 @@
+import { useState, useEffect } from "react";
+import { UserHeaders } from "src/api/SmartHome/SmartHome.config";
+import { res } from "src/types/Roomlist.type";
+
+import axios from "axios";
+
 import LightItem from "./LightItem";
-import { RoomList } from "src/Store/InterFace/RoomList";
 
 const LightList = () => {
-  const room: RoomList[] = [
-    {
-      'id': 1,
-      'name': 'room1',
-      'OnOff': 'ON'
-    },
-    {
-      'id': 2,
-      'name': 'room2',
-      'OnOff': 'OFF'
-    },
-    {
-      'id': 3,
-      'name': 'room3',
-      'OnOff': 'ON'
-    },
-    {
-      'id': 4,
-      'name': 'room4',
-      'OnOff': 'ON'
-    },
-    {
-      'id': 5,
-      'name': 'room5',
-      'OnOff': 'OFF'
-    },
-    {
-      'id': 6,
-      'name': 'room6',
-      'OnOff': 'OFF'
-    },
-  ]
+  const USER_TOKEN: string | null = sessionStorage.getItem('token');
+  const [lightRoomlist, setLightRoomlist] = useState<res[]>([]);
+
+  const feathData = async () => {
+    axios.get('/v1/user/data/room/light/', UserHeaders)
+    .then((res) => {
+      setLightRoomlist(res.data.data.data);
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
+
+  useEffect(() => {
+    if (USER_TOKEN) feathData();
+  }, [USER_TOKEN]);
 
   return (
     <>
       {
-        room.map(roomList => {
-          return ( <LightItem key={roomList.id} roomName={roomList.name} value={roomList.OnOff} /> )
+        lightRoomlist && lightRoomlist.map(roomList => {
+          return ( <LightItem roomlist={roomList} /> )
         })
       }
     </>

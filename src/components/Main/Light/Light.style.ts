@@ -14,12 +14,12 @@ export const LightItemContainer = styled.div`
   position: relative;
   float: left;
   left: 1.5vw;
-  top: 2.8vh;
+  top: 2.5vmin;
   padding: 0 2.5vw;
-  padding-bottom: 1.9vh;
+  padding-bottom: 1vh;
 
   .off {
-    padding-bottom: 1.9vh;
+    padding-bottom: 2vh;
   }
 `;
 
