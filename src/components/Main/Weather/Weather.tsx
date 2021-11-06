@@ -19,6 +19,7 @@ import {
   WeatherPlace,
   WeatherTemp
 } from './Weather.style';
+import { SwalBadRequest, SwalServerError, SwalUnauthorized } from 'src/Utils/SweetAlert/Error';
 
 const Weather = ({ history }) => {
   const USER_TOKEN: string | null = sessionStorage.getItem('token');
@@ -32,8 +33,8 @@ const Weather = ({ history }) => {
     .then((res) => {
       const response = res.data.data;
       setArea(response.city);
-      setTemp(response.weather);
-      setWeather(response.temperature);
+      setTemp(response.temperature);
+      setWeather(response.weatherf);
     })
   }
   useEffect(() => {
@@ -51,8 +52,11 @@ const Weather = ({ history }) => {
 
     await axios.post('/v1/user/data/weather/', Data, UserHeaders)
     .then((res) => {
+      
     }).catch((error) => {
-      console.log(error);
+      if (error.response.status === 400) SwalBadRequest();
+      else if (error.response.status === 401) SwalUnauthorized();
+      else if (error.response.status >= 500) SwalServerError();
     })
   }
   useEffect(() => {
@@ -60,7 +64,7 @@ const Weather = ({ history }) => {
       PostWeather(area, temp, weather);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [area])
+  }, [area, weather, temp])
 
   useEffect(() => {
     const featchData = async () => {
@@ -76,12 +80,14 @@ const Weather = ({ history }) => {
           const value = items.addr.substr(0, area.length);
           if (value === area) {
             setWeather(items.weatherContents);
-            setTemp(parseInt(items.tempValue) + '℃');
+            setTemp(parseInt(items.tempValue));
           }
           return <></>;
         })
-      }).catch((Error) => {
-        console.log(Error);
+      }).catch((error) => {
+        if (error.response.status === 400) SwalBadRequest();
+        else if (error.response.status === 401) SwalUnauthorized();
+        else if (error.response.status >= 500) SwalServerError();
       });
     }
 
@@ -142,7 +148,7 @@ const Weather = ({ history }) => {
     <WeatherContainer onClick={editPlace}>
       { weather !== 1 ? <WeatherIcon src={weatherImg} alt='날씨' /> : null }
       { area === '지역이 입력되지 않았습니다.' ? <NotSelectArea>{area}</NotSelectArea> : <WeatherPlace>{area}</WeatherPlace> }
-      { temp !== 1000 ? <WeatherTemp>{temp}</WeatherTemp> : null }
+      { temp !== 1000 ? <WeatherTemp>{temp}℃</WeatherTemp> : null }
     </WeatherContainer>
   );
 };

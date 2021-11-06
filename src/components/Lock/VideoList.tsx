@@ -4,6 +4,7 @@ import Video from "./Video";
 import { useEffect, useState } from "react"
 import { Error } from './Lock.style';
 import { SmartHomeURL } from "src/api/SmartHome/SmartHome.config";
+import { SwalBadRequest, SwalUnauthorized, SwalServerError } from "src/Utils/SweetAlert/Error";
 
 const VideoList = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -17,7 +18,9 @@ const VideoList = () => {
         .then((response) => {
           setArticle(response.data.data.article);
         }).catch((error) => {
-          console.log(error.response);
+          if (error.response.status === 400) SwalBadRequest();
+          else if (error.response.status === 401) SwalUnauthorized();
+          else if (error.response.status >= 500) SwalServerError();
         });
       setLoading(false);
     }
