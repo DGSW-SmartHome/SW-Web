@@ -22,7 +22,7 @@ import {
 } from './FineDust.style';
 
 const FineDust = ({ history }) => {
-  const USER_TOKEN = sessionStorage.getItem('token');
+  const USER_TOKEN: string | null = sessionStorage.getItem('token');
 
   const [firstCityName, setFirstCityName] = useRecoilState(FirstCityName);            // 입력된 지역의 앞 부분
   const [lastCityName, setLastCityName] = useRecoilState(LastCityName);               // 입력된 지역의 뒷 부분
