@@ -10,9 +10,9 @@ import { SwalChangeName } from 'src/Utils/SweetAlert/Success';
 
 import { 
   SwalBadRequest, 
-  SwalNotInsert, 
+  SwalCustomText, 
   SwalServerError, 
-  SwalUasuthorized 
+  SwalUnauthorized 
 } from 'src/Utils/SweetAlert/Error';
 
 import {
@@ -35,7 +35,7 @@ const PlugChangeNameItem = ({roomlist}:{roomlist:res}) => {
     });
 
     if (ROOM_NAME) setRoomName(ROOM_NAME);
-    else SwalNotInsert('방 이름을 입력하지 않았습니다.');
+    else SwalCustomText('방 이름을 입력하지 않았습니다.');
   }
 
   const PostChangename = async () => {
@@ -48,7 +48,7 @@ const PlugChangeNameItem = ({roomlist}:{roomlist:res}) => {
       if (res.data.status === 200) SwalChangeName();
     }).catch((error) => {
       if (error.response.status === 400) SwalBadRequest();
-      else if (error.response.status === 401) SwalUasuthorized();
+      else if (error.response.status === 401) SwalUnauthorized();
       else if (error.response.status >= 500) SwalServerError();
     })
   }

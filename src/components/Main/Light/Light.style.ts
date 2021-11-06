@@ -13,7 +13,7 @@ export const LightContainer = styled.div`
 export const LightItemContainer = styled.div`
   position: relative;
   float: left;
-  left: 1.5vw;
+  left: 3vmin;
   top: 2.5vmin;
   padding: 0 2.5vw;
   padding-bottom: 1vh;

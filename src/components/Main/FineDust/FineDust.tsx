@@ -12,6 +12,13 @@ import HouseFineDustSoso from '../../../assets/Image/MainPage/finedustPage/dustH
 import HouseFineDustBad from '../../../assets/Image/MainPage/finedustPage/dustHouseBad.png';
 import HouseFineDustVeryBad from '../../../assets/Image/MainPage/finedustPage/dustHouseVeryBad.png';
 
+import { 
+  SwalBadRequest, 
+  SwalCustomText, 
+  SwalServerError, 
+  SwalUnauthorized 
+} from 'src/Utils/SweetAlert/Error';
+
 import {
   FineDustValueContent,
   FineDustPlaceContent,
@@ -36,12 +43,8 @@ const FineDust = ({ history }) => {
   const getFineDustValue = async () => {
     await axios.get(`${baseURL}?serviceKey=${ServiceKey}&returnType=${ReturnType}&sidoName=${replaceArea}&numOfRows=100`)
       .then((response) => {
-        if (response.data.response.body.totalCount === 0) {
-          Swal.fire({
-            icon: 'error',
-            title:'미세먼지 측정소가 없습니다.',
-            text: '지역을 다시 입력해주세요.'
-          })
+        if (response.data.response.body.totalCount === 0) { 
+          SwalCustomText('미세먼지 측정소가 없습니다. 다시 입력해주세요.');
           NotFineDustStation();
         } else {
           response && response.data.response.body.items.map(items => {
@@ -69,9 +72,11 @@ const FineDust = ({ history }) => {
     Data.append('fineDust', fineDust);
     await axios.post('/v1/user/data/finedust/', Data, UserHeaders)
       .then((res) => {
-        console.log(res.data);
+        
       }).catch((error) => {
-        console.log(error.response);
+        if (error.response.status === 400) SwalBadRequest();
+        else if (error.response.status === 401) SwalUnauthorized();
+        else if (error.response.status >= 500) SwalServerError();
       })
   };
   // 지역이 변경 되었을 때 서버에 값 저장

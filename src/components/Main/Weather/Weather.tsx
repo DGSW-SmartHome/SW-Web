@@ -51,7 +51,6 @@ const Weather = ({ history }) => {
 
     await axios.post('/v1/user/data/weather/', Data, UserHeaders)
     .then((res) => {
-      
     }).catch((error) => {
       console.log(error);
     })
@@ -86,9 +85,7 @@ const Weather = ({ history }) => {
       });
     }
 
-    if (area !== '지역이 입력되지 않았습니다.') {
-      featchData();
-    }
+    if (area !== '지역이 입력되지 않았습니다.') featchData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [area]);
 
@@ -104,7 +101,6 @@ const Weather = ({ history }) => {
     } else if (weather === '안개끝') {
       setWeatherImg(foggy);
     }
-    console.log(weatherImg);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weather]);
 

@@ -9,7 +9,7 @@ import PlugChangeNameItem from "./PlugChangeNameItem";
 import { 
   SwalBadRequest, 
   SwalServerError, 
-  SwalUasuthorized 
+  SwalUnauthorized 
 } from "src/Utils/SweetAlert/Error";
 
 const PlugChangeNameList = () => {
@@ -22,7 +22,7 @@ const PlugChangeNameList = () => {
       setPlugRoomlist(res.data.data.data);
     }).catch((error) => {
       if (error.response.status === 400) SwalBadRequest();
-      else if (error.response.status === 401) SwalUasuthorized();
+      else if (error.response.status === 401) SwalUnauthorized();
       else if (error.response.status >= 500) SwalServerError();
     })
   }

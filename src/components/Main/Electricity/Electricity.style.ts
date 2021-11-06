@@ -13,7 +13,7 @@ export const ElectricityContainer = styled.div`
 export const ElectricityItemContainer = styled.div`
   position: relative;
   float: left;
-  left: 1.5vw;
+  left: 3vmin;
   top: 3vh;
   padding: 0 3vw;
   padding-bottom: 1.9vh;
