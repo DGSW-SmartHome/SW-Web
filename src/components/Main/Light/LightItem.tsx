@@ -25,7 +25,7 @@ const LightItem = ({ roomlist }:{roomlist:res}) => {
     const data = new URLSearchParams();
     data.append('id', id);
 
-    await axios.post('/v1/user/data/room/plug', data, UserHeaders)
+    await axios.post('/v1/user/data/room/light/', data, UserHeaders)
     .then((res) => {
 
     }).catch((error) => {
