@@ -55,6 +55,10 @@ const FineDust = ({ history }) => {
         } else {
           response && response.data.response.body.items.map(items => {
             if (items['stationName'] === lastCityName) setFineDustValue(items['pm10Value']);
+            else {
+              SwalCustomText('입력하신 장소와 일치하는 미세먼지 측정소가 없습니다. 다시 입력해주세요');
+              NotFineDustStation();
+            }
             return <></>;
           })
         }
@@ -189,7 +193,7 @@ const FineDust = ({ history }) => {
     <FineDustContainer>
       <ExternalFineDust onClick={changeCityName}>
         { fineDustValue !== 999 ? <FineDustImage src={fineDustImg} alt='Fine_Dust_Image' /> : null }
-        { fineDustValue !== 999 ? <FineDustValueContent>{fineDust}</FineDustValueContent> : null }
+        { fineDustValue !== 999 ? <FineDustValueContent>{fineDust} (미세먼지 농도: {fineDustValue}ug/m3)</FineDustValueContent> : null }
         { firstCityName === '지역이 설정되지 않았습니다.' ? <NotSelectCity>{firstCityName}</NotSelectCity> : <FineDustPlaceContent>{firstCityName} {lastCityName !== '' ? lastCityName : null} </FineDustPlaceContent> }
       </ExternalFineDust>
     </FineDustContainer>
