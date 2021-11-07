@@ -35,9 +35,8 @@ const LightList = () => {
   }
 
   useEffect(() => {
-    if (GetUserToken) feathData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [GetUserToken]);
+    if (GetUserToken) setTimeout(() => feathData(), 1500);
+  })
 
   return (
     <>
