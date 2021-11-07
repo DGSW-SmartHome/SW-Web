@@ -1,7 +1,6 @@
 import axios from "axios";
 
 import { useEffect, useState } from "react";
-import { UserHeaders } from "src/api/SmartHome/SmartHome.config";
 import { res } from "src/types/Roomlist.type";
 
 import PlugChangeNameItem from "./PlugChangeNameItem";
@@ -13,7 +12,15 @@ import {
 } from "src/Utils/SweetAlert/Error";
 
 const PlugChangeNameList = () => {
-  const USER_TOKEN: string | null = sessionStorage.getItem('token');
+  const GetUserToken: string | null = sessionStorage.getItem('token');
+
+  const UserHeaders: object = {
+    headers: {
+      "Authorization": `Token ${GetUserToken}`,
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  }
+
   const [plugRoomlist, setPlugRoomlist] = useState<res[]>([]);
 
   const feathData = async () => {
@@ -28,8 +35,9 @@ const PlugChangeNameList = () => {
   }
 
   useEffect(() => {
-    if (USER_TOKEN) feathData();
-  }, [USER_TOKEN]);
+    if (GetUserToken) feathData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [GetUserToken]);
 
   return (
     <>

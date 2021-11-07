@@ -5,7 +5,6 @@ import axios from 'axios';
 
 import { useState } from 'react';
 import { res } from 'src/types/Roomlist.type';
-import { UserHeaders } from 'src/api/SmartHome/SmartHome.config';
 import { SwalChangeName } from 'src/Utils/SweetAlert/Success';
 
 import { 
@@ -22,6 +21,15 @@ import {
 } from './Plug.style';
 
 const PlugChangeNameItem = ({roomlist}:{roomlist:res}) => {
+  const GetUserToken: string | null = sessionStorage.getItem('token');
+
+  const UserHeaders: object = {
+    headers: {
+      "Authorization": `Token ${GetUserToken}`,
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  }
+  
   const { id, name } = roomlist;
   const [roomName, setRoomName] = useState<string>(name);
 

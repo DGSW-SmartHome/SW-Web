@@ -4,7 +4,6 @@ import PlugOFF from '../../../assets/Image/MainPage/electriccityPage/plug_OFF.pn
 import axios from 'axios';
 
 import { res } from "src/types/Roomlist.type";
-import { UserHeaders } from 'src/api/SmartHome/SmartHome.config';
 
 import {
   ElectricityItemContainer,
@@ -19,6 +18,15 @@ import {
 } from 'src/Utils/SweetAlert/Error';
 
 const ElectricityItem = ({ roomlist }:{roomlist:res}) => {
+  const GetUserToken: string | null = sessionStorage.getItem('token');
+
+  const UserHeaders: object = {
+    headers: {
+      "Authorization": `Token ${GetUserToken}`,
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  }
+
   const { id, name, status } = roomlist;
 
   const PostTurnLight = async () => {

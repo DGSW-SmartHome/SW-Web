@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { UserHeaders } from "src/api/SmartHome/SmartHome.config";
 import { res } from "src/types/Roomlist.type";
 
 import axios from "axios";
@@ -12,10 +11,18 @@ import {
 } from "src/Utils/SweetAlert/Error";
 
 const ElectricityList = () => {
-  const USER_TOKEN: string | null = sessionStorage.getItem('token');
+  const GetUserToken: string | null = sessionStorage.getItem('token');
+
+  const UserHeaders: object = {
+    headers: {
+      "Authorization": `Token ${GetUserToken}`,
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  }
+
   const [plugRoomlist, setPlugRoomlist] = useState<res[]>([]);
 
-  const feathData = async() => {
+  const feathData = async () => {
     axios.get('/v1/user/data/room/plug/', UserHeaders)
     .then((res) => {
       setPlugRoomlist(res.data.data.data);
@@ -27,8 +34,8 @@ const ElectricityList = () => {
   }
 
   useEffect(() => {
-    if (USER_TOKEN) feathData();
-  }, [USER_TOKEN])
+    if (GetUserToken) feathData();
+  })
 
   return (
     <>

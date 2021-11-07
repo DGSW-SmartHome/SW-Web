@@ -2,7 +2,6 @@ import { useCallback, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { API_KEY, API_TYPE, WeatherBaseURL } from 'src/api/Weather/Weather.config';
 import { WeatherArea, WeatherImg, WeatherState, WeatherTempState } from 'src/Store/Weather';
-import { UserHeaders } from 'src/api/SmartHome/SmartHome.config';
 
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -22,7 +21,15 @@ import {
 import { SwalBadRequest, SwalServerError, SwalUnauthorized } from 'src/Utils/SweetAlert/Error';
 
 const Weather = ({ history }) => {
-  const USER_TOKEN: string | null = sessionStorage.getItem('token');
+  const GetUserToken: string | null = sessionStorage.getItem('token');
+
+  const UserHeaders: object = {
+    headers: {
+      "Authorization": `Token ${GetUserToken}`,
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  }
+
   const [area, setArea] = useRecoilState(WeatherArea);
   const [temp, setTemp] = useRecoilState(WeatherTempState);
   const [weather, setWeather] = useRecoilState(WeatherState);
@@ -38,11 +45,9 @@ const Weather = ({ history }) => {
     })
   }
   useEffect(() => {
-    if (USER_TOKEN) {
-      GetWeather();
-    }
+    if (GetUserToken) GetWeather();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [USER_TOKEN]);
+  }, [GetUserToken]);
 
   const PostWeather = async (area, temp, weather) => {
     const Data = new URLSearchParams();
@@ -60,7 +65,7 @@ const Weather = ({ history }) => {
     })
   }
   useEffect(() => {
-    if (USER_TOKEN && area !== '지역이 입력되지 않았습니다.') {
+    if (GetUserToken && area !== '지역이 입력되지 않았습니다.') {
       PostWeather(area, temp, weather);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -111,7 +116,7 @@ const Weather = ({ history }) => {
   }, [weather]);
 
   const editPlace = useCallback(async() => {
-    if (!USER_TOKEN) {
+    if (!GetUserToken) {
       Swal.fire({
         icon: 'error',
         title: '로그인이 필요한 서비스입니다.',
@@ -142,7 +147,7 @@ const Weather = ({ history }) => {
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setArea, setWeather, setTemp, USER_TOKEN, history]);
+  }, [setArea, setWeather, setTemp, GetUserToken, history]);
 
   return (
     <WeatherContainer onClick={editPlace}>

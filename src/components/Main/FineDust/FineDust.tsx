@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { baseURL, ServiceKey, ReturnType } from '../../../api/FineDust/FineDust.config';
-import { UserHeaders } from 'src/api/SmartHome/SmartHome.config';
 import { FineDustState, FirstCityName, LastCityName, FineDustValue } from '../../../Store/Finedust';
 import { useRecoilState } from 'recoil';
 
@@ -29,7 +28,14 @@ import {
 } from './FineDust.style';
 
 const FineDust = ({ history }) => {
-  const USER_TOKEN: string | null = sessionStorage.getItem('token');
+  const GetUserToken: string | null = sessionStorage.getItem('token');
+
+  const UserHeaders: object = {
+    headers: {
+      "Authorization": `Token ${GetUserToken}`,
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  }
 
   const [firstCityName, setFirstCityName] = useRecoilState(FirstCityName);            // 입력된 지역의 앞 부분
   const [lastCityName, setLastCityName] = useRecoilState(LastCityName);               // 입력된 지역의 뒷 부분
@@ -81,7 +87,7 @@ const FineDust = ({ history }) => {
   };
   // 지역이 변경 되었을 때 서버에 값 저장
   useEffect(() => {
-    if (USER_TOKEN && firstCityName !== '지역이 설정되지 않았습니다.') {
+    if (GetUserToken && firstCityName !== '지역이 설정되지 않았습니다.') {
       PostFineDust(firstCityName, lastCityName, fineDustValue, fineDust);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,7 +95,7 @@ const FineDust = ({ history }) => {
 
   // 미세먼지 값 불러오기 API 호출
   const GetFineDust = async () => {
-    await axios.get('/v1/user/data/finedust', UserHeaders)
+    await axios.get('/v1/user/data/finedust/', UserHeaders)
     .then((res) => {
       const response = res.data.data;
       setFirstCityName(response.firstCityName);
@@ -100,11 +106,10 @@ const FineDust = ({ history }) => {
   }
   // 로그인 토큰이 존재하면 서버에서 값 불러오기
   useEffect(() => {
-    if (USER_TOKEN) {
-      GetFineDust();
-    }
+    console.log(GetUserToken);
+    if (GetUserToken && GetUserToken !== null) setTimeout(() => GetFineDust(), 1000);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [USER_TOKEN]);
+  }, [GetUserToken]);
 
   // 미세먼지 값을 가져올 지역 문자열 가공
   useEffect(() => {
@@ -144,7 +149,7 @@ const FineDust = ({ history }) => {
 
   // 미세먼지 지역 변경
   const changeCityName = async () => {
-    if (!USER_TOKEN) {
+    if (!GetUserToken) {
       Swal.fire({
         icon: 'error',
         title: '로그인이 필요한 서비스입니다.',

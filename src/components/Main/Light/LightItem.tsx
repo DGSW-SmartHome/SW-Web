@@ -4,7 +4,6 @@ import lightOFF from '../../../assets/Image/MainPage/lightPage/light_OFF.png';
 import axios from 'axios';
 
 import { res } from "src/types/Roomlist.type";
-import { UserHeaders } from 'src/api/SmartHome/SmartHome.config';
 
 import { 
   LightItemContainer,
@@ -19,6 +18,15 @@ import {
 } from 'src/Utils/SweetAlert/Error';
 
 const LightItem = ({ roomlist }:{roomlist:res}) => {
+  const GetUserToken: string | null = sessionStorage.getItem('token');
+
+  const UserHeaders: object = {
+    headers: {
+      "Authorization": `Token ${GetUserToken}`,
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  }
+  
   const { id, name, status } = roomlist;
 
   const PostTurnPlug = async () => {
