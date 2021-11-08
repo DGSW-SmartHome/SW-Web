@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { API_KEY, API_TYPE, WeatherBaseURL } from 'src/api/Weather/Weather.config';
 import { WeatherArea, WeatherImg, WeatherState, WeatherTempState } from 'src/Store/Weather';
+import { SwalBadRequest, SwalServerError, SwalUnauthorized } from 'src/Utils/SweetAlert/Error';
 
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -18,7 +19,6 @@ import {
   WeatherPlace,
   WeatherTemp
 } from './Weather.style';
-import { SwalBadRequest, SwalServerError, SwalUnauthorized } from 'src/Utils/SweetAlert/Error';
 
 const Weather = ({ history }) => {
   const GetUserToken: string | null = sessionStorage.getItem('token');

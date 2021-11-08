@@ -111,7 +111,7 @@ const FineDust = ({ history }) => {
   // 로그인 토큰이 존재하면 서버에서 값 불러오기
   useEffect(() => {
     console.log(GetUserToken);
-    if (GetUserToken && GetUserToken !== null) setTimeout(() => GetFineDust(), 1000);
+    if (GetUserToken && GetUserToken !== null) GetFineDust();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [GetUserToken]);
 

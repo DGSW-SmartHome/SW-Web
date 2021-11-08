@@ -34,7 +34,7 @@ const ElectricityList = () => {
   }
 
   useEffect(() => {
-    if (GetUserToken) setTimeout(() => feathData(), 1500);
+    if (GetUserToken) setTimeout(() => feathData(), 2000);
   })
 
   return (

@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'react';
 import { SmartHomeURL, headers } from '../../api/SmartHome/SmartHome.config';
+import { SwalCustomText, SwalServerError } from 'src/Utils/SweetAlert/Error';
+import { SwalIDCheck } from 'src/Utils/SweetAlert/Success';
 
 import useInput from '../../Hooks/useInput';
 import axios from 'axios';
@@ -18,9 +20,6 @@ import {
   SignUpInputPasswordCheck,
   SignUpSubmitButtom
 } from './SignUp.style';
-
-import { SwalCustomText, SwalServerError } from 'src/Utils/SweetAlert/Error';
-import { SwalIDCheck } from 'src/Utils/SweetAlert/Success';
 
 const SignUp = ({ history }) => {
   const [id, onChangeId] = useInput('');

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { res } from "src/types/Roomlist.type";
 
 import axios from "axios";
-
 import LightItem from "./LightItem";
 
 import { 
@@ -35,7 +34,7 @@ const LightList = () => {
   }
 
   useEffect(() => {
-    if (GetUserToken) setTimeout(() => feathData(), 1500);
+    if (GetUserToken) setTimeout(() => feathData(), 2000);
   })
 
   return (
