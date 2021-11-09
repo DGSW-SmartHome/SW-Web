@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { API_KEY, API_TYPE, WeatherBaseURL } from 'src/api/Weather/Weather.config';
 import { WeatherArea, WeatherImg, WeatherState, WeatherTempState } from 'src/Store/Weather';
-import { SwalBadRequest, SwalServerError, SwalUnauthorized } from 'src/Utils/SweetAlert/Error';
+import { SwalBadRequest, SwalErrorCustomText, SwalServerError, SwalUnauthorized } from 'src/Utils/SweetAlert/Error';
 
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -41,7 +41,7 @@ const Weather = ({ history }) => {
       const response = res.data.data;
       setArea(response.city);
       setTemp(response.temperature);
-      setWeather(response.weatherf);
+      setWeather(response.weather);
     })
   }
   useEffect(() => {
@@ -71,16 +71,16 @@ const Weather = ({ history }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [area, weather, temp])
 
-  useEffect(() => {
-    const featchData = async () => {
-      const today = new Date();
-      const year = today.getFullYear();
-      const date = ('0' + (today.getMonth() + 1)).slice(-2);
-      const day = ('0' + today.getDate()).slice(-2);
-      const hour = ('0' + (today.getHours() - 2)).slice(-2);
+  const featchData = async () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const date = ('0' + (today.getMonth() + 1)).slice(-2);
+    const day = ('0' + today.getDate()).slice(-2);
+    const hour = ('0' + (today.getHours() - 2)).slice(-2);
 
-      await axios.get(`${WeatherBaseURL}?key=${API_KEY}&type=${API_TYPE}&sdate=${year}${date}${day}&stdHour=${hour}`)
-      .then((res) => {
+    await axios.get(`${WeatherBaseURL}?key=${API_KEY}&type=${API_TYPE}&sdate=${year}${date}${day}&stdHour=${hour}`)
+    .then((res) => {
+      if (res.data.list.length !== 0) {
         res.data.list.map(items => {
           const value = items.addr.substr(0, area.length);
           if (value === area) {
@@ -89,13 +89,19 @@ const Weather = ({ history }) => {
           }
           return <></>;
         })
-      }).catch((error) => {
-        if (error.response.status === 400) SwalBadRequest();
-        else if (error.response.status === 401) SwalUnauthorized();
-        else if (error.response.status >= 500) SwalServerError();
-      });
-    }
+      } else {
+        SwalErrorCustomText('날씨 정보를 가져오지 못하였습니다.');
+        setArea('지역이 입력되지 않았습니다.');
+      }
+    }).catch((error) => {
+      if (error.response.status === 400) SwalBadRequest();
+      else if (error.response.status === 401) SwalUnauthorized();
+      else if (error.response.status >= 500) SwalServerError();
+    });
+  }
 
+
+  useEffect(() => {
     if (area !== '지역이 입력되지 않았습니다.') featchData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [area]);
@@ -133,7 +139,10 @@ const Weather = ({ history }) => {
         input: 'text',
         inputPlaceholder: 'ex) 대구광역시 달성군 현풍면'
       })
-      if (!place) {
+      if (place !== '' || place !== '지역이 입력되지 않았습니다.' || !place) {
+        setArea(place);
+        featchData();
+      } else {
         Swal.fire({
           icon: 'error',
           title: '지역이 입력되지 않았습니다.',
@@ -142,8 +151,6 @@ const Weather = ({ history }) => {
         setArea('지역이 입력되지 않았습니다.');
         setTemp(1000);
         setWeather(1);
-      } else {
-        setArea(place);
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -151,9 +158,9 @@ const Weather = ({ history }) => {
 
   return (
     <WeatherContainer onClick={editPlace}>
-      { weather !== 1 ? <WeatherIcon src={weatherImg} alt='날씨' /> : null }
+      { weather !== 1 && area !== '지역이 입력되지 않았습니다.' ? <WeatherIcon src={weatherImg} alt='날씨' /> : null }
       { area === '지역이 입력되지 않았습니다.' ? <NotSelectArea>{area}</NotSelectArea> : <WeatherPlace>{area}</WeatherPlace> }
-      { temp !== 1000 ? <WeatherTemp>{temp}℃</WeatherTemp> : null }
+      { temp !== 1000 && area !== '지역이 입력되지 않았습니다.' ? <WeatherTemp>{temp}℃</WeatherTemp> : null }
     </WeatherContainer>
   );
 };

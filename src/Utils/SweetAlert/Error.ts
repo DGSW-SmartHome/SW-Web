@@ -24,7 +24,7 @@ export const SwalServerError = () => {
   })
 }
 
-export const SwalCustomText = (text) => {
+export const SwalErrorCustomText = (text) => {
   Swal.fire({
     icon: 'error',
     title: 'Error!',

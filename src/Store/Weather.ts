@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 export const WeatherArea = atom<string>({
   key: 'weatherArea',
-  default: '지역이 입력되지 않았습니다.'
+  default: '지역이 설정되지 않았습니다.'
 });
 
 export const WeatherTempState = atom<number | string>({

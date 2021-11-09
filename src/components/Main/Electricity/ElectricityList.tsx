@@ -34,8 +34,9 @@ const ElectricityList = () => {
   }
 
   useEffect(() => {
-    if (GetUserToken) setTimeout(() => feathData(), 2000);
-  })
+    if (GetUserToken) feathData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>

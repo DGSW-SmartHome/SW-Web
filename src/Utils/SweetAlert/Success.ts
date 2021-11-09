@@ -13,3 +13,10 @@ export const SwalIDCheck = () => {
     title: '사용 가능한 아이디입니다.'
   })
 }
+
+export const SwalSucessCustomText = ({text}: {text:string}) => {
+  Toast.fire({
+    icon: 'success',
+    title: `${text}`
+  })
+}

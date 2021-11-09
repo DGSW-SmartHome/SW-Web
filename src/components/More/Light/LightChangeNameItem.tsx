@@ -9,7 +9,7 @@ import { SwalChangeName } from 'src/Utils/SweetAlert/Success';
 
 import { 
   SwalBadRequest, 
-  SwalCustomText, 
+  SwalErrorCustomText, 
   SwalServerError, 
   SwalUnauthorized 
 } from 'src/Utils/SweetAlert/Error';
@@ -44,7 +44,7 @@ const LightChangeNameItem = ({roomlist}:{roomlist:res}) => {
       setRoomName(ROOM_NAME);
       PostChangeName(ROOM_NAME);
     }
-    else SwalCustomText('방 이름을 입력하지 않았습니다.');
+    else SwalErrorCustomText('방 이름을 입력하지 않았습니다.');
   }
 
   const PostChangeName = async ({RoomName}: {RoomName:string}) => {

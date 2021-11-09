@@ -17,7 +17,7 @@ export const FineDustPlaceContent = styled.p`
 
 export const NotSelectCity = styled.div`
   position: absolute;
-  font-size: 3.5vmin;
+  font-size: 3.4vmin;
   left: 1.8vmin;
   top: 6vmin;
 `;

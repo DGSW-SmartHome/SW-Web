@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { SmartHomeURL, headers } from '../../api/SmartHome/SmartHome.config';
-import { SwalCustomText, SwalServerError } from 'src/Utils/SweetAlert/Error';
+import { SwalErrorCustomText, SwalServerError } from 'src/Utils/SweetAlert/Error';
 import { SwalIDCheck } from 'src/Utils/SweetAlert/Success';
 
 import useInput from '../../Hooks/useInput';
@@ -49,11 +49,11 @@ const SignUp = ({ history }) => {
         .then(res => {
           SwalIDCheck();
         }).catch(error => {
-          if (error.response.status === 400) SwalCustomText('이미 존재하는 아이디입니다.');
+          if (error.response.status === 400) SwalErrorCustomText('이미 존재하는 아이디입니다.');
           else if (error.response.status >= 500) SwalServerError();
         })
     } else {
-      SwalCustomText('아이디를 입력하지 않았습니다.');
+      SwalErrorCustomText('아이디를 입력하지 않았습니다.');
     }
   }, [id])
 
@@ -66,20 +66,20 @@ const SignUp = ({ history }) => {
     data.append('username', name);
 
     if(password !== passwordCheck) {
-      SwalCustomText('비밀번호가 일치하지 않습니다.');
+      SwalErrorCustomText('비밀번호가 일치하지 않습니다.');
       return setPasswordError(true);
     }
 
     if (checkUserName === false) {
-      SwalCustomText('아이디 중복 확인을 먼저 해주세요.');
+      SwalErrorCustomText('아이디 중복 확인을 먼저 해주세요.');
     } else {
       axios.post(SmartHomeURL + '/v1/user/manage/signup/', data, headers)
       .then(res => {
-        SwalCustomText('아이디 생성을 성공하였습니다.');
+        SwalErrorCustomText('아이디 생성을 성공하였습니다.');
         history.push('/');
       }).catch(error => {
-        if (error.response.detail === 'Some Values are missing') SwalCustomText('일부 값이 전달되지 않았습니다.');
-        else if (error.response.detail === 'User Already Exists') SwalCustomText('이미 회원가입이 되어있습니다.');
+        if (error.response.detail === 'Some Values are missing') SwalErrorCustomText('일부 값이 전달되지 않았습니다.');
+        else if (error.response.detail === 'User Already Exists') SwalErrorCustomText('이미 회원가입이 되어있습니다.');
       })
     }
   }, [id, name, password, passwordCheck, checkUserName, history]);

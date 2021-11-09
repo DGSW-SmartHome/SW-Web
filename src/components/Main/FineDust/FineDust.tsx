@@ -13,7 +13,7 @@ import HouseFineDustVeryBad from '../../../assets/Image/MainPage/finedustPage/du
 
 import { 
   SwalBadRequest, 
-  SwalCustomText, 
+  SwalErrorCustomText, 
   SwalServerError, 
   SwalUnauthorized 
 } from 'src/Utils/SweetAlert/Error';
@@ -50,14 +50,12 @@ const FineDust = ({ history }) => {
     await axios.get(`${baseURL}?serviceKey=${ServiceKey}&returnType=${ReturnType}&sidoName=${replaceArea}&numOfRows=100`)
       .then((response) => {
         if (response.data.response.body.totalCount === 0) { 
-          SwalCustomText('미세먼지 측정소가 없습니다. 다시 입력해주세요.');
+          SwalErrorCustomText('미세먼지 측정소가 없습니다. 다시 입력해주세요.');
           NotFineDustStation();
         } else {
           response && response.data.response.body.items.map(items => {
-            if (items['stationName'] === lastCityName) setFineDustValue(items['pm10Value']);
-            else {
-              SwalCustomText('입력하신 장소와 일치하는 미세먼지 측정소가 없습니다. 다시 입력해주세요');
-              NotFineDustStation();
+            if (items['stationName'] === lastCityName) {
+              setFineDustValue(items['pm10Value']);
             }
             return <></>;
           })
@@ -80,6 +78,7 @@ const FineDust = ({ history }) => {
     Data.append('lastCityName', lastCityName);
     Data.append('fineDustValue', fineDustValue);
     Data.append('fineDust', fineDust);
+
     await axios.post('/v1/user/data/finedust/', Data, UserHeaders)
       .then((res) => {
         
@@ -89,6 +88,7 @@ const FineDust = ({ history }) => {
         else if (error.response.status >= 500) SwalServerError();
       })
   };
+
   // 지역이 변경 되었을 때 서버에 값 저장
   useEffect(() => {
     if (GetUserToken && firstCityName !== '지역이 설정되지 않았습니다.') {
@@ -110,7 +110,6 @@ const FineDust = ({ history }) => {
   }
   // 로그인 토큰이 존재하면 서버에서 값 불러오기
   useEffect(() => {
-    console.log(GetUserToken);
     if (GetUserToken && GetUserToken !== null) GetFineDust();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [GetUserToken]);
@@ -148,8 +147,7 @@ const FineDust = ({ history }) => {
       setFineDustImg(HouseFineDustVeryBad);
       setFineDust('매우 나쁨');
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fineDustValue]);
+  }, [fineDustValue, setFineDust]);
 
   // 미세먼지 지역 변경
   const changeCityName = async () => {
@@ -174,7 +172,7 @@ const FineDust = ({ history }) => {
       if (!place) {
         Swal.fire({
           icon: 'error',
-          title: '지역이 입력되지 않았습니다.',
+          title: '지역이 설정되지 않았습니다.',
           text: '지역을 입력해주세요'
         }).then((result) => {
           if (result.isConfirmed === true) {

@@ -35,7 +35,7 @@ const LightItem = ({ roomlist }:{roomlist:res}) => {
 
     await axios.post('/v1/user/data/room/light/', data, UserHeaders)
     .then((res) => {
-
+      console.log(res);
     }).catch((error) => {
       if (error.response.status === 400) SwalBadRequest();
       else if (error.response.status === 401) SwalUnauthorized();
