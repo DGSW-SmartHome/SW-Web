@@ -46,8 +46,8 @@ const FineDust = ({ history }) => {
   const [replaceArea, setReplaceArea] = useState<string>('');                         // 새로 저장한 지역 이름
 
   // 미세먼지 API 호출
-  const getFineDustValue = async () => {
-    await axios.get(`${baseURL}?serviceKey=${ServiceKey}&returnType=${ReturnType}&sidoName=${replaceArea}&numOfRows=100`)
+  const getFineDustValue = () => {
+    axios.get(`${baseURL}?serviceKey=${ServiceKey}&returnType=${ReturnType}&sidoName=${replaceArea}&numOfRows=100`)
       .then((response) => {
         if (response.data.response.body.totalCount === 0) { 
           SwalErrorCustomText('미세먼지 측정소가 없습니다. 다시 입력해주세요.');

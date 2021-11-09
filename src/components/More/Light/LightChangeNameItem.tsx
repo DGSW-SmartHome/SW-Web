@@ -47,7 +47,7 @@ const LightChangeNameItem = ({roomlist}:{roomlist:res}) => {
     else SwalErrorCustomText('방 이름을 입력하지 않았습니다.');
   }
 
-  const PostChangeName = async ({RoomName}: {RoomName:string}) => {
+  const PostChangeName = async (RoomName: string) => {
     const data = new URLSearchParams();
     data.append('id', id);
     data.append('name', RoomName);

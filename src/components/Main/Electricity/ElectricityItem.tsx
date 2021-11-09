@@ -17,6 +17,7 @@ import {
   SwalServerError, 
   SwalUnauthorized 
 } from 'src/Utils/SweetAlert/Error';
+import { useState } from 'react';
 
 const ElectricityItem = ({ roomlist }:{roomlist:res}) => {
   const GetUserToken: string | null = sessionStorage.getItem('token');
@@ -29,6 +30,7 @@ const ElectricityItem = ({ roomlist }:{roomlist:res}) => {
   }
 
   const { id, name, status } = roomlist;
+  const [plugStatus, setPlugStatus] = useState<boolean>(status);
 
   const PostTurnLight = async () => {
     const data = new URLSearchParams();
@@ -37,7 +39,7 @@ const ElectricityItem = ({ roomlist }:{roomlist:res}) => {
     if (id < 2) {
       await axios.post('/v1/user/data/room/plug/', data, UserHeaders)
       .then((res) => {
-        
+        setPlugStatus(res.data.data.status);
       }).catch((error) => {
         if (error.response.status === 400) SwalBadRequest();
         else if (error.response.status === 401) SwalUnauthorized();
@@ -51,7 +53,7 @@ const ElectricityItem = ({ roomlist }:{roomlist:res}) => {
   return (
     <ElectricityItemContainer onClick={PostTurnLight}>
       {
-        status === 'ON' 
+        plugStatus === true
         ? <ElectricityItemImage src={PlugON} alt='plugON' /> 
         : <ElectricityItemImage src={PlugOFF} alt='plugOFF' />
       }

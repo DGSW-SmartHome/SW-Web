@@ -17,6 +17,7 @@ import {
   SwalServerError,
   SwalUnauthorized
 } from 'src/Utils/SweetAlert/Error';
+import { useState } from 'react';
 
 const LightItem = ({ roomlist }:{roomlist:res}) => {
   const GetUserToken: string | null = sessionStorage.getItem('token');
@@ -29,6 +30,7 @@ const LightItem = ({ roomlist }:{roomlist:res}) => {
   }
   
   const { id, name, status } = roomlist;
+  const [lightStatus, setLightStatus] = useState<boolean>(status);
 
   const PostTurnPlug = async () => {
     const data = new URLSearchParams();
@@ -37,7 +39,7 @@ const LightItem = ({ roomlist }:{roomlist:res}) => {
     if (id < 4) {
       await axios.post('/v1/user/data/room/light/', data, UserHeaders)
       .then((res) => {
-        
+        setLightStatus(res.data.data.status);
       }).catch((error) => {
         if (error.response.status === 400) SwalBadRequest();
         else if (error.response.status === 401) SwalUnauthorized();
@@ -51,7 +53,7 @@ const LightItem = ({ roomlist }:{roomlist:res}) => {
   return (
     <LightItemContainer onClick={PostTurnPlug}>
       {
-        status === 'ON' 
+        lightStatus === true 
         ? <LightItemImage src={lightON} alt='lightON' /> 
         : <LightItemImage className='off' src={lightOFF} alt='lightOFF' />
       }
