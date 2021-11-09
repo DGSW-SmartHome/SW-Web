@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { API_KEY, API_TYPE, WeatherBaseURL } from 'src/api/Weather/Weather.config';
 import { WeatherArea, WeatherImg, WeatherState, WeatherTempState } from 'src/Store/Weather';
-import { SwalBadRequest, SwalErrorCustomText, SwalServerError, SwalUnauthorized } from 'src/Utils/SweetAlert/Error';
+import { SwalBadRequest, SwalServerError, SwalUnauthorized } from 'src/Utils/SweetAlert/Error';
 
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -80,19 +80,14 @@ const Weather = ({ history }) => {
 
     await axios.get(`${WeatherBaseURL}?key=${API_KEY}&type=${API_TYPE}&sdate=${year}${date}${day}&stdHour=${hour}`)
     .then((res) => {
-      if (res.data.list.length !== 0) {
-        res.data.list.map(items => {
-          const value = items.addr.substr(0, area.length);
-          if (value === area) {
-            setWeather(items.weatherContents);
-            setTemp(parseInt(items.tempValue));
-          }
-          return <></>;
-        })
-      } else {
-        SwalErrorCustomText('날씨 정보를 가져오지 못하였습니다.');
-        setArea('지역이 입력되지 않았습니다.');
-      }
+      res.data.list.map(items => {
+        const value = items.addr.substr(0, area.length);
+        if (value === area) {
+          setWeather(items.weatherContents);
+          setTemp(parseInt(items.tempValue));
+        }
+        return <></>;
+      })
     }).catch((error) => {
       if (error.response.status === 400) SwalBadRequest();
       else if (error.response.status === 401) SwalUnauthorized();
@@ -158,9 +153,9 @@ const Weather = ({ history }) => {
 
   return (
     <WeatherContainer onClick={editPlace}>
-      { weather !== 1 && area !== '지역이 입력되지 않았습니다.' ? <WeatherIcon src={weatherImg} alt='날씨' /> : null }
+      { weather !== 1 ? <WeatherIcon src={weatherImg} alt='날씨' /> : null }
       { area === '지역이 입력되지 않았습니다.' ? <NotSelectArea>{area}</NotSelectArea> : <WeatherPlace>{area}</WeatherPlace> }
-      { temp !== 1000 && area !== '지역이 입력되지 않았습니다.' ? <WeatherTemp>{temp}℃</WeatherTemp> : null }
+      { temp !== 1000 ? <WeatherTemp>{temp}℃</WeatherTemp> : null }
     </WeatherContainer>
   );
 };
