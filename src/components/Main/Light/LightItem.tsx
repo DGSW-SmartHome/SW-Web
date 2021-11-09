@@ -13,6 +13,7 @@ import {
 
 import {
   SwalBadRequest,
+  SwalErrorCustomText,
   SwalServerError,
   SwalUnauthorized
 } from 'src/Utils/SweetAlert/Error';
@@ -33,14 +34,18 @@ const LightItem = ({ roomlist }:{roomlist:res}) => {
     const data = new URLSearchParams();
     data.append('id', id);
 
-    await axios.post('/v1/user/data/room/light/', data, UserHeaders)
-    .then((res) => {
-      console.log(res);
-    }).catch((error) => {
-      if (error.response.status === 400) SwalBadRequest();
-      else if (error.response.status === 401) SwalUnauthorized();
-      else if (error.response.status >= 500) SwalServerError();
-    })
+    if (id < 4) {
+      await axios.post('/v1/user/data/room/light/', data, UserHeaders)
+      .then((res) => {
+        
+      }).catch((error) => {
+        if (error.response.status === 400) SwalBadRequest();
+        else if (error.response.status === 401) SwalUnauthorized();
+        else if (error.response.status >= 500) SwalServerError();
+      })
+    } else {
+      SwalErrorCustomText('등록되지 않았습니다.');
+    }
   }
 
   return (
