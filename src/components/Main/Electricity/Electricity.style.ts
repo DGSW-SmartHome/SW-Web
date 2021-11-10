@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const ElectricityContainer = styled.div`
   position: absolute;
   width: 32vw;
-  height: 37vh;
+  height: 22vh;
   background: rgba(0, 0, 0, 0.4);
-  top: 56.7vh;
+  top: 72vmin;
   left: 67vw;
   border-radius: 30px;
 `;

@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { SmartHomeURL, headers } from '../../api/SmartHome/SmartHome.config';
-import { SwalDiscordance, SwalServerError, SwalUnauthorized } from 'src/Utils/SweetAlert/Error';
+import { SwalDiscordance, SwalErrorCustomText, SwalServerError, SwalUnauthorized } from 'src/Utils/SweetAlert/Error';
 
 import axios from 'axios';
 import useInput from '../../Hooks/useInput';
@@ -36,6 +36,12 @@ const Login = ({ history }) => {
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, password]);
+
+  useEffect(() => {
+    SwalErrorCustomText('아직 구현되지 않았어요!');
+    history.push('/');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   
   return (
     <LoginContainer>
