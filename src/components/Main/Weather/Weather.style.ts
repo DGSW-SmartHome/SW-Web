@@ -13,7 +13,7 @@ export const WeatherContainer = styled.div`
 
 export const WeatherIcon = styled.img`
   position: absolute;
-  width: 6vw;
+  width: 5vw;
   left: 1.5vw;
   top: 2.5vh;
 `;

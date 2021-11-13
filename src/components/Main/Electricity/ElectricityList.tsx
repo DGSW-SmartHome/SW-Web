@@ -1,45 +1,48 @@
+import { useEffect, useState } from "react";
+import { res } from "src/types/Roomlist.type";
+
+import axios from "axios";
 import ElectricityItem from "./ElectricityItem";
-import { RoomList } from "src/Store/InterFace/RoomList";
+
+import { 
+  SwalBadRequest, 
+  SwalServerError, 
+  SwalUnauthorized 
+} from "src/Utils/SweetAlert/Error";
 
 const ElectricityList = () => {
-  const room: RoomList[] = [
-    {
-      'id': 1,
-      'name': 'room1',
-      'OnOff': 'ON'
-    },
-    {
-      'id': 2,
-      'name': 'room2',
-      'OnOff': 'OFF'
-    },
-    {
-      'id': 3,
-      'name': 'room3',
-      'OnOff': 'OFF'
-    },
-    {
-      'id': 4,
-      'name': 'room4',
-      'OnOff': 'ON'
-    },
-    {
-      'id': 5,
-      'name': 'room5',
-      'OnOff': 'OFF'
-    },
-    {
-      'id': 6,
-      'name': 'room6',
-      'OnOff': 'ON'
-    },
-  ]
-  
+  const GetUserToken: string | null = sessionStorage.getItem('token');
+
+  const UserHeaders: object = {
+    headers: {
+      "Authorization": `Token ${GetUserToken}`,
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  }
+
+  const [plugRoomlist, setPlugRoomlist] = useState<res[]>([]);
+
+  const feathData = async () => {
+    axios.get('/v1/user/data/room/plug/', UserHeaders)
+    .then((res) => {
+      setPlugRoomlist(res.data.data.data);
+    }).catch((error) => {
+      if (error.response.status === 400) SwalBadRequest();
+      else if (error.response.status === 401) SwalUnauthorized();
+      else if (error.response.status >= 500) SwalServerError();
+    })
+  }
+
+  useEffect(() => {
+    if (GetUserToken) feathData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <>
       {
-        room.map(roomList => {
-          return ( <ElectricityItem key={roomList.id} roomList={roomList} /> )
+        plugRoomlist && plugRoomlist.map(roomList => {
+          return ( <ElectricityItem roomlist={roomList} /> )
         })
       }
     </>

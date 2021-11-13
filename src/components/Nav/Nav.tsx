@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom';
 import homeicon from '../../assets/Image/houseIcon.svg';
 import lockicon from '../../assets/Image/lock.png';
 import settingicon from '../../assets/Image/set.png';
+
+import { Link } from 'react-router-dom';
+
 import {
   Home,
   Icon,
@@ -9,7 +11,7 @@ import {
   MainIcon
 } from './Nav.style';
 
-const Nav = ({ iconName, name }) => {  
+const Nav = ({ iconName, name }:{iconName: string, name: string}) => {  
   return (
     <Home>
       {

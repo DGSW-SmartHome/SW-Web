@@ -1,7 +1,8 @@
 import Nav from "../Nav/Nav";
+import LightChangeNameList from "./Light/LightChangeNameList"
+import PlugList from "./Pulg/PlugChangeNameList";
+
 import { LightBackground, PlugBackground } from "./More.style";
-import LightList from "./Light/LightList"
-import PlugList from "./Pulg/PlutList";
 
 const More = () => {
 
@@ -9,7 +10,7 @@ const More = () => {
     <>
       <Nav iconName='톱니' name='설정' />
       <LightBackground>
-        <LightList />
+        <LightChangeNameList />
       </LightBackground>
       <PlugBackground>
         <PlugList />

@@ -1,7 +1,15 @@
-import axios from 'axios';
 import { useCallback } from 'react';
 import { SmartHomeURL, headers } from '../../api/SmartHome/SmartHome.config';
+
 import useInput from '../../Hooks/useInput';
+import axios from 'axios';
+
+import { 
+  SwalDiscordance, 
+  SwalServerError, 
+  SwalUnauthorized 
+} from 'src/Utils/SweetAlert/Error';
+
 import {
   LoginContainer,
   LoginTitle,
@@ -11,7 +19,7 @@ import {
   LoginButton
 } from './Login.style';
 
-const MainLogin = () => {
+const MainLogin = ({ history }) => {
   const [id, onChangeId] = useInput('');
   const [password, onChangePassword] = useInput('');
 
@@ -25,11 +33,13 @@ const MainLogin = () => {
     axios.post(SmartHomeURL + '/v1/user/manage/signin/', data, headers)
     .then(res => {
       sessionStorage.setItem('token', res.data.data.token);
-      window.location.replace('/');
+      history.push('/');
     }).catch(error => {
-      console.log(error);
-      alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+      if (error.response.status === 400) SwalDiscordance();
+      else if (error.response.status === 401) SwalUnauthorized();
+      else if (error.response.status >= 500) SwalServerError();
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, password]);
   
   return (

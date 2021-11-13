@@ -1,5 +1,6 @@
 import Nav from "../Nav/Nav";
 import VideoList from "./VideoList";
+
 import { ScrollContainer, VideoBackground } from './Lock.style';
 import { useEffect } from "react";
 

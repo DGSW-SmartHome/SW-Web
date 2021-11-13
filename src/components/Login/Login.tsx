@@ -1,9 +1,9 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { SmartHomeURL, headers } from '../../api/SmartHome/SmartHome.config';
+import { SwalDiscordance, SwalErrorCustomText, SwalServerError, SwalUnauthorized } from 'src/Utils/SweetAlert/Error';
 
 import axios from 'axios';
 import useInput from '../../Hooks/useInput';
-import Swal from 'sweetalert2';
 
 import {
   LoginContainer,
@@ -14,7 +14,7 @@ import {
   LoginButton
 } from './Login.style';
 
-const Login = () => {
+const Login = ({ history }) => {
   const [id, onChangeId] = useInput('');
   const [password, onChangePassword] = useInput('');
 
@@ -28,17 +28,20 @@ const Login = () => {
     axios.post(SmartHomeURL + '/v1/user/manage/signin/', data, headers)
     .then(res => {
       sessionStorage.setItem('accessToken', res.data.data.token);
-      window.location.replace('/lock');
+      history.push('/lock');
     }).catch(error => {
-      if (error.response.data['detail'] === 'Invalid value') {
-        Swal.fire({
-          icon: 'error',
-          title: 'ERROR!',
-          text: '아이디 또는 비밀번호가 일치하지 않습니다.'
-        })
-      }
+      if (error.response.status === 400) SwalDiscordance();
+      else if (error.response.status === 401) SwalUnauthorized();
+      else if (error.response.status >= 500) SwalServerError();
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, password]);
+
+  useEffect(() => {
+    SwalErrorCustomText('아직 구현되지 않았어요!');
+    history.push('/');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   
   return (
     <LoginContainer>

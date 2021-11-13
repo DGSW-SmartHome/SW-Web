@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import axios from "axios";
+
+import { useEffect, useState } from "react";
 import { res } from "src/types/Roomlist.type";
 
-import axios from "axios";
-import LightItem from "./LightItem";
+import LightChangeNameItem from "./LightChangeNameItem";
 
 import { 
   SwalBadRequest, 
@@ -10,7 +11,7 @@ import {
   SwalUnauthorized 
 } from "src/Utils/SweetAlert/Error";
 
-const LightList = () => {
+const LightChangeNameList = () => {
   const GetUserToken: string | null = sessionStorage.getItem('token');
 
   const UserHeaders: object = {
@@ -21,7 +22,7 @@ const LightList = () => {
   }
 
   const [lightRoomlist, setLightRoomlist] = useState<res[]>([]);
-
+  
   const feathData = async () => {
     axios.get('/v1/user/data/room/light/', UserHeaders)
     .then((res) => {
@@ -36,17 +37,16 @@ const LightList = () => {
   useEffect(() => {
     if (GetUserToken) feathData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [GetUserToken]);
 
   return (
     <>
       {
-        lightRoomlist && lightRoomlist.map(roomList => {
-          return ( <LightItem roomlist={roomList} /> )
-        })
-      }
+        lightRoomlist && lightRoomlist.map(roomlist => {
+          return ( <LightChangeNameItem roomlist={roomlist} />)
+        })}
     </>
   );
 };
 
-export default LightList;
+export default LightChangeNameList;

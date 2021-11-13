@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { baseURL, ServiceKey, ReturnType } from '../../../api/FineDust/FineDust.config';
-import { UserHeaders } from 'src/api/SmartHome/SmartHome.config';
-import { FineDustState, FirstCityName, LastCityName, FineDustValue } from '../../../Store/Recoil/Finedust';
+import { FineDustState, FirstCityName, LastCityName, FineDustValue } from '../../../Store/Finedust';
 import { useRecoilState } from 'recoil';
 
 import axios from 'axios';
@@ -11,6 +10,13 @@ import HouseFineDustGood from '../../../assets/Image/MainPage/finedustPage/dustH
 import HouseFineDustSoso from '../../../assets/Image/MainPage/finedustPage/dustHouseSoso.png';
 import HouseFineDustBad from '../../../assets/Image/MainPage/finedustPage/dustHouseBad.png';
 import HouseFineDustVeryBad from '../../../assets/Image/MainPage/finedustPage/dustHouseVeryBad.png';
+
+import { 
+  SwalBadRequest, 
+  SwalErrorCustomText, 
+  SwalServerError, 
+  SwalUnauthorized 
+} from 'src/Utils/SweetAlert/Error';
 
 import {
   FineDustValueContent,
@@ -22,7 +28,14 @@ import {
 } from './FineDust.style';
 
 const FineDust = ({ history }) => {
-  const USER_TOKEN = sessionStorage.getItem('token');
+  const GetUserToken: string | null = sessionStorage.getItem('token');
+
+  const UserHeaders: object = {
+    headers: {
+      "Authorization": `Token ${GetUserToken}`,
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  }
 
   const [firstCityName, setFirstCityName] = useRecoilState(FirstCityName);            // 입력된 지역의 앞 부분
   const [lastCityName, setLastCityName] = useRecoilState(LastCityName);               // 입력된 지역의 뒷 부분
@@ -33,19 +46,17 @@ const FineDust = ({ history }) => {
   const [replaceArea, setReplaceArea] = useState<string>('');                         // 새로 저장한 지역 이름
 
   // 미세먼지 API 호출
-  const getFineDustValue = async () => {
-    await axios.get(`${baseURL}?serviceKey=${ServiceKey}&returnType=${ReturnType}&sidoName=${replaceArea}&numOfRows=100`)
+  const getFineDustValue = () => {
+    axios.get(`${baseURL}?serviceKey=${ServiceKey}&returnType=${ReturnType}&sidoName=${replaceArea}&numOfRows=100`)
       .then((response) => {
-        if (response.data.response.body.totalCount === 0) {
-          Swal.fire({
-            icon: 'error',
-            title:'미세먼지 측정소가 없습니다.',
-            text: '지역을 다시 입력해주세요.'
-          })
+        if (response.data.response.body.totalCount === 0) { 
+          SwalErrorCustomText('미세먼지 측정소가 없습니다. 다시 입력해주세요.');
           NotFineDustStation();
         } else {
           response && response.data.response.body.items.map(items => {
-            if (items['stationName'] === lastCityName) setFineDustValue(items['pm10Value']);
+            if (items['stationName'] === lastCityName) {
+              setFineDustValue(items['pm10Value']);
+            }
             return <></>;
           })
         }
@@ -67,17 +78,28 @@ const FineDust = ({ history }) => {
     Data.append('lastCityName', lastCityName);
     Data.append('fineDustValue', fineDustValue);
     Data.append('fineDust', fineDust);
-    await axios.post(`/v1/user/data/finedust/`, Data, UserHeaders)
+
+    await axios.post('/v1/user/data/finedust/', Data, UserHeaders)
       .then((res) => {
-        console.log(res.data);
+        
       }).catch((error) => {
-        console.log(error.response);
+        if (error.response.status === 400) SwalBadRequest();
+        else if (error.response.status === 401) SwalUnauthorized();
+        else if (error.response.status >= 500) SwalServerError();
       })
   };
 
+  // 지역이 변경 되었을 때 서버에 값 저장
+  useEffect(() => {
+    if (GetUserToken && firstCityName !== '지역이 설정되지 않았습니다.') {
+      PostFineDust(firstCityName, lastCityName, fineDustValue, fineDust);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fineDust]);
+
   // 미세먼지 값 불러오기 API 호출
   const GetFineDust = async () => {
-    await axios.get('/v1/user/data/finedust', UserHeaders)
+    await axios.get('/v1/user/data/finedust/', UserHeaders)
     .then((res) => {
       const response = res.data.data;
       setFirstCityName(response.firstCityName);
@@ -86,13 +108,11 @@ const FineDust = ({ history }) => {
       setFineDust(response.fineDust);
     })
   }
-
+  // 로그인 토큰이 존재하면 서버에서 값 불러오기
   useEffect(() => {
-    if (USER_TOKEN) {
-      GetFineDust();
-    }
+    if (GetUserToken && GetUserToken !== null) GetFineDust();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [USER_TOKEN]);
+  }, [GetUserToken]);
 
   // 미세먼지 값을 가져올 지역 문자열 가공
   useEffect(() => {
@@ -107,19 +127,10 @@ const FineDust = ({ history }) => {
   // 지역 이름이 바뀌었을 때 실행
   useEffect(() => {
     if (firstCityName !== '지역이 설정되지 않았습니다.') {
-      console.log('hi');
       getFineDustValue();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [replaceArea]);
-
-  // 지역이 변경 되었을 때 서버에 값 저장
-  useEffect(() => {
-    if (USER_TOKEN && firstCityName !== '지역이 설정되지 않았습니다.') {
-      PostFineDust(firstCityName, lastCityName, fineDustValue, fineDust);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fineDust]);
 
   // 미세먼지 값이 바뀌었을 때 실행
   useEffect(() => {
@@ -136,12 +147,11 @@ const FineDust = ({ history }) => {
       setFineDustImg(HouseFineDustVeryBad);
       setFineDust('매우 나쁨');
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fineDustValue]);
+  }, [fineDustValue, setFineDust]);
 
   // 미세먼지 지역 변경
   const changeCityName = async () => {
-    if (!USER_TOKEN) {
+    if (!GetUserToken) {
       Swal.fire({
         icon: 'error',
         title: '로그인이 필요한 서비스입니다.',
@@ -162,7 +172,7 @@ const FineDust = ({ history }) => {
       if (!place) {
         Swal.fire({
           icon: 'error',
-          title: '지역이 입력되지 않았습니다.',
+          title: '지역이 설정되지 않았습니다.',
           text: '지역을 입력해주세요'
         }).then((result) => {
           if (result.isConfirmed === true) {
@@ -180,15 +190,9 @@ const FineDust = ({ history }) => {
   return (
     <FineDustContainer>
       <ExternalFineDust onClick={changeCityName}>
-        {
-          fineDustValue !== 999 ? <FineDustImage src={fineDustImg} alt='Fine_Dust_Image' /> : null
-        }
-        {
-          fineDustValue !== 999 ? <FineDustValueContent>{fineDust}</FineDustValueContent> : null
-        }
-        {
-          firstCityName === '지역이 설정되지 않았습니다.' ? <NotSelectCity>{firstCityName}</NotSelectCity> : <FineDustPlaceContent>{firstCityName} {lastCityName !== '' ? lastCityName : null} </FineDustPlaceContent>
-        }
+        { fineDustValue !== 999 ? <FineDustImage src={fineDustImg} alt='Fine_Dust_Image' /> : null }
+        { fineDustValue !== 999 ? <FineDustValueContent>{fineDust} (미세먼지 농도: {fineDustValue}ug/m3)</FineDustValueContent> : null }
+        { firstCityName === '지역이 설정되지 않았습니다.' ? <NotSelectCity>{firstCityName}</NotSelectCity> : <FineDustPlaceContent>{firstCityName} {lastCityName !== '' ? lastCityName : null} </FineDustPlaceContent> }
       </ExternalFineDust>
     </FineDustContainer>
   );

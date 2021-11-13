@@ -4,8 +4,8 @@ import { RecoilRoot } from 'recoil';
 import App from './App';
 import ReactDOM from 'react-dom';
 
-import './index.scss';
-import './font.scss';
+import './styles/index.scss';
+import './styles/font.scss';
 
 ReactDOM.render(
   <BrowserRouter>

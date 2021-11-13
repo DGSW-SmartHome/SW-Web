@@ -2,16 +2,14 @@ import styled from "styled-components";
 
 export const FineDustValueContent = styled.div`
   position: absolute;
-  left: 5.8vw;
+  left: 13vmin;
   top: 6vh;
-  width: 4vw;
-  font-size: 2.5vmin;
-  text-align: center;
+  font-size: 2.1vmin;
 `;
 
 export const FineDustPlaceContent = styled.p`
   position: absolute;
-  left: 6.5vw;
+  left: 13vmin;
   top: 8vh;
   text-align: center;
   font-size: 2.2vmin;
@@ -19,9 +17,9 @@ export const FineDustPlaceContent = styled.p`
 
 export const NotSelectCity = styled.div`
   position: absolute;
-  font-size: 2vmin;
-  left: 2vw;
-  top: 7vh;
+  font-size: 3.4vmin;
+  left: 1.8vmin;
+  top: 6vmin;
 `;
 
 export const FineDustContainer = styled.div`
@@ -36,10 +34,10 @@ export const FineDustContainer = styled.div`
 
 export const ExternalFineDust = styled.div`
   position: absolute;
-  width: 17vw;
+  width: 22vw;
   height: 16vh;
   top: 2vh;
-  left: 1vw;
+  left: 8vmin;
 `;
 
 export const FineDustImage = styled.img`
@@ -47,4 +45,11 @@ export const FineDustImage = styled.img`
   width: 11vmin;
   left: 0.5vw;
   top: 2.5vh;
+`;
+
+export const FineDustValueugm3 = styled.div`
+  position: absolute;
+  left: 20vmin;
+  top: 6.2vmin;
+  font-size: 2.2vmin;
 `;
